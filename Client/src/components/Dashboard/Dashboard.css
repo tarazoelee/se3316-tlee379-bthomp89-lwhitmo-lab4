@@ -1,5 +1,7 @@
 .dash-container {
     display: flex;
+    border:1px solid white;
+
 }
 
 .searchtracks-container {
@@ -7,4 +9,5 @@
 }
 
 .list-container{
+    width:25%;
 }
