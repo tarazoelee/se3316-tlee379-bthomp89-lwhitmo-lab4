@@ -20,8 +20,8 @@ class Tracks extends Component {
     render() {
         return (
             <ul>
-                {this.state.users.map(tracks => (
-                    <li>track number: {tracks.trackNumber}, title: {tracks.trackTitle}</li>
+             {this.tracks?.map(track => (
+                    <li>track number: {track.trackNumber}, title: {track.trackTitle}</li>
                 ))}
             </ul>
         )
