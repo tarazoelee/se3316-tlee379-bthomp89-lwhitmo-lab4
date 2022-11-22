@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard"
 import Login from"./login"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
+import Tracks from "./Tracks"
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="/signup" element={<Signup/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/forgot-password" element={<ForgotPassword/>} />
+              <Route path="/tracks" element={<Tracks/>} />
             </Routes>
           </AuthProvider>
         </Router>
