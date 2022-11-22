@@ -1,0 +1,8 @@
+.playlist-container {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    min-width: 25%;
+    height: 100vh;
+    background-color: rgb(36, 31, 53);
+    padding: 30px 25px;
+}

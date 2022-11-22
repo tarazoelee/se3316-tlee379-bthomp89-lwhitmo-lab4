@@ -3,7 +3,7 @@ import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 
-export default function Dashboard() {
+export default function ProfileDash() {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth()
   const history = useNavigate()
@@ -20,8 +20,9 @@ export default function Dashboard() {
   }
 
   return (
-    <>
-      <Card>
+    <div className="d-flex flex-column">
+      <div>
+      <Card className="w-200">
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -31,11 +32,12 @@ export default function Dashboard() {
           </Link>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
+      </div>
+      <div className="w-20 text-center mt-2">
         <Button variant="link" onClick={handleLogout}>
           Log Out
         </Button>
       </div>
-    </>
+    </div>
   )
 }
