@@ -1,0 +1,17 @@
+.searchtracks-container {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    padding: 30px 25px;
+}
+
+input {
+    width: 275px;
+    height: 35px;
+    border-radius: 30px;
+    border: none;
+}
+
+.searchtracks-input {
+    padding: 2px 10px;
+}

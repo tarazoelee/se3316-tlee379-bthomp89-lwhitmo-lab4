@@ -1,3 +1,16 @@
+// import React from 'react'
+// import './SearchTracks.css'
+
+// function SearchTracks() {
+//   return (
+//     <div className='searchtracks-container'>
+//       <input className='searchtracks-input' placeholder='Find music!'></input>
+//       <div className='searchresults-container'>Placeholder for results!</div>
+//     </div>
+//   )
+// }
+
+// export default SearchTracks
 import { Component } from 'react';
 
 class Tracks extends Component {
@@ -32,12 +45,12 @@ class Tracks extends Component {
    
         return (
         <div className = "App">
-            <h1> Fetch data from an api in react </h1>  {
+            <h1> Tracks </h1>  {
                 items.map((item) => ( 
                 <ol key = { item.id } >
-                    User_Name: { item.username }, 
-                    Full_Name: { item.name }, 
-                    User_Email: { item.email } 
+                    Track Name: { item.trackTitle }, 
+                    Album: { item.albumTitle }, 
+                    Artist: { item.artistName } 
                     </ol>
                 ))
             }
