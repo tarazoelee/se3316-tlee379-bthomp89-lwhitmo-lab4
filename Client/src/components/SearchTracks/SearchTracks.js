@@ -45,9 +45,9 @@ class Tracks extends Component {
    
         return (
         <div className = "App">
-            <h1> Tracks </h1>  {
+            <h1 className='text-white'> Tracks </h1>  {
                 items.map((item) => ( 
-                <ol key = { item.id } >
+                <ol key = { item.id } className='text-white' >
                     Track Name: { item.trackTitle }, 
                     Album: { item.albumTitle }, 
                     Artist: { item.artistName } 
