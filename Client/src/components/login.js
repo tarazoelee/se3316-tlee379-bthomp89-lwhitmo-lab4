@@ -1,55 +1,68 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
-import './login.css'
+import React, { useRef, useState } from "react";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import { GoogleButton } from "react-google-button";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import "./login.css";
+//import { signInWithGoogle } from "../firebase";
 
 export default function Login() {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const { login } = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const history = useNavigate()
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const { login, googleSignIn } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useNavigate();
+
+  async function handleGoogleSignIn(e) {
+    e.preventDefault();
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     try {
       setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
       history('/userdash')
     } catch(err) {
-      alert(err.name); // ReferenceError
-    alert(err.message); // lalala is not defined
-    alert(err.stack); // ReferenceError: lalala is not defined at (...call stack)
 
-    // Can also show an error as a whole
-    // The error is converted to string as "name: message"
-    alert(err); // ReferenceError: lalala is not defined
-      setError("Failed to create an account")
+      alert(err.name); // ReferenceError
+      alert(err.message); // lalala is not defined
+      alert(err.stack); // ReferenceError: lalala is not defined at (...call stack)
+
+      // Can also show an error as a whole
+      // The error is converted to string as "name: message"
+      alert(err); // ReferenceError: lalala is not defined
+      setError("Failed to create an account");
     }
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
     <div className="login-container">
       <div className="logincontent-container">
         <h1>Music Player</h1>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </p>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. It has survived not only
+          five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and
+          more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum.
+        </p>
       </div>
       <div className="logincard-container">
+
       <Card className="login-card">
         <Card.Body>
           <h2 className="text-center mb-4">Login</h2>
@@ -78,7 +91,10 @@ export default function Login() {
           </div>
         </Card.Body>
       </Card>
+
       </div>
+      <div className="max-w-[240px] m-auto py-4"></div>
+      <GoogleButton onClick={handleGoogleSignIn} />
     </div>
-  )
+  );
 }
