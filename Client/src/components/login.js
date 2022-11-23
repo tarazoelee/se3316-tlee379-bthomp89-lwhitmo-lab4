@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { GoogleButton } from "react-google-button";
 import { useAuth } from "../contexts/AuthContext";
@@ -9,7 +9,7 @@ import "./login.css";
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login, googleSignIn } = useAuth();
+  const { login, googleSignIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useNavigate();
@@ -22,6 +22,12 @@ export default function Login() {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    if (currentUser != null) {
+      history("/");
+    }
+  }, [currentUser]);
 
   async function handleSubmit(e) {
     e.preventDefault();
