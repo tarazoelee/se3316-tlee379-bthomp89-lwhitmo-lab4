@@ -68,7 +68,6 @@ export default function Login() {
         </p>
       </div>
       <div className="logincard-container">
-
       <Card className="login-card">
         <Card.Body>
           <h2 className="text-center mb-4">Login</h2>
@@ -90,17 +89,17 @@ export default function Login() {
             <Link to="/forgot-password">Forgot Password?</Link>
           </div>
           <div className="w-100 text-center mt-3">
-            <Link to="/dashboard">Continue without an account</Link>
+            <Link to="/opendash">Continue without an account</Link>
           </div>
            <div className="w-100 text-center mt-2 text-gray">
             Need an account? <Link to="/signup">Signup</Link>
           </div>
         </Card.Body>
       </Card>
-
+       <div className="googlebutton"></div>
+            <GoogleButton onClick={handleGoogleSignIn} />
+        </div>
       </div>
-      <div className="max-w-[240px] m-auto py-4"></div>
-      <GoogleButton onClick={handleGoogleSignIn} />
-    </div>
+  
   );
 }

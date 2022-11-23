@@ -5,7 +5,9 @@
 .logincard-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     width:70%;
+    flex-direction: column;
 }
 .login-container{
     display: flex;
@@ -21,4 +23,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.googlebutton{
+    margin-top:20px;
 }

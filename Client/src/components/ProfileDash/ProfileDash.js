@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import './ProfileDash.css'
 
 export default function ProfileDash() {
   const [error, setError] = useState("")
@@ -20,20 +21,16 @@ export default function ProfileDash() {
   }
 
   return (
-    <div>
-      <Card className="w-75">
-        <Card.Body>
+    <div className="profiledash-card">
           {error && <Alert variant="danger">{error}</Alert>} {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-60 mt-2 bg-secondary border-0 fs-6">
+          <Link to="/update-profile" className="btn btn-primary mt-2 bg-secondary border-0 fs-6">
             Update Profile
           </Link>
-          <div className=" text-center">
+          <div>
             <Button variant="link" onClick={handleLogout} className='text-decoration-none text-secondary'>
               Log Out
             </Button>
          </div>
-        </Card.Body>
-      </Card>
       </div>
   )
 }
