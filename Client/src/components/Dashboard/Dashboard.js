@@ -1,6 +1,6 @@
 import React from 'react'
 import './Dashboard.css'
-import SearchTracks from '../SearchTracks/SearchTracks';
+import SearchTracks from '../SearchTracks/Tracks';
 import PlaylistList from '../PlaylistList/PlaylistList';
 import ProfileDash from '../ProfileDash';
 
