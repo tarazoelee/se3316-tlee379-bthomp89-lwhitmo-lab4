@@ -3,7 +3,7 @@ import Signup from "./Signup";
 import {Container} from 'react-bootstrap'
 import { AuthProvider } from "../contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Dashboard from "./Dashboard/Dashboard";
+import Dashboard from "./OpenDashboard/Dashboard";
 import Login from"./login"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile/UpdateProfile"
@@ -24,7 +24,7 @@ function App() {
               <Route exact path="/" element={<Login></Login>} />
               <Route path="/update-profile" element={<UpdateProfile/>} />
               <Route path="/signup" element={<Signup/>} />
-              <Route path="/dashboard" element={<Dashboard></Dashboard>} />
+              <Route path="/opendash" element={<Dashboard></Dashboard>} />
               <Route path="/userdash" element={<UserDash/>} />
               <Route path="/forgot-password" element={<ForgotPassword/>} />
               <Route path="/tracks" element={<Tracks/>} />

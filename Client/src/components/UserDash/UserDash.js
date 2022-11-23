@@ -1,8 +1,8 @@
 import React from 'react'
 import './UserDash.css'
-import SearchTracks from '../SearchTracks/Tracks';
+import SearchTracks from '../SearchTracks/SearchTracks';
 import PlaylistList from '../PlaylistList/PlaylistList';
-import ProfileDash from '../ProfileDash';
+import ProfileDash from '../ProfileDash/ProfileDash';
 
 function UserDash() {
   return (

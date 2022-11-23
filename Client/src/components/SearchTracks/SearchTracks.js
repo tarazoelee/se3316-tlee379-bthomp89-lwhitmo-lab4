@@ -12,7 +12,7 @@ import './SearchTracks.css'
 // export default SearchTracks
 import { Component, React, useState} from 'react';
 
-export default function Tracks(){
+export default function SearchTracks(){
     const [items, setItems] = useState([])
     const [DataisLoaded, setLoading]= useState(false)
     const [inputText, setInputText] = useState("");
@@ -22,19 +22,7 @@ export default function Tracks(){
         setInputText(lowerCase);
     };
     var query;
-
-    // Constructor 
-    /** 
-     *   constructor(props){
-        super(props);
-        this.state = {
-            items: [],
-            DataisLoaded: false
-        };
-    };
-    */
  
-   
     // ComponentDidMount is used to execute the code 
     function componentDidMount(){
         fetch(
@@ -43,16 +31,13 @@ export default function Tracks(){
             .then((json) => {
                     setItems(json);
                     setLoading(true);
-                /** this.setState({
-                    items: json,
-                    DataisLoaded: true   })*/
             ;
         })
     };
     componentDidMount();
 
      if (!DataisLoaded){ 
-        return <div> <h1 className='text-white'> loading.... </h1> </div> ;
+        return <div> <h1 className='text-white fs-5'> loading.... </h1> </div> ;
      }
    
     return (

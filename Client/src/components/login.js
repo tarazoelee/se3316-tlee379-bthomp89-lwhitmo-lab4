@@ -89,7 +89,7 @@ export default function Login() {
             <Link to="/forgot-password">Forgot Password?</Link>
           </div>
           <div className="w-100 text-center mt-3">
-            <Link to="/dashboard">Continue without an account</Link>
+            <Link to="/opendash">Continue without an account</Link>
           </div>
            <div className="w-100 text-center mt-2 text-gray">
             Need an account? <Link to="/signup">Signup</Link>
