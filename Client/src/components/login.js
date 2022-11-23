@@ -68,7 +68,6 @@ export default function Login() {
         </p>
       </div>
       <div className="logincard-container">
-
       <Card className="login-card">
         <Card.Body>
           <h2 className="text-center mb-4">Login</h2>
@@ -97,10 +96,10 @@ export default function Login() {
           </div>
         </Card.Body>
       </Card>
-
+       <div className="googlebutton"></div>
+            <GoogleButton onClick={handleGoogleSignIn} />
+        </div>
       </div>
-      <div className="max-w-[240px] m-auto py-4"></div>
-      <GoogleButton onClick={handleGoogleSignIn} />
-    </div>
+  
   );
 }
