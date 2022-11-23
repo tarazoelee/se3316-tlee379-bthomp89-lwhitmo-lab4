@@ -18,7 +18,7 @@ export default function Login() {
       setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      history('/')
+      history('/userdash')
     } catch(err) {
       alert(err.name); // ReferenceError
     alert(err.message); // lalala is not defined
@@ -70,7 +70,10 @@ export default function Login() {
           <div className="w-100 text-center mt-3">
             <Link to="/forgot-password">Forgot Password?</Link>
           </div>
-           <div className="w-100 text-center mt-2 text-white">
+          <div className="w-100 text-center mt-3">
+            <Link to="/dashboard">Continue without an account</Link>
+          </div>
+           <div className="w-100 text-center mt-2 text-gray">
             Need an account? <Link to="/signup">Signup</Link>
           </div>
         </Card.Body>
