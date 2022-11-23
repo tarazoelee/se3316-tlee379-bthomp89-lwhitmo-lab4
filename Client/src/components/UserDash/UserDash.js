@@ -1,10 +1,10 @@
 import React from 'react'
-import './Dashboard.css'
+import './UserDash.css'
 import SearchTracks from '../SearchTracks/Tracks';
 import PlaylistList from '../PlaylistList/PlaylistList';
 import ProfileDash from '../ProfileDash';
 
-function Dashboard() {
+function UserDash() {
   return (
     <div className='dash-container'>
         <div className='list-container'>
@@ -20,4 +20,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default UserDash;

@@ -8,6 +8,7 @@ import Login from"./login"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile/UpdateProfile"
 import Tracks from "./Tracks"
+import UserDash from "./UserDash/UserDash";
 
 
 function App() {
@@ -20,10 +21,11 @@ function App() {
         <Router>
           <AuthProvider>
             <Routes>
-              <Route exact path="/" element={<Dashboard/>} />
+              <Route exact path="/" element={<Login></Login>} />
               <Route path="/update-profile" element={<UpdateProfile/>} />
               <Route path="/signup" element={<Signup/>} />
-              <Route path="/login" element={<Login/>} />
+              <Route path="/dashboard" element={<Dashboard></Dashboard>} />
+              <Route path="/userdash" element={<UserDash/>} />
               <Route path="/forgot-password" element={<ForgotPassword/>} />
               <Route path="/tracks" element={<Tracks/>} />
             </Routes>

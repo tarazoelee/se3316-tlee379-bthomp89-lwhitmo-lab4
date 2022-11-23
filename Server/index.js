@@ -11,4 +11,6 @@ app.get('/api', (request, response) => {
     response.send('Hello world from Express!');
 });
 
-app.listen(1234);   
+app.listen(1234,()=>{
+    console.log('Running on port 1234!')
+});
