@@ -1,0 +1,10 @@
+.updateprof-container{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding-top:200px
+}
+
+.updateprof-card{
+    width: 500px;
+}
