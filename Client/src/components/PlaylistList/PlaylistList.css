@@ -5,3 +5,9 @@
     background-color: rgb(46, 41, 62);
     padding: 55px 25px ;
 }
+.playlist-list-container{
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    padding: 30px 25px; 
+}

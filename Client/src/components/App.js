@@ -8,6 +8,7 @@ import Login from"./login"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile/UpdateProfile"
 import UserDash from "./UserDash/UserDash";
+import Playlist from "./Playlist/Playlist";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path="/opendash" element={<Dashboard></Dashboard>} />
               <Route path="/userdash" element={<UserDash/>} />
               <Route path="/forgot-password" element={<ForgotPassword/>} />
+              <Route path="/playlist/:id" element={<Playlist></Playlist>}/>
             </Routes>
           </AuthProvider>
         </Router>
