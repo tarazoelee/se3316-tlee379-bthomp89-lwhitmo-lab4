@@ -1,16 +1,7 @@
 import './SearchTracks.css'
 
-// function SearchTracks() {
-//   return (
-//     <div className='searchtracks-container'>
-//       <input className='searchtracks-input' placeholder='Find music!'></input>
-//       <div className='searchresults-container'>Placeholder for results!</div>
-//     </div>
-//   )
-// }
-
 // export default SearchTracks
-import { Component, React, useState} from 'react';
+import {React, useState} from 'react';
 
 export default function SearchTracks(){
     const [items, setItems] = useState([])
@@ -21,12 +12,17 @@ export default function SearchTracks(){
         var lowerCase = e.target.value.toLowerCase();
         setInputText(lowerCase);
     };
-    var query;
+
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
       };
+
+
+
     // ComponentDidMount is used to execute the code 
-    function componentDidMount(){
+    function getData(){
+        var called = false;
+        while(called==false){
         fetch("/api/tracks")
             .then((res) => res.json())
             .then((json) => {
@@ -34,8 +30,11 @@ export default function SearchTracks(){
                     setLoading(true);
             ;
         })
+        called=true;
+    }
+    console.log("printing")
     };
-    componentDidMount();
+    getData();
 
      if (!DataisLoaded){ 
         return <div> <h1 className='text-white fs-5'> loading.... </h1> </div> ;
