@@ -14,7 +14,7 @@ export default function ProfileDash() {
 
     try {
       await logout()
-      history("/login")
+      history("/")
     } catch {
       setError("Failed to log out")
     }
