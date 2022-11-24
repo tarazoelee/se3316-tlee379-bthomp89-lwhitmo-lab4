@@ -21,8 +21,6 @@ export default function SearchTracks(){
 
     // ComponentDidMount is used to execute the code 
     function getData(){
-        var called = false;
-        while(called==false){
         fetch("/api/tracks")
             .then((res) => res.json())
             .then((json) => {
@@ -30,8 +28,6 @@ export default function SearchTracks(){
                     setLoading(true);
             ;
         })
-        called=true;
-    }
     console.log("printing")
     };
     getData();
