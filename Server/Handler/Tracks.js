@@ -8,7 +8,6 @@ exports.tracks = async (req, res) => {
             id: doc.id,
             ...doc.data(),
         }));
-            console.log(data);
             return res.status(201).json(data);
         })
     } catch (error) {
