@@ -49,8 +49,9 @@ export default function SearchTracks(){
                     }
                 }).map((item) => ( 
                  <div key = { item.id } className='track-container' >
-                    <p>{ item.trackTitle }, Album: { item.albumTitle }, Artist: { item.artistName } 
-                    <button class="btn btn-outline-dark" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.trackTitle)}>Play Song</button></p>
+                    <div>{ item.trackTitle }, Album: { item.albumTitle }, Artist: { item.artistName } </div>
+                    <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.trackTitle)}>Play Song</button>
+                     </div>
                 </div>
                 ))
            
