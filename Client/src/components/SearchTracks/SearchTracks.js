@@ -1,7 +1,7 @@
 import './SearchTracks.css'
 
 // export default SearchTracks
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 
 export default function SearchTracks(){
     const [items, setItems] = useState([])
@@ -17,10 +17,12 @@ export default function SearchTracks(){
         window.open(url, '_blank', 'noopener,noreferrer');
       };
 
+   useEffect(() => {
+    fetchData();
+    console.log('use effect running')
+  }, []);
 
-
-    // ComponentDidMount is used to execute the code 
-    function getData(){
+    function fetchData(){
         fetch("/api/tracks")
             .then((res) => res.json())
             .then((json) => {
@@ -28,9 +30,7 @@ export default function SearchTracks(){
                     setLoading(true);
             ;
         })
-    console.log("printing")
-    };
-    getData();
+    }
 
      if (!DataisLoaded){ 
         return <div> <h1 className='text-white fs-5'> loading.... </h1> </div> ;
