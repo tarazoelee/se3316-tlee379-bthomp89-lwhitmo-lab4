@@ -22,11 +22,12 @@ export default function SearchTracks(){
         setInputText(lowerCase);
     };
     var query;
- 
+    const openInNewTab = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      };
     // ComponentDidMount is used to execute the code 
     function componentDidMount(){
-        fetch(
-            "/api/tracks")
+        fetch("/api/tracks")
             .then((res) => res.json())
             .then((json) => {
                     setItems(json);
@@ -53,7 +54,8 @@ export default function SearchTracks(){
                     }
                 }).map((item) => ( 
                  <div key = { item.id } className='track-container' >
-                    <p>{ item.trackTitle }, Album: { item.albumTitle }, Artist: { item.artistName } </p>
+                    <p>{ item.trackTitle }, Album: { item.albumTitle }, Artist: { item.artistName } 
+                    <button class="btn btn-outline-dark" onClick={() => openInNewTab(item.trackUrl)}>Play Song</button></p>
                 </div>
                 ))
            

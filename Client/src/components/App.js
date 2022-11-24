@@ -7,7 +7,6 @@ import Dashboard from "./OpenDashboard/Dashboard";
 import Login from"./login"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile/UpdateProfile"
-import Tracks from "./Tracks"
 import UserDash from "./UserDash/UserDash";
 
 
@@ -27,7 +26,6 @@ function App() {
               <Route path="/opendash" element={<Dashboard></Dashboard>} />
               <Route path="/userdash" element={<UserDash/>} />
               <Route path="/forgot-password" element={<ForgotPassword/>} />
-              <Route path="/tracks" element={<Tracks/>} />
             </Routes>
           </AuthProvider>
         </Router>

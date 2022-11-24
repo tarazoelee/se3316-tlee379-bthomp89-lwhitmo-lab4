@@ -18,7 +18,5 @@ if (!firebase.apps.length) {
 } else {
   firebase.app(); // if already initialized, use that one
 }
-// firebase.initializeApp(app); //initialize firebase app
-// module.exports = { firebase };
 export const auth = app.auth();
 export default app;
