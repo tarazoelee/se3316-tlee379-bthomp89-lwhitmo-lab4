@@ -1,0 +1,15 @@
+.add-btn{
+    margin-right:20px;
+    background-color: rgba(255, 255, 255, 0.76);
+    max-width: 100px;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: 0.2s;
+    border:0;
+    color:black;
+}
+
+.add-btn:hover{
+    color:white;
+    background-color: rgb(67, 69, 103);
+}

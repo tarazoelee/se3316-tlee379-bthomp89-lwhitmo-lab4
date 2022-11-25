@@ -7,8 +7,13 @@ const {playlists} = require('../handler/playlists');
 //get all the current playlists from firebase
 router.get('/', playlists);
 //add tracks to a playlist
-router.post('/add', (req,res)=>{
-    console.log(db.collection("playlists").listDocuments)
+router.post('/add/:id', (req,res)=>{
+    const playlistID= req.params.id;
+    const tracks = req.body.tracks;
+
+    addSongs(playlistID, tracks)
+    res.send("done")
+    
 })
 //create a new playlist
 router.post('/create', (req,res)=>{
@@ -18,6 +23,7 @@ router.post('/create', (req,res)=>{
     res.send()
 })
 
+//create new playlist function
 async function addPlaylist(name, email){
     const res = await db.collection('Playlists').add({
         Name: name,
@@ -26,6 +32,17 @@ async function addPlaylist(name, email){
       
       console.log('Added document with ID: ', res.id);
       
+}
+//add songs function
+async function addSongs(id, tracks){
+    const FieldValue = require('firebase-admin').firestore.FieldValue;
+    for (track in tracks){
+        const res = await db.collection('Playlists').doc(id).update({
+            Songs: FieldValue.arrayUnion(tracks[track])
+        })
+    }
+
+    console.log("Added tracks: "+tracks+" to: "+id)
 }
 
 module.exports = router;
