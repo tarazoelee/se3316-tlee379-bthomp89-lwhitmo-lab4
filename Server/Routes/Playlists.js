@@ -12,13 +12,16 @@ router.post('/add', (req,res)=>{
 })
 //create a new playlist
 router.post('/create', (req,res)=>{
-    addPlaylist("tester")
+    const name= req.body.name;
+    const email= req.body.email;
+    addPlaylist(name, email)
     res.send()
 })
 
-async function addPlaylist(name){
+async function addPlaylist(name, email){
     const res = await db.collection('Playlists').add({
-        Name: name
+        Name: name,
+        UserEmail: email
       });
       
       console.log('Added document with ID: ', res.id);
