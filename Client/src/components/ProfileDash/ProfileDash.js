@@ -23,7 +23,7 @@ export default function ProfileDash() {
   return (
     <div className="profiledash-card">
           {error && <Alert variant="danger">{error}</Alert>} {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary mt-2 bg-secondary border-0 fs-6">
+          <Link to="/update-profile" className="update-btn">
             Update Profile
           </Link>
           <div>

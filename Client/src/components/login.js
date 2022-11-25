@@ -3,10 +3,14 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { GoogleButton } from "react-google-button";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+
 import "./login.css";
 //import { signInWithGoogle } from "../firebase";
 
 export default function Login() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login, googleSignIn, currentUser } = useAuth();
@@ -18,27 +22,38 @@ export default function Login() {
     e.preventDefault();
     try {
       await googleSignIn();
-      history("/userdash")
     } catch (error) {
       console.log(error);
     }
   }
 
+  //This block of code handles routing based on the user stored
   useEffect(() => {
     if (currentUser != null) {
-      history("/");
+      if (user.emailVerified == false) {
+        history("/verifyemail");
+        //history("/userdash");
+      } else {
+        history("/userdash");
+      }
     }
   }, [currentUser]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      setError("")
-      setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      history('/userdash')
-    } catch(err) {
-      setError("Failed to login to account");
+      setError("");
+      setLoading(true);
+      await login(emailRef.current.value, passwordRef.current.value);
+    } catch (err) {
+      if (
+        err.message ===
+        "Firebase: The user account has been disabled by an administrator. (auth/user-disabled)."
+      ) {
+        setError("Your account has been disabled. Contact administrator");
+      } else {
+        setError("Failed to login to account");
+      }
     }
 
     setLoading(false);
@@ -61,38 +76,41 @@ export default function Login() {
         </p>
       </div>
       <div className="logincard-container">
-      <Card className="login-card">
-        <Card.Body>
-          <h2 className="text-center mb-4">Login</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <Button disabled={loading} className="w-100 bg-secondary border-0 mt-3" type="submit">
-              Login
-            </Button>
-          </Form>
-          <div className="w-100 text-center mt-3">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
-          <div className="w-100 text-center mt-3">
-            <Link to="/opendash">Continue without an account</Link>
-          </div>
-           <div className="w-100 text-center mt-2 text-gray">
-            Need an account? <Link to="/signup">Signup</Link>
-          </div>
-        </Card.Body>
-      </Card>
-       <div className="googlebutton"></div>
-            <GoogleButton onClick={handleGoogleSignIn} />
-        </div>
+        <Card className="login-card">
+          <Card.Body>
+            <h2 className="text-center mb-4">Login</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
+              <Form.Group id="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" ref={emailRef} required />
+              </Form.Group>
+              <Form.Group id="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" ref={passwordRef} required />
+              </Form.Group>
+              <Button
+                disabled={loading}
+                className="w-100 bg-secondary border-0 mt-3"
+                type="submit"
+              >
+                Login
+              </Button>
+            </Form>
+            <div className="w-100 text-center mt-3">
+              <Link to="/forgot-password">Forgot Password?</Link>
+            </div>
+            <div className="w-100 text-center mt-3">
+              <Link to="/opendash">Continue without an account</Link>
+            </div>
+            <div className="w-100 text-center mt-2 text-gray">
+              Need an account? <Link to="/signup">Signup</Link>
+            </div>
+          </Card.Body>
+        </Card>
+        <div className="googlebutton"></div>
+        <GoogleButton onClick={handleGoogleSignIn} />
       </div>
-  
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 .playlist-container {
     color: white;
     font-family: 'Montserrat', sans-serif;
-    height: 100vh;
     background-color: rgb(46, 41, 62);
     padding: 55px 25px ;
 }
@@ -10,4 +9,11 @@
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
     padding: 30px 25px; 
+    min-height: 100vh;
+}
+
+.title{
+    font-weight: 700;
+    font-size: 30px;
+    margin-bottom: 10px;
 }

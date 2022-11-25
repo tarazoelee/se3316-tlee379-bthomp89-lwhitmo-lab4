@@ -14,6 +14,8 @@ function PlaylistList() {
       <div className='track-container'  onClick={openPlaylist}>
             Playlist  
       </div>
+      <div className='title'>Browse Playlists</div>
+      <button class="btn btn-outline-light">Create Playlist</button>
     </div>
   )
 }

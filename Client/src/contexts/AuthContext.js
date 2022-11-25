@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider);
   };
-  
+
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
