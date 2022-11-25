@@ -9,13 +9,12 @@ function PlaylistList() {
   }
   return (
     <div className='playlist-container'>
-      <h3>Browse playlists</h3>
+      <h3 className='title'>Browse playlists</h3>
       <button class="btn btn-outline-light">Create New Playlist</button>
       <div className='track-container'  onClick={openPlaylist}>
             Playlist  
       </div>
-      <div className='title'>Browse Playlists</div>
-      <button class="btn btn-outline-light">Create Playlist</button>
+  
     </div>
   )
 }

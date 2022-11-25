@@ -1,17 +1,21 @@
-.play-container {
+.dash-container {
+    display: flex;
+}
+
+.searchtracks-container {
     color: white;
     font-family: 'Montserrat', sans-serif;
-    background-color: rgb(46, 41, 62);
-    padding: 55px 25px ;
-    display: flex;
+    height: 100vh;
+    padding: 30px 25px;
+    width: 45%;
+}
 
+.list-container {
+    width: 50%;
 }
-.addSongs{
-    width: 30%;
-    display: inline-block;
-}
-.playlistInfo{
-    width:60%;
-    display: inline-block;
-    vertical-align: text-top;
+.go-back{
+    width:5%;
+    text-align: right;
+    padding-top: 10pt;
+    padding-right: 2pt;
 }
