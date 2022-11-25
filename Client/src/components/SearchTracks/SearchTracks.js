@@ -1,21 +1,26 @@
 import './SearchTracks.css'
-
-// export default SearchTracks
 import {React, useState, useEffect} from 'react';
+import Fuse from 'fuse.js';
 
 export default function SearchTracks(){
     const [items, setItems] = useState([])
     const [toggle, setToggle] = useState(false);
-    const [itemID, setItemID] = useState("");
     const [DataisLoaded, setLoading]= useState(false)
     const [inputText, setInputText] = useState("");
-    
-    //convert input to lowercase
-    let inputHandler = (e) => {
-        //convert input text to lower case
-        var lowerCase = e.target.value.toLowerCase();
-        setInputText(lowerCase);
-    };
+    const [query, updateQuery] = useState('');
+
+    //define fuse results search
+    const fuse = new Fuse(items, {
+    keys: ['artistName', 'trackTitle','albumTitle']
+    })
+    //create fuse result search 
+    const result = fuse.search(query);
+    const tracksResults = result.map(track => track.item);
+
+
+    function onSearch({ currentTarget }) {
+        updateQuery(currentTarget.value);
+        }
 
     function toggleDiv(){
         setToggle(!toggle)
@@ -50,13 +55,13 @@ export default function SearchTracks(){
      }
 
      //When track is clicked display additional info 
-    function getClicked(id, time){
+    function getClicked(id, album, time){
         const track = document.getElementById(id);
 
         //only create additional children if they don't exist
         if(!track.children[1]){
             const div = document.createElement('div');
-            const timep = document.createTextNode('Length: ' + time);
+            const info = document.createTextNode("Album: " + album + ' Length: ' + time)
             const close = document.createElement('button');
             
             div.className='clicked-info';
@@ -65,7 +70,7 @@ export default function SearchTracks(){
             close.appendChild(
                 document.createTextNode('close')
             )
-            div.appendChild(timep);
+            div.appendChild(info);
             div.appendChild(close);
             track.appendChild(div);
             close.addEventListener("click",()=>removeClicked(id));
@@ -73,7 +78,6 @@ export default function SearchTracks(){
     }
 
     function removeClicked(id){
-        console.log(id);
         const track = document.getElementById(id);
         while(track.children[1]){
             track.removeChild(track.children[1])
@@ -82,22 +86,13 @@ export default function SearchTracks(){
    
     //Display tracks
     return (
-        //Search tracks input
         <div className = "searchtracks-container">
-            <input className='searchtracks-input' placeholder='Find music!' onChange={inputHandler}></input>
+            <input className='searchtracks-input' placeholder='Find music!' value={query} onChange={onSearch}></input>
              {
-                items.filter(item => {
-                    if(inputText===''){ 
-                        return item;
-                    }
-                    else if (item.trackTitle.toLowerCase().includes(inputText) || item.albumTitle.toLowerCase().includes(inputText) || item.artistName.toLowerCase().includes(inputText)) {
-                        return item; //display searched tracks 
-                    }
-                }).map((item) => ( 
-                    //if not clicked, only display tracks 
+               tracksResults.map((item) => ( 
                 <div key = { item.id } id={item.id} className='track-container'>
-                 <div key = { item.id } className='default-track' onClick={() => getClicked(item.id, item.trackDuration)}>
-                    <div>{ item.trackTitle }, Album: { item.albumTitle }, Artist: { item.artistName } </div>
+                 <div key = { item.id } className='default-track' onClick={() => getClicked(item.id, item.albumTitle, item.trackDuration)}>
+                    <div>{ item.trackTitle }, Artist: { item.artistName } </div>
                     <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.trackTitle)}>Play Song</button> </div>
                 </div> 
                 </div>
