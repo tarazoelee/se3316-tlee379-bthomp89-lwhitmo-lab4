@@ -13,9 +13,6 @@ function Dashboard() {
         <div className='searchtracks-container'>
             <SearchTracks></SearchTracks>
         </div>
-        <div>
-           <ProfileDash></ProfileDash>
-        </div>
     </div>
   )
 }

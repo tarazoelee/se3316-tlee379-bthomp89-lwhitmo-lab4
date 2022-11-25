@@ -20,10 +20,58 @@ input {
    color:white;
 }
 
+.default-track{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .track-container{
-    color:rgb(59, 59, 59);
-    background-color:rgba(241, 241, 241, 0.895);;
-    margin:10px 0px;
-    padding: 5px 0px 5px 20px;
+    background-color: rgba(241, 241, 241, 0.895);
+    margin: 11px 0px;
+    padding: 11px 0px 10px 20px;
     border-radius: 20px;
+    color: rgb(59, 59, 59);
+}
+
+.clicked-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.close-btn{
+    margin-right: 20px;
+    max-width: 100px;
+    border-radius: 10px;
+    font-size: 10px;
+    transition: 0.2s;
+    border:0;
+    margin-top:5px;
+}
+
+.close-btn:hover {
+    color: white;
+    background-color: rgb(67, 69, 103);
+}
+
+.playsong-btn{
+    margin-right:20px;
+    background-color: rgba(255, 255, 255, 0.76);
+    max-width: 100px;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: 0.2s;
+    border:0;
+    color:black;
+}
+
+.playsong-btn:hover{
+    color:white;
+    background-color: rgb(67, 69, 103);
+}
+
+.modal-container{
+    display:block;
+    background-color: white;
+    color:black;
 }
