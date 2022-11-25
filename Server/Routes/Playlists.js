@@ -35,9 +35,12 @@ async function addPlaylist(name, email){
 }
 //add songs function
 async function addSongs(id, tracks){
-    const res = await db.collection('Playlists').doc(id).update({
-        Songs: tracks
-    })
+    const FieldValue = require('firebase-admin').firestore.FieldValue;
+    for (track in tracks){
+        const res = await db.collection('Playlists').doc(id).update({
+            Songs: FieldValue.arrayUnion(tracks[track])
+        })
+    }
 
     console.log("Added tracks: "+tracks+" to: "+id)
 }
