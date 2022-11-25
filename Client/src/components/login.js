@@ -3,10 +3,14 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { GoogleButton } from "react-google-button";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+
 import "./login.css";
 //import { signInWithGoogle } from "../firebase";
 
 export default function Login() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login, googleSignIn, currentUser } = useAuth();
@@ -23,9 +27,15 @@ export default function Login() {
     }
   }
 
+  //This block of code handles routing based on the user stored
   useEffect(() => {
     if (currentUser != null) {
-      history("/userdash");
+      if (user.emailVerified == false) {
+        history("/verifyemail");
+        //history("/userdash");
+      } else {
+        history("/userdash");
+      }
     }
   }, [currentUser]);
 
@@ -35,7 +45,6 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history("/userdash");
     } catch (err) {
       setError("Failed to login to account");
     }
