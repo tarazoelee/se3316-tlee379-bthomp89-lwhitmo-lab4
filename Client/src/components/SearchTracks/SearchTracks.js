@@ -93,7 +93,7 @@ export default function SearchTracks(){
                 <div key = { item.id } id={item.id} className='track-container'>
                  <div key = { item.id } className='default-track' onClick={() => getClicked(item.id, item.albumTitle, item.trackDuration)}>
                     <div>{ item.trackTitle }, Artist: { item.artistName } </div>
-                    <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.trackTitle)}>Play Song</button> </div>
+                    <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play Song</button> </div>
                 </div> 
                 </div>
                 ))

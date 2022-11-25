@@ -1,0 +1,21 @@
+.dash-container {
+    display: flex;
+}
+
+.searchtracks-container {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    padding: 30px 25px;
+    width: 45%;
+}
+
+.list-container {
+    width: 50%;
+}
+.go-back{
+    width:5%;
+    text-align: right;
+    padding-top: 10pt;
+    padding-right: 2pt;
+}

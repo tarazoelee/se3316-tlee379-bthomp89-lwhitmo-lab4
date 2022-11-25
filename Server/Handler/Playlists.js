@@ -1,10 +1,10 @@
 const { db } = require("../../util/admin");
 
-
-exports.tracks = async (req, res) => {
-    const tracksRef = db.collection('Tracks');
+//load the playlists in from firebase
+exports.playlists = async (req, res) => {
+    const playlistRef = db.collection('Playlists');
     try{
-        tracksRef.get().then((snapshot) => {
+        playlistRef.get().then((snapshot) => {
             const data = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),

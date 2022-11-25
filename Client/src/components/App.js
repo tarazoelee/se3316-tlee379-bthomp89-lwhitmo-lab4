@@ -8,7 +8,9 @@ import Login from "./login";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile/UpdateProfile";
 import UserDash from "./UserDash/UserDash";
+import Playlist from "./Playlist/Playlist";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
+
 
 function App() {
   return (
@@ -24,8 +26,9 @@ function App() {
               <Route path="/update-profile" element={<UpdateProfile />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/opendash" element={<Dashboard></Dashboard>} />
-              <Route path="/userdash" element={<UserDash />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/userdash" element={<UserDash/>} />
+              <Route path="/forgot-password" element={<ForgotPassword/>} />
+              <Route path="/playlist/:id" element={<Playlist></Playlist>}/>
               <Route path="/verifyemail" element={<VerifyEmail />} />
             </Routes>
           </AuthProvider>
