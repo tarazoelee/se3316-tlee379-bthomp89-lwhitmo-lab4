@@ -46,7 +46,14 @@ export default function Login() {
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
     } catch (err) {
-      setError("Failed to login to account");
+      if (
+        err.message ===
+        "Firebase: The user account has been disabled by an administrator. (auth/user-disabled)."
+      ) {
+        setError("Your account has been disabled. Contact administrator");
+      } else {
+        setError("Failed to login to account");
+      }
     }
 
     setLoading(false);
