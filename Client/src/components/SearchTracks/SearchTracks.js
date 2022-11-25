@@ -6,12 +6,12 @@ export default function SearchTracks(){
     const [items, setItems] = useState([])
     const [toggle, setToggle] = useState(false);
     const [DataisLoaded, setLoading]= useState(false)
-    const [inputText, setInputText] = useState("");
     const [query, updateQuery] = useState('');
 
     //define fuse results search
     const fuse = new Fuse(items, {
-    keys: ['artistName', 'trackTitle','albumTitle']
+    keys: ['artistName', 'trackTitle','albumTitle'],
+    threshold:0.5
     })
     //create fuse result search 
     const result = fuse.search(query);
@@ -87,7 +87,7 @@ export default function SearchTracks(){
     //Display tracks
     return (
         <div className = "searchtracks-container">
-            <input className='searchtracks-input' placeholder='Find music!' value={query} onChange={onSearch}></input>
+            <input className='searchtracks-input' placeholder='Discover Music' value={query} onChange={onSearch}></input>
              {
                tracksResults.map((item) => ( 
                 <div key = { item.id } id={item.id} className='track-container'>
