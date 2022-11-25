@@ -2,12 +2,14 @@ import './PlaylistList.css'
 import {React, useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import Popup from '../Popup/popup';
+import { useAuth } from "../../contexts/AuthContext"
 
 
 function PlaylistList() {
   const [items, setItems] = useState([])
   const [DataisLoaded, setLoading]= useState(false)
   const [isOpen, setIsOpen] = useState(false);
+  const { currentUser } = useAuth()
  
   const togglePopup = () => {
     setIsOpen(!isOpen);
@@ -41,7 +43,18 @@ function PlaylistList() {
   function openPlaylist(passed){
     history('/playlist/'+passed) //open new page for that playlist
   }
-  
+  function addPlaylist(name){
+    console.log(name)
+      fetch("/api/playlist/create",{
+        method:'POST',
+        headers:{
+          "Content-Type": "application/json",
+          "Content-length" : 2
+        },
+        body: JSON.stringify({"name": name, "email": currentUser.email })
+      })
+        
+  }
 
   return (
     <div className='playlist-container'>
@@ -55,7 +68,8 @@ function PlaylistList() {
     {isOpen && <Popup
       content={<>
       <p></p>
-      <span>Name:  <input></input></span>
+      <span>Name:  <input id='playName'></input></span>
+      <button onClick={()=>addPlaylist(document.getElementById('playName').value)}>Submit</button>
       </>}
       handleClose={togglePopup}
     />}
