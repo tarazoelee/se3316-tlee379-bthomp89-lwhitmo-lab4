@@ -6,12 +6,12 @@ export default function SearchTracks(){
     const [items, setItems] = useState([])
     const [toggle, setToggle] = useState(false);
     const [DataisLoaded, setLoading]= useState(false)
-    const [inputText, setInputText] = useState("");
     const [query, updateQuery] = useState('');
 
     //define fuse results search
     const fuse = new Fuse(items, {
-    keys: ['artistName', 'trackTitle','albumTitle']
+    keys: ['artistName', 'trackTitle','albumTitle'],
+    threshold:0.5
     })
     //create fuse result search 
     const result = fuse.search(query);
