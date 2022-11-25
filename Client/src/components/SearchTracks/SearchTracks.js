@@ -50,13 +50,13 @@ export default function SearchTracks(){
      }
 
      //When track is clicked display additional info 
-    function getClicked(id, time){
+    function getClicked(id, album, time){
         const track = document.getElementById(id);
 
         //only create additional children if they don't exist
         if(!track.children[1]){
             const div = document.createElement('div');
-            const timep = document.createTextNode('Length: ' + time);
+            const info = document.createTextNode("Album: " + album + ' Length: ' + time)
             const close = document.createElement('button');
             
             div.className='clicked-info';
@@ -65,7 +65,7 @@ export default function SearchTracks(){
             close.appendChild(
                 document.createTextNode('close')
             )
-            div.appendChild(timep);
+            div.appendChild(info);
             div.appendChild(close);
             track.appendChild(div);
             close.addEventListener("click",()=>removeClicked(id));
@@ -96,8 +96,8 @@ export default function SearchTracks(){
                 }).map((item) => ( 
                     //if not clicked, only display tracks 
                 <div key = { item.id } id={item.id} className='track-container'>
-                 <div key = { item.id } className='default-track' onClick={() => getClicked(item.id, item.trackDuration)}>
-                    <div>{ item.trackTitle }, Album: { item.albumTitle }, Artist: { item.artistName } </div>
+                 <div key = { item.id } className='default-track' onClick={() => getClicked(item.id, item.albumTitle, item.trackDuration)}>
+                    <div>{ item.trackTitle }, Artist: { item.artistName } </div>
                     <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.trackTitle)}>Play Song</button> </div>
                 </div> 
                 </div>
