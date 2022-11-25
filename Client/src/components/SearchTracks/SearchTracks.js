@@ -87,7 +87,7 @@ export default function SearchTracks(){
     //Display tracks
     return (
         <div className = "searchtracks-container">
-            <input className='searchtracks-input' placeholder='Find music!' value={query} onChange={onSearch}></input>
+            <input className='searchtracks-input' placeholder='Discover Music' value={query} onChange={onSearch}></input>
              {
                tracksResults.map((item) => ( 
                 <div key = { item.id } id={item.id} className='track-container'>

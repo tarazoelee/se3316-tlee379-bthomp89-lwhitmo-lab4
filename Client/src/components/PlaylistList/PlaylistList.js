@@ -6,7 +6,7 @@ function PlaylistList() {
 
   return (
     <div className='playlist-container'>
-      <h3>Browse playlists</h3>
+      <div className='title'>Browse Playlists</div>
       <button class="btn btn-outline-light">Create Playlist</button>
     </div>
   )
