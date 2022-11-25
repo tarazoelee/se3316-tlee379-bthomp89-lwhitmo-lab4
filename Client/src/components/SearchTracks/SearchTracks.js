@@ -1,20 +1,26 @@
 import './SearchTracks.css'
-
-// export default SearchTracks
 import {React, useState, useEffect} from 'react';
+import Fuse from 'fuse.js';
 
 export default function SearchTracks(){
     const [items, setItems] = useState([])
     const [toggle, setToggle] = useState(false);
     const [DataisLoaded, setLoading]= useState(false)
     const [inputText, setInputText] = useState("");
-    
-    //convert input to lowercase
-    let inputHandler = (e) => {
-        //convert input text to lower case
-        var lowerCase = e.target.value.toLowerCase();
-        setInputText(lowerCase);
-    };
+    const [query, updateQuery] = useState('');
+
+    //define fuse results search
+    const fuse = new Fuse(items, {
+    keys: ['artistName', 'trackTitle','albumTitle']
+    })
+    //create fuse result search 
+    const result = fuse.search(query);
+    const tracksResults = result.map(track => track.item);
+
+
+    function onSearch({ currentTarget }) {
+        updateQuery(currentTarget.value);
+        }
 
     function toggleDiv(){
         setToggle(!toggle)
@@ -72,7 +78,6 @@ export default function SearchTracks(){
     }
 
     function removeClicked(id){
-        console.log(id);
         const track = document.getElementById(id);
         while(track.children[1]){
             track.removeChild(track.children[1])
@@ -81,19 +86,10 @@ export default function SearchTracks(){
    
     //Display tracks
     return (
-        //Search tracks input
         <div className = "searchtracks-container">
-            <input className='searchtracks-input' placeholder='Find music!' onChange={inputHandler}></input>
+            <input className='searchtracks-input' placeholder='Find music!' value={query} onChange={onSearch}></input>
              {
-                items.filter(item => {
-                    if(inputText===''){ 
-                        return item;
-                    }
-                    else if (item.trackTitle.toLowerCase().includes(inputText) || item.albumTitle.toLowerCase().includes(inputText) || item.artistName.toLowerCase().includes(inputText)) {
-                        return item; //display searched tracks 
-                    }
-                }).map((item) => ( 
-                    //if not clicked, only display tracks 
+               tracksResults.map((item) => ( 
                 <div key = { item.id } id={item.id} className='track-container'>
                  <div key = { item.id } className='default-track' onClick={() => getClicked(item.id, item.albumTitle, item.trackDuration)}>
                     <div>{ item.trackTitle }, Artist: { item.artistName } </div>
