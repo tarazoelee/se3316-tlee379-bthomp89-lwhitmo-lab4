@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { auth } from "firebase-admin";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 
@@ -28,7 +28,7 @@ export default function VerifyEmail() {
 
   useEffect(() => {
     if (user != null) {
-      if (user.emailVerified == false) {
+      if (user.emailVerified === false) {
         history("/verifyemail");
         //history("/userdash");
       } else {
