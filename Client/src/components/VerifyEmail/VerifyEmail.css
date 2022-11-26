@@ -1,0 +1,21 @@
+.login-card {
+  width: 500px;
+}
+
+.logincard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  flex-direction: column;
+}
+.logincontent-container {
+  width: 30%;
+  color: rgb(213, 213, 213);
+  background-color: rgb(69, 60, 75);
+  padding: 0px 50px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

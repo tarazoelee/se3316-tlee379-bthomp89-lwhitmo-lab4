@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { Card, Button, Alert } from "react-bootstrap";
+import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 // import { auth } from "firebase-admin";
@@ -14,6 +14,7 @@ export default function VerifyEmail() {
 
   async function sendEmail() {
     sendEmailVerification(auth.currentUser);
+    alert("Verification Email Sent");
   }
 
   async function handleLogout() {
@@ -38,10 +39,26 @@ export default function VerifyEmail() {
   }, [user]);
 
   return (
-    <div>
-      <h1>PLEASE VERIFY YOUR ACCOUNT {auth.currentUser.email}</h1>
-      <button onClick={sendEmail}>SEND VERIFICATION EMAIL</button>
-      <button onClick={handleLogout}>LOGOUT</button>
+    <div className="logincard-container">
+      <Card className="login-card">
+        <Card.Body>
+          <h2 className="text-center mb-4">
+            Verify Your Email {auth.currentUser.email}
+          </h2>
+          <Button
+            className="w-100 bg-secondary border-0 mt-3"
+            onClick={sendEmail}
+          >
+            Send Verification Email
+          </Button>
+          <Button
+            className="w-100 bg-secondary border-0 mt-3"
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
