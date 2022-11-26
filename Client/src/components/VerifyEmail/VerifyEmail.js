@@ -39,8 +39,8 @@ export default function VerifyEmail() {
   }, [user]);
 
   return (
-    <div className="logincard-container">
-      <Card className="login-card">
+    <div className="verify-container">
+      <Card className="verify-card">
         <Card.Body>
           <h2 className="text-center mb-4">
             Verify Your Email {auth.currentUser.email}
