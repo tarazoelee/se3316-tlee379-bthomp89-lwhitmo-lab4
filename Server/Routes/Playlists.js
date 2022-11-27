@@ -6,6 +6,17 @@ const {playlists} = require('../handler/playlists');
 
 //get all the current playlists from firebase
 router.get('/', playlists);
+
+//get the songs on a playlist
+router.get('/getsongs/:id',(req,res)=>{
+    const playlist = req.params.id;
+    getPlaySongs(playlist).then((data)=>{
+        res.send(data)
+    })
+    .catch((err)=>{
+        res.send(err)
+    })
+})
 //add tracks to a playlist
 router.post('/add/:id', (req,res)=>{
     const playlistID= req.params.id;
@@ -43,6 +54,17 @@ async function addSongs(id, tracks){
     }
 
     console.log("Added tracks: "+tracks+" to: "+id)
+}
+
+async function getPlaySongs(id){
+    const play = db.collection('Playlists').doc(id);
+    const doc = await play.get();
+    if (!doc.exists) {
+    console.log('No such document!');
+    } else {
+    console.log(doc.data().Songs);
+    }
+    return doc.data()
 }
 
 module.exports = router;
