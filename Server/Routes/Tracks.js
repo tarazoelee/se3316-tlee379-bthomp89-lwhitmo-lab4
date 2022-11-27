@@ -24,7 +24,7 @@ async function lookForTracks(id){
     return;
     }  
     snapshot.forEach(doc => {
-    console.log(doc.id, '=>', doc.data());
+    //console.log(doc.id, '=>', doc.data());
     sending ={
         "trackId": doc.data().trackId,
         "trackTitle": doc.data().trackTitle,
@@ -32,7 +32,7 @@ async function lookForTracks(id){
         "albumTitle": doc.data().albumTitle
     }
     })
-    console.log("break")
+    //console.log("break")
     console.log(sending)
     return sending
     

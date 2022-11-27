@@ -62,7 +62,7 @@ async function getPlaySongs(id){
     if (!doc.exists) {
     console.log('No such document!');
     } else {
-    console.log('Document data:', doc.data().Songs);
+    console.log(doc.data().Songs);
     }
     return doc.data()
 }
