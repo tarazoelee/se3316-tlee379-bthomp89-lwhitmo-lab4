@@ -83,7 +83,6 @@ function PlaylistInformation() {
                 console.log(item),
                 <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
                <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
-                <li key={item.trackId}>Title: {item.trackTitle} Album: {item.albumtitle} Artist: {item.artistName}</li>
             )
           })}
         </div>
