@@ -60,13 +60,23 @@ function PlaylistList() {
         method:'POST',
         headers:{
           "Content-Type": "application/json",
-          "Content-length" : 2
+          "Content-length" : 3
         },
         body: JSON.stringify({"name": name, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
       })
         
   }
 
+  function deletePlaylist(id){
+    fetch('/api/playlist/deletePlaylist/'+id,{
+      method: "DELETE",
+      headers:{
+        "Content-Type": "application/json",
+        "Content-length" : 3
+      }
+    })
+  }
+//get the length of the list of songs
   function getLength (item){
     if(item===undefined){
       return 0
@@ -96,8 +106,10 @@ function PlaylistList() {
       <div className='playlist-container' >{
       items.map((item, arrRef) => ( 
         arrRef=item.Songs,
-        <div key = { item.id } className='track-container' onClick={()=>openPlaylist(item.id)}>
+        <div key = { item.id } className='track-container'>
         <p className='text-black fs-5'>Name: {item.Name}, Creators Name: {item.User}, {getLength(arrRef)} tracks</p>
+        <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
+        <button onClick={()=>deletePlaylist(item.id)}>Delete Playlist</button>
        </div>
                     ))
                     }

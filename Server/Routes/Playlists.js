@@ -51,12 +51,19 @@ router.post('/description/:id', (req,res)=>{
     res.send()
 })
 
+router.delete('/deletePlaylist/:id', (req,res)=>{
+    const playlist = req.params.id;
+    deletePlaylist(playlist);
+    res.send()
+})
+
 //create new playlist function
 async function addPlaylist(name, email, user){
     const res = await db.collection('Playlists').add({
         Name: name,
         UserEmail: email,
-        User: user
+        User: user,
+        Songs:[]
       });
       
       console.log('Added document with ID: ', res.id);
@@ -102,6 +109,9 @@ async function getPlaylist(id){
     console.log(doc.data())
     return doc.data()
 }
-
+//delete a playlist
+async function deletePlaylist(id){
+    const res = await db.collection("Playlists").doc(id).delete()
+}
 
 module.exports = router;
