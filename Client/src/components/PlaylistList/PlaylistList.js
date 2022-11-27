@@ -3,6 +3,7 @@ import {React, useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import Popup from '../Popup/popup';
 import { useAuth } from "../../contexts/AuthContext"
+import { Alert } from 'react-bootstrap';
 
 
 function PlaylistList() {
@@ -10,7 +11,7 @@ function PlaylistList() {
   const [DataisLoaded, setLoading]= useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useAuth()
- 
+  const names=[];
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
@@ -44,6 +45,16 @@ function PlaylistList() {
     history('/playlist/'+passed) //open new page for that playlist
   }
   function addPlaylist(name){
+    const names=[];
+    //get an array of current playlist names
+    for(let i=0; i<items.length;i++){
+      names.push(items[i].Name)
+    }
+    //if there is a playlist with that name already, do not add the playlist
+    if(names.includes(name)){
+      console.log("called")
+      return alert("choose a new name")
+    }
     console.log(name)
       fetch("/api/playlist/create",{
         method:'POST',
@@ -54,6 +65,11 @@ function PlaylistList() {
         body: JSON.stringify({"name": name, "email": currentUser.email })
       })
         
+  }
+
+  function getLength (item){
+    console.log(item.length)
+      return item.length
   }
 
   return (
@@ -75,9 +91,10 @@ function PlaylistList() {
     />}
   </div>
       <div className='playlist-container' >{
-      items.map((item) => ( 
+      items.map((item, arrRef) => ( 
+        arrRef=item.Songs,
         <div key = { item.id } className='track-container' onClick={()=>openPlaylist(item.id)}>
-        <p className='text-black fs-5'>Name: {item.Name}</p>
+        <p className='text-black fs-5'>Name: {item.Name}, Creators Name: MAKE THIS, {getLength(arrRef)} tracks</p>
        </div>
                     ))
                     }
