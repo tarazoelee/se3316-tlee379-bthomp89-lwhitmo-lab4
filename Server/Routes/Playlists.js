@@ -64,14 +64,24 @@ router.post('/addtime/:id', (req, res)=>{
     addTime(playlist, time);
     req.send()
 })
-
+router.get("/changetopublic/:id", (req,res)=>{
+    const id =req.params.id;
+    changeVisibility(id)
+    res.send("changed")
+})
+router.get("/changetoprivate/:id", (req,res)=>{
+    const id =req.params.id;
+    changeVisibility2(id)
+    res.send("changed")
+})
 //create new playlist function
 async function addPlaylist(name, email, user){
     const res = await db.collection('Playlists').add({
         Name: name,
         UserEmail: email,
         User: user,
-        Songs:[]
+        Songs:[],
+        visibility: "private"
       });
       
       console.log('Added document with ID: ', res.id);
@@ -88,7 +98,16 @@ async function addSongs(id, tracks){
 
     console.log("Added tracks: "+tracks+" to: "+id)
 }
-
+async function changeVisibility(id){
+    const res= await db.collection('Playlists').doc(id).update({
+        visibility: "public"
+    })
+}
+async function changeVisibility2(id){
+    const res= await db.collection('Playlists').doc(id).update({
+        visibility: "private"
+    })
+}
 
 async function addDescription(id, desc){
     //const FieldValue = require('firebase-admin').firestore.FieldValue;
