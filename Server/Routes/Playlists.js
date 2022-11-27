@@ -26,11 +26,27 @@ router.post('/add/:id', (req,res)=>{
     res.send("done")
     
 })
+//get specific playlist
+router.get("/:id", (req,res)=>{
+    const playlist =req.params.id;
+    getPlaylist(playlist).then((data)=>{
+        res.send(data)
+    })
+})
 //create a new playlist
 router.post('/create', (req,res)=>{
     const name= req.body.name;
     const email= req.body.email;
     addPlaylist(name, email)
+    res.send()
+})
+//add description
+router.post('/description/:id', (req,res)=>{
+    console.log("called")
+    const playlistID= req.params.id;
+    const description = req.body.description;
+
+    addDescription(playlistID, description)
     res.send()
 })
 
@@ -56,6 +72,15 @@ async function addSongs(id, tracks){
     console.log("Added tracks: "+tracks+" to: "+id)
 }
 
+async function addDescription(id, desc){
+    //const FieldValue = require('firebase-admin').firestore.FieldValue;
+    const res = await db.collection('Playlists').doc(id).update({
+        Description: desc
+    })
+
+    console.log("Added description to: "+id)
+}
+
 async function getPlaySongs(id){
     const play = db.collection('Playlists').doc(id);
     const doc = await play.get();
@@ -64,6 +89,13 @@ async function getPlaySongs(id){
     } else {
     console.log(doc.data().Songs);
     }
+    return doc.data()
+}
+
+async function getPlaylist(id){
+    const play = db.collection("Playlists").doc(id);
+    const doc = await play.get();
+    console.log(doc.data())
     return doc.data()
 }
 
