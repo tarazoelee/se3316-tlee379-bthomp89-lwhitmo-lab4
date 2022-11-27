@@ -62,12 +62,15 @@ function PlaylistList() {
           "Content-Type": "application/json",
           "Content-length" : 2
         },
-        body: JSON.stringify({"name": name, "email": currentUser.email })
+        body: JSON.stringify({"name": name, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
       })
         
   }
 
   function getLength (item){
+    if(item===undefined){
+      return 0
+    }
     console.log(item.length)
       return item.length
   }
@@ -94,7 +97,7 @@ function PlaylistList() {
       items.map((item, arrRef) => ( 
         arrRef=item.Songs,
         <div key = { item.id } className='track-container' onClick={()=>openPlaylist(item.id)}>
-        <p className='text-black fs-5'>Name: {item.Name}, Creators Name: MAKE THIS, {getLength(arrRef)} tracks</p>
+        <p className='text-black fs-5'>Name: {item.Name}, Creators Name: {item.User}, {getLength(arrRef)} tracks</p>
        </div>
                     ))
                     }
