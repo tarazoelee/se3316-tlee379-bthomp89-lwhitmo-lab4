@@ -107,7 +107,7 @@ function PlaylistList() {
       items.map((item, arrRef) => ( 
         arrRef=item.Songs,
         <div key = { item.id } className='track-container'>
-        <p className='text-black fs-5'>Name: {item.Name}, Creators Name: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
+        <p className='text-black fs-5'>{item.Name}, Creators Name: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
         <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
         <button onClick={()=>deletePlaylist(item.id)}>Delete Playlist</button>
        </div>
