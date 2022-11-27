@@ -29,7 +29,8 @@ async function lookForTracks(id){
         "trackId": doc.data().trackId,
         "trackTitle": doc.data().trackTitle,
         "artistName": doc.data().artistName,
-        "albumTitle": doc.data().albumTitle
+        "albumTitle": doc.data().albumTitle,
+        "titleDuration": doc.data().trackDuration
     }
     })
     //console.log("break")
