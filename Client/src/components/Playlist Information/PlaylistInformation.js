@@ -59,7 +59,14 @@ function PlaylistInformation() {
 
         console.log(total.minutes+":"+total.seconds)
         time=total.minutes+":"+total.seconds
-        //return total.minutes+":"+total.seconds;
+        fetch("/api/playlist/addtime/"+params.id,{
+            method:'POST',
+            headers:{
+              "Content-Type": "application/json",
+              "Content-length" : 2
+            },
+            body: JSON.stringify({"time": time })
+          })
     }
 
     function fetchDataInfo(pass){
@@ -82,10 +89,6 @@ function PlaylistInformation() {
             console.log(nItems)
         })
     }, [items.length]);
-
-
-    addTime();
-    //useEffect(fetchDataInfo(),[])
     
   return (
     <div className='playlist-container'>
