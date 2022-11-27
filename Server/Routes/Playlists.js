@@ -72,6 +72,7 @@ async function addSongs(id, tracks){
     console.log("Added tracks: "+tracks+" to: "+id)
 }
 
+
 async function addDescription(id, desc){
     //const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
@@ -80,6 +81,7 @@ async function addDescription(id, desc){
 
     console.log("Added description to: "+id)
 }
+
 
 async function getPlaySongs(id){
     const play = db.collection('Playlists').doc(id);
@@ -98,5 +100,6 @@ async function getPlaylist(id){
     console.log(doc.data())
     return doc.data()
 }
+
 
 module.exports = router;
