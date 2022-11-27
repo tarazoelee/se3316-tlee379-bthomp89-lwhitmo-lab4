@@ -1,0 +1,15 @@
+.verify-card {
+  width: 500px;
+}
+
+.verify-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  flex-direction: column;
+  color: rgb(213, 213, 213);
+  background-color: rgb(69, 60, 75);
+  padding: 0px 50px;
+  height: 250vh;
+}
