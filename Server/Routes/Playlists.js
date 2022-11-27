@@ -50,13 +50,28 @@ router.post('/description/:id', (req,res)=>{
     addDescription(playlistID, description)
     res.send()
 })
+//delete a playlist
+router.delete('/deletePlaylist/:id', (req,res)=>{
+    const playlist = req.params.id;
+    deletePlaylist(playlist);
+    res.send()
+})
+
+router.post('/addtime/:id', (req, res)=>{
+    const playlist = req.params.id;
+    const time = req.body.time;
+
+    addTime(playlist, time);
+    req.send()
+})
 
 //create new playlist function
 async function addPlaylist(name, email, user){
     const res = await db.collection('Playlists').add({
         Name: name,
         UserEmail: email,
-        User: user
+        User: user,
+        Songs:[]
       });
       
       console.log('Added document with ID: ', res.id);
@@ -102,6 +117,16 @@ async function getPlaylist(id){
     console.log(doc.data())
     return doc.data()
 }
+//delete a playlist
+async function deletePlaylist(id){
+    const res = await db.collection("Playlists").doc(id).delete()
+}
 
+async function addTime(id, time){
+    const res = await db.collection('Playlists').doc(id).update({
+        Time: time
+    })
 
+    console.log("Added time to: "+id)
+}
 module.exports = router;

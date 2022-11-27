@@ -9,6 +9,8 @@ function PlaylistInformation() {
     const [play, setPlay]=useState([])
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
+    let total;
+    let time=0;
     function fetchData(){
         fetch("/api/playlist/getsongs/"+params.id)
             .then((res) => res.json())
@@ -41,6 +43,32 @@ function PlaylistInformation() {
         })
     }
 
+    function addTime(){
+        console.log(nItems)
+        total =  nItems
+            .map(el => el.titleDuration.split(':'))
+            .reduce((p, c) => {
+            p.minutes += Number(c[0]);
+            p.seconds += Number(c[1]);
+            return p;
+            },{ minutes: 0, seconds: 0 });
+
+        const whole = Math.floor(total.seconds / 60);
+        total.minutes += whole;
+        total.seconds = total.seconds % 60;
+
+        console.log(total.minutes+":"+total.seconds)
+        time=total.minutes+":"+total.seconds
+        fetch("/api/playlist/addtime/"+params.id,{
+            method:'POST',
+            headers:{
+              "Content-Type": "application/json",
+              "Content-length" : 2
+            },
+            body: JSON.stringify({"time": time })
+          })
+    }
+
     function fetchDataInfo(pass){
         fetch("/api/tracks/"+pass)
             .then((res) => res.json())
@@ -52,7 +80,6 @@ function PlaylistInformation() {
     } 
     useEffect(() => {
         fetchData();
-
         getDescription();
         console.log(items)
     
@@ -62,8 +89,6 @@ function PlaylistInformation() {
             console.log(nItems)
         })
     }, [items.length]);
-
-    //useEffect(fetchDataInfo(),[])
     
   return (
     <div className='playlist-container'>
@@ -75,6 +100,7 @@ function PlaylistInformation() {
         <input id ="desc"></input>
         <button onClick={()=>addDescription(document.getElementById("desc").value)}>Submit</button>
       </div>
+      <div onClick={addTime()}>Total time: {time}</div>
       <div>
       {items.length > 0 && (
         <div>
