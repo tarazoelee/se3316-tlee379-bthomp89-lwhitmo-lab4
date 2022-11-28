@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Popup from '../Popup/popup';
 import { useAuth } from "../../contexts/AuthContext"
 
-
+//get all the playlists that are public to display
 function PlaylistList() {
   const [items, setItems] = useState([])
   const [auth, setAuth]= useState([]);
@@ -46,9 +46,10 @@ function PlaylistList() {
   function openPlaylist(passed){
     history('/playlistview/'+passed) //open new page for that playlist
   }
+  //if public add to auth, to be displayed
   function testVisibility(){
     const newMap=[]
-    let i =0;
+    let i =0; //up to ten playlists
     items.map((item)=>{
       if(item.visibility === "public" && i<10){
         newMap.push(item)

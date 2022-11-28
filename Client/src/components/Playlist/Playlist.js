@@ -4,6 +4,7 @@ import SearchTracksForPlaylist from '../SearchTracksForPlaylists/SearchTracksFor
 import PlaylistInformation from '../Playlist Information/PlaylistInformation';
 import { Link, useNavigate } from "react-router-dom";
 
+//play list for logged in users
 function Playlist() {
     const history = useNavigate();
     function goBack(){
