@@ -6,9 +6,26 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 
 export default function Admin() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useNavigate();
+
+  async function handleLogout() {
+    try {
+      setError("");
+      await logout();
+      history("/");
+    } catch {
+      setError("Failed to log out");
+    }
+  }
+
   return (
     <div>
-      <h1>ADMIN</h1>
+      <h1>Logged in as Admin, You have SM Privlege</h1>
+      <button onClick={handleLogout}>Logout {user.email}</button>
     </div>
   );
 }
