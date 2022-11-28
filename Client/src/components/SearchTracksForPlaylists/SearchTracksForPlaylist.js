@@ -12,6 +12,9 @@ export default function SearchTracksForPlaylist(){
     const [DataisLoaded, setLoading]= useState(false)
     const [query, updateQuery] = useState('');
     const params = useParams();
+    function refreshPage() {
+        window.location.reload(false);
+      }
 
     //define fuse results search
     const fuse = new Fuse(items, {
@@ -97,6 +100,7 @@ export default function SearchTracksForPlaylist(){
             },
             body: JSON.stringify({"tracks": [tracks]})
           })
+          refreshPage()
     }
    
     //Display tracks

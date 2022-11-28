@@ -12,6 +12,9 @@ function PlaylistInformation() {
     const params = useParams();
     let total;
     let time=0;
+    function refreshPage() {
+      window.location.reload(false);
+    }
     //fetch all the songs this is an array of the song ids
     function fetchData(){
         fetch("/api/playlist/getsongs/"+params.id)
@@ -37,6 +40,7 @@ function PlaylistInformation() {
             },
             body: JSON.stringify({"description": desc })
           })
+          refreshPage()
     }
     //get existing description
     function getDescription(){
@@ -97,12 +101,14 @@ function PlaylistInformation() {
     function changeToPublic(){
         fetch('/api/playlist/changetopublic/'+params.id)
         alert("changed to public")
+        refreshPage()
     }
 
     //change the visibility to private
     function changeToPrivate(){
         fetch('/api/playlist/changetoprivate/'+params.id)
         alert("changed to private")
+        refreshPage()
     }
 
     
