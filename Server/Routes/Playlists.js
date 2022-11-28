@@ -56,7 +56,14 @@ router.post('/review/:id', (req,res)=>{
     const playlistID= req.params.id;
     const review = req.body.review;
     const user=req.body.user;
-    addReviews(playlistID, review, user)
+
+    var today = new Date();   //getting current date 
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
+
+    addReviews(playlistID, review, user, today)
     res.send()
 })
 
@@ -131,15 +138,10 @@ async function addDescription(id, desc){
 }
 
 //add comments to playlist 
-async function addReviews(id, review, user){
-    /*
-    var reviewInfo ={};
-    reviewInfo[`Reviews.${key}.rev`] = review;
-    reviewInfo[`Reviews.${key}.user`] = 2;
-    */
+async function addReviews(id, review, user, date){
     const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
-        Reviews:FieldValue.arrayUnion({comm: review, user: user})
+        Reviews:FieldValue.arrayUnion({comm: review, user: user, date: date})
     })
     console.log("Added review to: "+id)
 }
