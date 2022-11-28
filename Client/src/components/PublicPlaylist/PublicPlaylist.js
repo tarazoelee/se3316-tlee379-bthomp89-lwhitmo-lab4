@@ -5,7 +5,7 @@ import Popup from '../Popup/popup';
 import { useAuth } from "../../contexts/AuthContext"
 
 //get all the playlists that are public to display
-function PlaylistList() {
+function PublicPlaylist() {
   const [items, setItems] = useState([])
   const [auth, setAuth]= useState([]);
   const [DataisLoaded, setLoading]= useState(false)
@@ -42,10 +42,11 @@ function PlaylistList() {
       return <div> <h1 className='text-white fs-5'> loading.... </h1> </div> ;
    }
   
-
+  //open new page for that playlist
   function openPlaylist(passed){
-    history('/playlistview/'+passed) //open new page for that playlist
+    history('/playlistview/'+passed) 
   }
+
   //if public add to auth, to be displayed
   function testVisibility(){
     const newMap=[]
@@ -58,6 +59,7 @@ function PlaylistList() {
     })
     setAuth(newMap)
   }
+
 //get the length of the list of songs
   function getLength (item){
     if(item===undefined){
@@ -86,4 +88,4 @@ function PlaylistList() {
   )
 }
 
-export default PlaylistList;
+export default PublicPlaylist;

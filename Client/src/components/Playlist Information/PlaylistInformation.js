@@ -95,16 +95,19 @@ function PlaylistInformation() {
             console.log(nItems)
         })
     }, [items.length]);
-//change the visibility to public
+
+    //change the visibility to public
     function changeToPublic(){
         fetch('/api/playlist/changetopublic/'+params.id)
         alert("changed to public")
     }
+
     //change the visibility to private
     function changeToPrivate(){
         fetch('/api/playlist/changetoprivate/'+params.id)
         alert("changed to private")
     }
+
     
   return (
     <div className='playlist-container'>

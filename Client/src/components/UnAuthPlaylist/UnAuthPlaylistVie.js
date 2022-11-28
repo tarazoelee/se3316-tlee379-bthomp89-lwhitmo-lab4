@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
+import './UnAuthPlaylist.css'
 
 
 //playlist for users that are not logged in
@@ -11,13 +12,15 @@ function UnAuthPlaylist() {
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
     const history = useNavigate();
+
     function goBack(){
-        history("/opendash")
+        history("/userdash")
     }
     //open in a new tab
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
+
     //get the description of the playlist
     function getDescription(){
         fetch("/api/playlist/"+params.id)
@@ -61,11 +64,9 @@ function UnAuthPlaylist() {
 
   return (
     <div className='dash-container'>
-        <div className='searchtracks-container'>
-        </div>
-        <div className='playlist-container'>
-        <h3 className="text-center mb-4">{play.Name}</h3>
-      <h4 className="text-center mb-4">{play.visibility}</h4>
+    <div className='playlist-container'>
+    <h3 className="text-center mb-4">{play.Name}</h3>
+    <h4 className="text-center mb-4">{play.visibility}</h4>
       {play.Description}
       {items.length > 0 && (
         <div>
@@ -79,9 +80,14 @@ function UnAuthPlaylist() {
         </div>
       )}
       </div>
+      <div className='right-column'>
         <div className='go-back'>
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
+        <div>
+            <input placeholder='comments'></input>
+        </div>
+    </div>
     </div>
   )
 }

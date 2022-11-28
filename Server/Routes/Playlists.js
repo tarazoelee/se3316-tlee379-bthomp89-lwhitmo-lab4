@@ -23,7 +23,7 @@ router.post('/add/:id', (req,res)=>{
     const tracks = req.body.tracks;
 
     addSongs(playlistID, tracks)
-    res.send("done")
+    res.send("added songs ")
     
 })
 //get specific playlist
@@ -41,6 +41,7 @@ router.post('/create', (req,res)=>{
     addPlaylist(name, email, user)
     res.send()
 })
+
 //add description
 router.post('/description/:id', (req,res)=>{
     console.log("called")
@@ -50,6 +51,17 @@ router.post('/description/:id', (req,res)=>{
     addDescription(playlistID, description)
     res.send()
 })
+
+//add comments to playlist
+router.post('/comments/:id', (req,res)=>{
+    console.log("called")
+    const playlistID= req.params.id;
+    const description = req.body.description;
+
+    addDescription(playlistID, description)
+    res.send()
+})
+
 //delete a playlist
 router.delete('/deletePlaylist/:id', (req,res)=>{
     const playlist = req.params.id;
@@ -64,6 +76,7 @@ router.post('/addtime/:id', (req, res)=>{
     addTime(playlist, time);
     res.send()
 })
+
 router.get("/changetopublic/:id", (req,res)=>{
     const id =req.params.id;
     changeVisibility(id)
@@ -74,6 +87,7 @@ router.get("/changetoprivate/:id", (req,res)=>{
     changeVisibility2(id)
     res.send("changed")
 })
+
 //create new playlist function
 async function addPlaylist(name, email, user){
     const res = await db.collection('Playlists').add({
@@ -87,6 +101,7 @@ async function addPlaylist(name, email, user){
       console.log('Added document with ID: ', res.id);
       
 }
+
 //add songs function
 async function addSongs(id, tracks){
     const FieldValue = require('firebase-admin').firestore.FieldValue;
@@ -118,6 +133,14 @@ async function addDescription(id, desc){
     console.log("Added description to: "+id)
 }
 
+async function addComments(id, comments){
+    for(comm in comments){
+    const res = await db.collection('Playlists').doc(id).update({
+        Comments: FieldValue.arrayUnion(comments[comm])
+    })
+    }
+    console.log("Added comments to: "+id)
+}
 
 async function getPlaySongs(id){
     const play = db.collection('Playlists').doc(id);

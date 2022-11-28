@@ -44,9 +44,9 @@ function PlaylistList() {
       return <div> <h1 className='text-white fs-5'> loading.... </h1> </div> ;
    }
   
-//open the playlust
+  //open the playlist
   function openPlaylist(passed){
-    history('/playlist/'+passed) //open new page for that playlist
+    history('/playlist/'+passed)
   }
   //check who the owner of the playlist and add to array if they are the current users
   async function usersPlaylists(){
