@@ -54,6 +54,15 @@ router.post('/description/:id', (req,res)=>{
     res.send()
 })
 
+//add rating to a playlist 
+router.post('/rating/:id', (req,res)=>{
+    const playlistID= req.params.id;
+    const rating = req.body.rating;
+    const user=req.body.user;
+    addRating(playlistID, rating, user)
+    res.send()
+})
+
 //add reviews to playlist
 router.post('/review/:id', (req,res)=>{
     const playlistID= req.params.id;
@@ -147,6 +156,15 @@ async function addReviews(id, review, user, date){
         Reviews:FieldValue.arrayUnion({comm: review, user: user, date: date})
     })
     console.log("Added review to: "+id)
+}
+
+//add ratings to a playlist 
+async function addRating(id, rating, user){
+    const FieldValue = require('firebase-admin').firestore.FieldValue;
+    const res = await db.collection('Playlists').doc(id).update({
+        Ratings: FieldValue.arrayUnion({rating: rating, user:user })
+    })
+    console.log("Added rating to: "+id)
 }
 
 async function getPlaySongs(id){

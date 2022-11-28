@@ -3,6 +3,7 @@ import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
 import './UnAuthPlaylist.css'
 import { useAuth } from "../../contexts/AuthContext"
+import ReactStars from "react-rating-stars-component";
 
 //playlist for users that are not logged in
 function UnAuthPlaylist() {
@@ -52,6 +53,18 @@ function UnAuthPlaylist() {
         })
     }
     
+    function setRating(newRating){
+        console.log(newRating);
+        fetch("/api/playlist/rating/"+params.id,{
+            method:'POST',
+            headers:{
+              "Content-Type": "application/json",
+              "Content-length" : 2
+            },
+            body: JSON.stringify({"rating": newRating, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
+          })
+
+    }
     //add comments to a playlist
     function addComment(rev){
         fetch("/api/playlist/review/"+params.id,{
@@ -107,6 +120,11 @@ function UnAuthPlaylist() {
                 </div>)
             }
         </div>
+        <ReactStars
+        count={5}
+        onChange={setRating}
+        size={24}
+        activeColor="#ffd700" />
     </div>
     </div>
   )
