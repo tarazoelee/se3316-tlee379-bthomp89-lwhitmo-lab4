@@ -62,7 +62,7 @@ router.post('/addtime/:id', (req, res)=>{
     const time = req.body.time;
 
     addTime(playlist, time);
-    req.send()
+    res.send()
 })
 router.get("/changetopublic/:id", (req,res)=>{
     const id =req.params.id;

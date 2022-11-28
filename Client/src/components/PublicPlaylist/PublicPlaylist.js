@@ -1,9 +1,8 @@
-import './PlaylistList.css'
-import {React, useState, useEffect, usePrevious} from 'react';
+import '../PlaylistList/PlaylistList'
+import {React, useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import Popup from '../Popup/popup';
 import { useAuth } from "../../contexts/AuthContext"
-import { Alert } from 'react-bootstrap';
 
 
 function PlaylistList() {
@@ -23,9 +22,8 @@ function PlaylistList() {
   useEffect(() => {
       fetchData()
   }, []);
-
   useEffect(()=>{
-    usersPlaylists()
+    testVisibility();
   },[items])
   //Fetch all playlist data 
   async function fetchData(){
@@ -46,49 +44,16 @@ function PlaylistList() {
   
 
   function openPlaylist(passed){
-    history('/playlist/'+passed) //open new page for that playlist
+    history('/playlistView/'+passed) //open new page for that playlist
   }
-  async function usersPlaylists(){
+  function testVisibility(){
     const newMap=[]
     items.map((item)=>{
-      if(item.UserEmail == currentUser.email){
+      if(item.visibility === "public"){
         newMap.push(item)
       }
     })
     setAuth(newMap)
-    
-  }
-
-  function addPlaylist(name){
-    const names=[];
-    //get an array of current playlist names
-    for(let i=0; i<auth.length;i++){
-      names.push(auth[i].Name)
-    }
-    //if there is a playlist with that name already, do not add the playlist
-    if(names.includes(name)){
-      return alert("choose a new name")
-    }
-    console.log(name)
-      fetch("/api/playlist/create",{
-        method:'POST',
-        headers:{
-          "Content-Type": "application/json",
-          "Content-length" : 3
-        },
-        body: JSON.stringify({"name": name, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
-      })
-        
-  }
-
-  function deletePlaylist(id){
-    fetch('/api/playlist/deletePlaylist/'+id,{
-      method: "DELETE",
-      headers:{
-        "Content-Type": "application/json",
-        "Content-length" : 3
-      }
-    })
   }
 //get the length of the list of songs
   function getLength (item){
@@ -100,21 +65,8 @@ function PlaylistList() {
   }
   return (
     <div className='playlist-container'>
-      <h3 className='title'>Your playlists</h3>
+      <h3 className='title'>Public Playlists</h3>
       <div>
-    <input
-      type="button"
-      value="Create Playlist"
-      onClick={togglePopup}
-    />
-    {isOpen && <Popup
-      content={<>
-      <p></p>
-      <span>Name:  <input id='playName'></input></span>
-      <button onClick={()=>addPlaylist(document.getElementById('playName').value)}>Submit</button>
-      </>}
-      handleClose={togglePopup}
-    />}
   </div>
       <div className='playlist-container'>{
         auth.map((item, arrRef) => ( 
@@ -122,7 +74,6 @@ function PlaylistList() {
         <div key = { item.id } className='track-container' >
         <p className='text-black fs-5'>{item.Name}, Creators Name: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
         <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
-        <button onClick={()=>deletePlaylist(item.id)}>Delete Playlist</button>
        </div>
                     ))
                   }
