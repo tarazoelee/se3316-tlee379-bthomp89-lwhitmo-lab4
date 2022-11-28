@@ -12,7 +12,6 @@ export default function SearchTracksForPlaylist(){
     const [DataisLoaded, setLoading]= useState(false)
     const [query, updateQuery] = useState('');
     const params = useParams();
-    console.log(params)
 
     //define fuse results search
     const fuse = new Fuse(items, {
@@ -30,7 +29,6 @@ export default function SearchTracksForPlaylist(){
 
     function toggleDiv(){
         setToggle(!toggle)
-        console.log(toggle);
     }
 
     //open new song in tab

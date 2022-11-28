@@ -48,7 +48,6 @@ function PlaylistInformation() {
     }
     //find the total time for the playlist
     function addTime(){
-        console.log(nItems)
         total =  nItems
             .map(el => el.titleDuration.split(':'))
             .reduce((p, c) => {
@@ -60,8 +59,6 @@ function PlaylistInformation() {
         const whole = Math.floor(total.seconds / 60);
         total.minutes += whole;
         total.seconds = total.seconds % 60;
-
-        console.log(total.minutes+":"+total.seconds)
         time=total.minutes+":"+total.seconds
         //post the time to the playlist
         fetch("/api/playlist/addtime/"+params.id,{
@@ -128,7 +125,6 @@ function PlaylistInformation() {
         <div>
           {nItems.map((item)=>{
             return(
-                console.log(item),
                 <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
                <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
             )

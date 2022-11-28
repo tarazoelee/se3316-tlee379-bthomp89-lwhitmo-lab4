@@ -70,12 +70,11 @@ function PlaylistList() {
     if(names.includes(name)){
       return alert("choose a new name")
     }
-    console.log(name)
       fetch("/api/playlist/create",{
         method:'POST',
         headers:{
           "Content-Type": "application/json",
-          "Content-length" : 3
+          "Content-length" : 7
         },
         body: JSON.stringify({"name": name, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
       })
@@ -96,7 +95,6 @@ function PlaylistList() {
     if(item===undefined){
       return 0
     }
-    console.log(item.length)
       return item.length
   }
   return (

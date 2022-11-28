@@ -49,12 +49,25 @@ function UnAuthPlaylist() {
             ;
         })
     }
+    
+    //add comments to a playlist
+    function addComment(comm){
+        fetch("/api/playlist/comments/"+params.id,{
+            method:'POST',
+            headers:{
+              "Content-Type": "application/json",
+              "Content-length" : 2
+            },
+            body: JSON.stringify({"comments": comm })
+          })
+    }
+
+
     //use effect to call all needed inforamtion amd call fetching data info for every song
     useEffect(() => {
         fetchData();
         getDescription();
         console.log(items)
-    
         items.map((item)=>{
             console.log(item)
             fetchDataInfo(item)
@@ -72,7 +85,6 @@ function UnAuthPlaylist() {
         <div>
           {nItems.map((item)=>{
             return(
-                console.log(item),
                 <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
                <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
             )
@@ -85,7 +97,8 @@ function UnAuthPlaylist() {
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
         <div>
-            <input placeholder='comments'></input>
+            <input id='comm-input' placeholder='comments'></input>
+            <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
         </div>
     </div>
     </div>

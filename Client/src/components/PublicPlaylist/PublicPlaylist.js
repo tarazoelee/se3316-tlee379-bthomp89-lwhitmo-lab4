@@ -65,7 +65,6 @@ function PublicPlaylist() {
     if(item===undefined){
       return 0
     }
-    console.log(item.length)
       return item.length
   }
   return (

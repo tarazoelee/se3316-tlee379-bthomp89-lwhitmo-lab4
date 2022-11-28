@@ -24,7 +24,6 @@ export default function SearchTracks(){
 
     function toggleDiv(){
         setToggle(!toggle)
-        console.log(toggle);
     }
 
     //open new song in tab
