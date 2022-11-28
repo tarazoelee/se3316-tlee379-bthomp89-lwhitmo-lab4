@@ -1,5 +1,6 @@
 import React from "react";
  
+//pop up for creating the playlists
 const Popup = props => {
   return (
     <div className="popup-box">

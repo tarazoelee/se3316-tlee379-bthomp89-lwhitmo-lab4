@@ -23,7 +23,7 @@ function PlaylistList() {
   useEffect(() => {
       fetchData()
   }, []);
-
+//for the number of items in the list, call to check if they are the users 
   useEffect(()=>{
     usersPlaylists()
   },[items])
@@ -44,10 +44,11 @@ function PlaylistList() {
       return <div> <h1 className='text-white fs-5'> loading.... </h1> </div> ;
    }
   
-
+//open the playlust
   function openPlaylist(passed){
     history('/playlist/'+passed) //open new page for that playlist
   }
+  //check who the owner of the playlist and add to array if they are the current users
   async function usersPlaylists(){
     const newMap=[]
     items.map((item)=>{
@@ -80,7 +81,7 @@ function PlaylistList() {
       })
         
   }
-
+//delete the playlist
   function deletePlaylist(id){
     fetch('/api/playlist/deletePlaylist/'+id,{
       method: "DELETE",

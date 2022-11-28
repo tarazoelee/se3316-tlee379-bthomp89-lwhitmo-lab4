@@ -4,6 +4,8 @@ import Fuse from 'fuse.js';
 import '../SearchTracks/SearchTracks.css'
 import '../SearchTracksForPlaylists/Search.css'
 
+
+//search tracks for playlist function cuz i needed to add a button to the tracks for adding them to a playlist
 export default function SearchTracksForPlaylist(){
     const [items, setItems] = useState([])
     const [toggle, setToggle] = useState(false);
@@ -87,7 +89,7 @@ export default function SearchTracksForPlaylist(){
             track.removeChild(track.children[1])
         }
     }
-
+//add the clicked song to the current playlist
     function addSongs(id, tracks){
         fetch("/api/playlist/add/"+id,{
             method:'POST',
