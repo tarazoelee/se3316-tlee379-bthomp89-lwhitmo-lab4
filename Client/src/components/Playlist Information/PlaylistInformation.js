@@ -3,7 +3,7 @@ import './PlaylistInformation.css'
 import {useParams} from 'react-router-dom'
 import { Alert } from 'react-bootstrap'
 
-
+//information about each of the playlists
 function PlaylistInformation() {
     const [items, setItems] = useState([])
     const [nItems, setNItems]=useState([])
@@ -12,6 +12,7 @@ function PlaylistInformation() {
     const params = useParams();
     let total;
     let time=0;
+    //fetch all the songs this is an array of the song ids
     function fetchData(){
         fetch("/api/playlist/getsongs/"+params.id)
             .then((res) => res.json())
@@ -26,6 +27,7 @@ function PlaylistInformation() {
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
+    //create the description for the playlists
     function addDescription(desc){
         fetch("/api/playlist/description/"+params.id,{
             method:'POST',
@@ -36,6 +38,7 @@ function PlaylistInformation() {
             body: JSON.stringify({"description": desc })
           })
     }
+    //get existing description
     function getDescription(){
         fetch("/api/playlist/"+params.id)
         .then((res)=>res.json())
@@ -43,7 +46,7 @@ function PlaylistInformation() {
             setPlay(json);
         })
     }
-
+    //find the total time for the playlist
     function addTime(){
         console.log(nItems)
         total =  nItems
@@ -60,6 +63,7 @@ function PlaylistInformation() {
 
         console.log(total.minutes+":"+total.seconds)
         time=total.minutes+":"+total.seconds
+        //post the time to the playlist
         fetch("/api/playlist/addtime/"+params.id,{
             method:'POST',
             headers:{
@@ -69,7 +73,7 @@ function PlaylistInformation() {
             body: JSON.stringify({"time": time })
           })
     }
-
+    //fetch the tracks information that is on the playlist
     function fetchDataInfo(pass){
         fetch("/api/tracks/"+pass)
             .then((res) => res.json())
@@ -79,10 +83,11 @@ function PlaylistInformation() {
             ;
         })
     } 
+    //for the length of the number of songs on the playlist cqll the get data, also get the description for the playlist
     useEffect(() => {
         fetchData();
         getDescription();
-        console.log(items)
+        console.log(items)//idk why but it doesnt work without this
     
         items.map((item)=>{
             console.log(item)
@@ -90,11 +95,12 @@ function PlaylistInformation() {
             console.log(nItems)
         })
     }, [items.length]);
-
+//change the visibility to public
     function changeToPublic(){
         fetch('/api/playlist/changetopublic/'+params.id)
         alert("changed to public")
     }
+    //change the visibility to private
     function changeToPrivate(){
         fetch('/api/playlist/changetoprivate/'+params.id)
         alert("changed to private")

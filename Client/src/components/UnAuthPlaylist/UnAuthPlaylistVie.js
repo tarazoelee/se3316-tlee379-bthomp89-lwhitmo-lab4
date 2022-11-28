@@ -1,9 +1,9 @@
 import {React, useState, useEffect} from 'react'
 import '../Playlist/Playlist'
-import SearchTracksForPlaylist from '../SearchTracksForPlaylists/SearchTracksForPlaylist';
-import PlaylistInformation from '../Playlist Information/PlaylistInformation';
 import { useNavigate, useParams } from "react-router-dom";
 
+
+//playlist for users that are not logged in
 function UnAuthPlaylist() {
     const [items, setItems] = useState([])
     const [nItems, setNItems]=useState([])
@@ -14,9 +14,11 @@ function UnAuthPlaylist() {
     function goBack(){
         history("/opendash")
     }
+    //open in a new tab
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
+    //get the description of the playlist
     function getDescription(){
         fetch("/api/playlist/"+params.id)
         .then((res)=>res.json())
@@ -24,6 +26,7 @@ function UnAuthPlaylist() {
             setPlay(json);
         })
     }
+    //get the information about the tracks - from the array of songs
     function fetchDataInfo(pass){
         fetch("/api/tracks/"+pass)
             .then((res) => res.json())
@@ -33,6 +36,7 @@ function UnAuthPlaylist() {
             ;
         })
     } 
+    //this retruns an array of the songs that are on the playlist 
     function fetchData(){
         fetch("/api/playlist/getsongs/"+params.id)
             .then((res) => res.json())
@@ -42,6 +46,7 @@ function UnAuthPlaylist() {
             ;
         })
     }
+    //use effect to call all needed inforamtion amd call fetching data info for every song
     useEffect(() => {
         fetchData();
         getDescription();
