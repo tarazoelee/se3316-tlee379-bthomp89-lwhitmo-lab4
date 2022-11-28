@@ -13,7 +13,9 @@ export default function SearchTracksForPlaylist(){
     const [query, updateQuery] = useState('');
     const params = useParams();
     console.log(params)
-
+    function refreshPage() {
+        window.location.reload(false);
+      }
     //define fuse results search
     const fuse = new Fuse(items, {
     keys: ['artistName', 'trackTitle','albumTitle'],
@@ -99,6 +101,7 @@ export default function SearchTracksForPlaylist(){
             },
             body: JSON.stringify({"tracks": [tracks]})
           })
+          refreshPage()
     }
    
     //Display tracks

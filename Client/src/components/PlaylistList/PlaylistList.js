@@ -16,7 +16,9 @@ function PlaylistList() {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
-  
+  function refreshPage() {
+    window.location.reload(false);
+  }
   const history = useNavigate();
 
   //calls fetch data once when page loaded
@@ -79,7 +81,7 @@ function PlaylistList() {
         },
         body: JSON.stringify({"name": name, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
       })
-        
+      refreshPage()
   }
 //delete the playlist
   function deletePlaylist(id){
@@ -90,6 +92,7 @@ function PlaylistList() {
         "Content-length" : 3
       }
     })
+    refreshPage()
   }
 //get the length of the list of songs
   function getLength (item){
@@ -123,7 +126,8 @@ function PlaylistList() {
         <div key = { item.id } className='track-container' >
         <p className='text-black fs-5'>{item.Name}, Creators Name: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
         <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
-        <button onClick={()=>deletePlaylist(item.id)}>Delete Playlist</button>
+        <button onClick={()=>document.getElementById("confirm"+item.id).style.display=("block")}>Delete Playlist</button>
+        <button id={"confirm"+item.id} style={{display:"none"}} onClick={()=>deletePlaylist(item.id)}>click here to confirm</button>
        </div>
                     ))
                   }
