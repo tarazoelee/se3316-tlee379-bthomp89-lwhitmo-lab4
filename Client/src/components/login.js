@@ -30,12 +30,16 @@ export default function Login() {
   //This block of code handles routing based on the user stored
   useEffect(() => {
     if (currentUser != null) {
-      if (user.emailVerified == false) {
+      if (user.email === "testadminemail@gmail.com") {
+        history("/admin");
+      } else if (user.emailVerified === false) {
         history("/verifyemail");
         //history("/userdash");
       } else {
         history("/userdash");
       }
+    } else {
+      history("/");
     }
   }, [currentUser]);
 
