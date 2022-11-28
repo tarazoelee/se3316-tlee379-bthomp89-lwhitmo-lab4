@@ -83,7 +83,6 @@ function UnAuthPlaylist() {
     <h3 className="text-center mb-4">{play.Name}</h3>
     <h4 className="text-center mb-4">{play.visibility}</h4>
       {play.Description}
-      {/*play.Reviews.map((item)=><div>{item.comm}</div>)*/}
       {items.length > 0 && (
         <div>
           {nItems.map((item)=>{
@@ -100,9 +99,10 @@ function UnAuthPlaylist() {
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
         <div>
-            <input id='comm-input' placeholder='review'></input>
+            <input id='comm-input' placeholder='add a review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
-            {play.Reviews.map(item => <div>
+            {play.Reviews && play.Reviews.map(item => 
+                <div key={item.date}>
                     <div>{item.comm}, {item.user}, {item.date}</div>
                 </div>)
             }
