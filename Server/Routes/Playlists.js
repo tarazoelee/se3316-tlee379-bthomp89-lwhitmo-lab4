@@ -17,6 +17,7 @@ router.get('/getsongs/:id',(req,res)=>{
         res.send(err)
     })
 })
+
 //add tracks to a playlist
 router.post('/add/:id', (req,res)=>{
     const playlistID= req.params.id;
@@ -26,6 +27,7 @@ router.post('/add/:id', (req,res)=>{
     res.send("added songs ")
     
 })
+
 //get specific playlist
 router.get("/:id", (req,res)=>{
     const playlist =req.params.id;
@@ -33,6 +35,7 @@ router.get("/:id", (req,res)=>{
         res.send(data)
     })
 })
+
 //create a new playlist
 router.post('/create', (req,res)=>{
     const name= req.body.name;
@@ -51,7 +54,7 @@ router.post('/description/:id', (req,res)=>{
     res.send()
 })
 
-//add comments to playlist
+//add reviews to playlist
 router.post('/review/:id', (req,res)=>{
     const playlistID= req.params.id;
     const review = req.body.review;

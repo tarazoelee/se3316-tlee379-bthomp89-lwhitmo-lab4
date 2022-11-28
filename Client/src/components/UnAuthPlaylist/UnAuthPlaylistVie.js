@@ -30,6 +30,7 @@ function UnAuthPlaylist() {
             setPlay(json);
         })
     }
+
     //get the information about the tracks - from the array of songs
     function fetchDataInfo(pass){
         fetch("/api/tracks/"+pass)
@@ -75,12 +76,14 @@ function UnAuthPlaylist() {
         })
     }, [items.length]);
 
+
   return (
     <div className='dash-container'>
     <div className='playlist-container'>
     <h3 className="text-center mb-4">{play.Name}</h3>
     <h4 className="text-center mb-4">{play.visibility}</h4>
       {play.Description}
+      {/*play.Reviews.map((item)=><div>{item.comm}</div>)*/}
       {items.length > 0 && (
         <div>
           {nItems.map((item)=>{
@@ -99,6 +102,10 @@ function UnAuthPlaylist() {
         <div>
             <input id='comm-input' placeholder='review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
+            {play.Reviews.map(item => <div>
+                    <div>{item.comm}, {item.user}, {item.date}</div>
+                </div>)
+            }
         </div>
     </div>
     </div>
