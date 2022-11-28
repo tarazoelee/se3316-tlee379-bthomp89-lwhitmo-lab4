@@ -44,7 +44,6 @@ router.post('/create', (req,res)=>{
 
 //add description
 router.post('/description/:id', (req,res)=>{
-    console.log("called")
     const playlistID= req.params.id;
     const description = req.body.description;
 
@@ -53,12 +52,11 @@ router.post('/description/:id', (req,res)=>{
 })
 
 //add comments to playlist
-router.post('/comments/:id', (req,res)=>{
-    console.log("called")
+router.post('/review/:id', (req,res)=>{
     const playlistID= req.params.id;
-    const description = req.body.description;
-
-    addDescription(playlistID, description)
+    const review = req.body.review;
+    const user=req.body.user;
+    addReviews(playlistID, review, user)
     res.send()
 })
 
@@ -129,17 +127,21 @@ async function addDescription(id, desc){
     const res = await db.collection('Playlists').doc(id).update({
         Description: desc
     })
-
     console.log("Added description to: "+id)
 }
 
-async function addComments(id, comments){
-    for(comm in comments){
+//add comments to playlist 
+async function addReviews(id, review, user){
+    /*
+    var reviewInfo ={};
+    reviewInfo[`Reviews.${key}.rev`] = review;
+    reviewInfo[`Reviews.${key}.user`] = 2;
+    */
+    const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
-        Comments: FieldValue.arrayUnion(comments[comm])
+        Reviews:FieldValue.arrayUnion({comm: review, user: user})
     })
-    }
-    console.log("Added comments to: "+id)
+    console.log("Added review to: "+id)
 }
 
 async function getPlaySongs(id){

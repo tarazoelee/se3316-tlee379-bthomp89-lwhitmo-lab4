@@ -2,7 +2,7 @@ import {React, useState, useEffect} from 'react'
 import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
 import './UnAuthPlaylist.css'
-
+import { useAuth } from "../../contexts/AuthContext"
 
 //playlist for users that are not logged in
 function UnAuthPlaylist() {
@@ -12,6 +12,7 @@ function UnAuthPlaylist() {
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
     const history = useNavigate();
+    const { currentUser } = useAuth()
 
     function goBack(){
         history("/userdash")
@@ -51,17 +52,16 @@ function UnAuthPlaylist() {
     }
     
     //add comments to a playlist
-    function addComment(comm){
-        fetch("/api/playlist/comments/"+params.id,{
+    function addComment(rev){
+        fetch("/api/playlist/review/"+params.id,{
             method:'POST',
             headers:{
               "Content-Type": "application/json",
               "Content-length" : 2
             },
-            body: JSON.stringify({"comments": comm })
+            body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
           })
     }
-
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
     useEffect(() => {
@@ -97,7 +97,7 @@ function UnAuthPlaylist() {
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
         <div>
-            <input id='comm-input' placeholder='comments'></input>
+            <input id='comm-input' placeholder='review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
         </div>
     </div>
