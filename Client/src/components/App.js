@@ -10,7 +10,9 @@ import UpdateProfile from "./UpdateProfile/UpdateProfile";
 import UserDash from "./UserDash/UserDash";
 import Playlist from "./Playlist/Playlist";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
+import UnAuthPlaylist from "./UnAuthPlaylist/UnAuthPlaylistVie";
 import Admin from "./Admin/Admin";
+
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/playlist/:id" element={<Playlist></Playlist>} />
               <Route path="/verifyemail" element={<VerifyEmail />} />
+              <Route path="/playlistview/:id" element={<UnAuthPlaylist></UnAuthPlaylist>}/>
               <Route path="/admin" element={<Admin />} />
             </Routes>
           </AuthProvider>

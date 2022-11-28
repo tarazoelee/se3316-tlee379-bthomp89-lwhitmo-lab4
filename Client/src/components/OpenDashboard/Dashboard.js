@@ -1,7 +1,7 @@
 import React from 'react'
 import './Dashboard.css'
 import SearchTracks from '../SearchTracks/SearchTracks';
-import PlaylistList from '../PlaylistList/PlaylistList';
+import PlaylistList from '../PublicPlaylist/PublicPlaylist';
 import ProfileDash from '../ProfileDash/ProfileDash';
 
 function Dashboard() {

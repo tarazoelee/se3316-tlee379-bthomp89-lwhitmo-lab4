@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react'
 import './PlaylistInformation.css'
 import {useParams} from 'react-router-dom'
+import { Alert } from 'react-bootstrap'
 
 
 function PlaylistInformation() {
@@ -89,11 +90,23 @@ function PlaylistInformation() {
             console.log(nItems)
         })
     }, [items.length]);
+
+    function changeToPublic(){
+        fetch('/api/playlist/changetopublic/'+params.id)
+        alert("changed to public")
+    }
+    function changeToPrivate(){
+        fetch('/api/playlist/changetoprivate/'+params.id)
+        alert("changed to private")
+    }
     
   return (
     <div className='playlist-container'>
-      <h3 className="text-center mb-4">Information</h3>
+      <h3 className="text-center mb-4">{play.Name}</h3>
+      <h4 className="text-center mb-4">{play.visibility}</h4>
       <div>
+        <button onClick={()=>changeToPublic()}>Change to public</button>
+        <button onClick={()=>changeToPrivate()}>Change to private</button>
         {play.Description}
         <p></p>
         Update/Add Description Here:  
