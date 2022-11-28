@@ -2,7 +2,7 @@ import {React, useState, useEffect} from 'react'
 import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
 import './UnAuthPlaylist.css'
-
+import { useAuth } from "../../contexts/AuthContext"
 
 //playlist for users that are not logged in
 function UnAuthPlaylist() {
@@ -12,6 +12,7 @@ function UnAuthPlaylist() {
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
     const history = useNavigate();
+    const { currentUser } = useAuth()
 
     function goBack(){
         history("/userdash")
@@ -29,6 +30,7 @@ function UnAuthPlaylist() {
             setPlay(json);
         })
     }
+
     //get the information about the tracks - from the array of songs
     function fetchDataInfo(pass){
         fetch("/api/tracks/"+pass)
@@ -49,18 +51,31 @@ function UnAuthPlaylist() {
             ;
         })
     }
+    
+    //add comments to a playlist
+    function addComment(rev){
+        fetch("/api/playlist/review/"+params.id,{
+            method:'POST',
+            headers:{
+              "Content-Type": "application/json",
+              "Content-length" : 2
+            },
+            body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
+          })
+    }
+
     //use effect to call all needed inforamtion amd call fetching data info for every song
     useEffect(() => {
         fetchData();
         getDescription();
         console.log(items)
-    
         items.map((item)=>{
             console.log(item)
             fetchDataInfo(item)
             console.log(nItems)
         })
     }, [items.length]);
+
 
   return (
     <div className='dash-container'>
@@ -72,7 +87,6 @@ function UnAuthPlaylist() {
         <div>
           {nItems.map((item)=>{
             return(
-                console.log(item),
                 <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
                <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
             )
@@ -85,7 +99,13 @@ function UnAuthPlaylist() {
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
         <div>
-            <input placeholder='comments'></input>
+            <input id='comm-input' placeholder='add a review'></input>
+            <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
+            {play.Reviews && play.Reviews.map(item => 
+                <div key={item.date}>
+                    <div>{item.comm}, {item.user}, {item.date}</div>
+                </div>)
+            }
         </div>
     </div>
     </div>

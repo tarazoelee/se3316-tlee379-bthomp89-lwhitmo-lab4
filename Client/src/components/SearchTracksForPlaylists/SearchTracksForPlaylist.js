@@ -12,10 +12,10 @@ export default function SearchTracksForPlaylist(){
     const [DataisLoaded, setLoading]= useState(false)
     const [query, updateQuery] = useState('');
     const params = useParams();
-    console.log(params)
     function refreshPage() {
         window.location.reload(false);
       }
+
     //define fuse results search
     const fuse = new Fuse(items, {
     keys: ['artistName', 'trackTitle','albumTitle'],
@@ -32,7 +32,6 @@ export default function SearchTracksForPlaylist(){
 
     function toggleDiv(){
         setToggle(!toggle)
-        console.log(toggle);
     }
 
     //open new song in tab

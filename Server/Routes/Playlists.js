@@ -17,6 +17,7 @@ router.get('/getsongs/:id',(req,res)=>{
         res.send(err)
     })
 })
+
 //add tracks to a playlist
 router.post('/add/:id', (req,res)=>{
     const playlistID= req.params.id;
@@ -26,6 +27,7 @@ router.post('/add/:id', (req,res)=>{
     res.send("added songs ")
     
 })
+
 //get specific playlist
 router.get("/:id", (req,res)=>{
     const playlist =req.params.id;
@@ -33,6 +35,7 @@ router.get("/:id", (req,res)=>{
         res.send(data)
     })
 })
+
 //create a new playlist
 router.post('/create', (req,res)=>{
     const name= req.body.name;
@@ -44,7 +47,6 @@ router.post('/create', (req,res)=>{
 
 //add description
 router.post('/description/:id', (req,res)=>{
-    console.log("called")
     const playlistID= req.params.id;
     const description = req.body.description;
 
@@ -52,13 +54,19 @@ router.post('/description/:id', (req,res)=>{
     res.send()
 })
 
-//add comments to playlist
-router.post('/comments/:id', (req,res)=>{
-    console.log("called")
+//add reviews to playlist
+router.post('/review/:id', (req,res)=>{
     const playlistID= req.params.id;
-    const description = req.body.description;
+    const review = req.body.review;
+    const user=req.body.user;
 
-    addDescription(playlistID, description)
+    var today = new Date();   //getting current date 
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
+
+    addReviews(playlistID, review, user, today)
     res.send()
 })
 
@@ -129,17 +137,16 @@ async function addDescription(id, desc){
     const res = await db.collection('Playlists').doc(id).update({
         Description: desc
     })
-
     console.log("Added description to: "+id)
 }
 
-async function addComments(id, comments){
-    for(comm in comments){
+//add comments to playlist 
+async function addReviews(id, review, user, date){
+    const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
-        Comments: FieldValue.arrayUnion(comments[comm])
+        Reviews:FieldValue.arrayUnion({comm: review, user: user, date: date})
     })
-    }
-    console.log("Added comments to: "+id)
+    console.log("Added review to: "+id)
 }
 
 async function getPlaySongs(id){
