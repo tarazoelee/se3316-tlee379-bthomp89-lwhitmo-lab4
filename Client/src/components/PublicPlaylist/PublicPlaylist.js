@@ -44,7 +44,7 @@ function PlaylistList() {
   
 
   function openPlaylist(passed){
-    history('/playlistView/'+passed) //open new page for that playlist
+    history('/playlistview/'+passed) //open new page for that playlist
   }
   function testVisibility(){
     const newMap=[]
