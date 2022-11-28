@@ -48,9 +48,11 @@ function PlaylistList() {
   }
   function testVisibility(){
     const newMap=[]
+    let i =0;
     items.map((item)=>{
-      if(item.visibility === "public"){
+      if(item.visibility === "public" && i<10){
         newMap.push(item)
+        i++;
       }
     })
     setAuth(newMap)
