@@ -71,6 +71,9 @@ function UnAuthPlaylist() {
     }
 
     function calcRating(){
+        getDescription()
+        const div = document.getElementsByClassName("description")
+
         var num = play.Ratings.length;
         var sum = 0;
         play.Ratings.map((item) => {
@@ -79,7 +82,6 @@ function UnAuthPlaylist() {
         });
         var avg = (sum/num);
         setRate(avg);
-    
     }
     //add comments to a playlist
     function addComment(rev){
@@ -110,7 +112,6 @@ function UnAuthPlaylist() {
             console.log(nItems)
         })
     }, [items.length]);
-
 
   return (
     <div className='dash-container'>
