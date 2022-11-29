@@ -1,29 +1,16 @@
-.playlist-container {
+.your-playlist-container {
     color: white;
     font-family: 'Montserrat', sans-serif;
     background-color: rgb(46, 41, 62);
     padding: 55px 25px ;
+    width:800px;
 }
 .playlist-list-container{
-    color: white;
     font-family: 'Montserrat', sans-serif;
-    height: 100vh;
     padding: 30px 25px; 
-    min-height: 100vh;
 }
-
 .title{
     font-weight: 700;
     font-size: 30px;
     margin-bottom: 10px;
 }
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.25);
-  }
-  .modal_content {
-    background-color: white;
-    position: absolute;
-  }

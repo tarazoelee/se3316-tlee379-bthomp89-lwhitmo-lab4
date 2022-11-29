@@ -1,7 +1,7 @@
 import '../PlaylistList/PlaylistList'
 import {React, useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import Popup from '../Popup/popup';
+import './PublicPlaylist.css'
 import { useAuth } from "../../contexts/AuthContext"
 
 //get all the playlists that are public to display
@@ -10,8 +10,7 @@ function PublicPlaylist() {
   const [auth, setAuth]= useState([]);
   const [DataisLoaded, setLoading]= useState(false)
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUser } = useAuth()
-  const authh=[];
+
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
@@ -68,21 +67,20 @@ function PublicPlaylist() {
       return item.length
   }
   return (
-    <div className='playlist-container'>
+    <div className='public-playlist-container'>
       <h3 className='title'>Public Playlists</h3>
       <div>
   </div>
-      <div className='playlist-container'>{
+      <div className='public-playlist-list-container'>{
         auth.map((item, arrRef) => ( 
         arrRef=item.Songs,
         <div key = { item.id } className='track-container' >
-        <p className='text-black fs-5'><b>{item.Name}</b><p></p> Creators Name: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
-        <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
+          <p className='text-black fs-5'><b>{item.Name}</b><p></p> Creators Name: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
+          <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
        </div>
                     ))
                   }
       </div>
-  
     </div>
   )
 }

@@ -1,21 +1,20 @@
 .dash-container {
     display: flex;
+    justify-content: space-between;
 }
 
-.searchtracks-container {
+.searchtracks-cont {
     color: white;
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
     padding: 30px 25px;
-    width: 45%;
+    width: 800px;
+    align-items: center;
+    margin-left:300px;
 }
 
-.list-container {
-    width: 50%;
-}
-
-.go-back{
-    width:5%;
+.go-back-btn{
+    width:100px;
     text-align: right;
     padding-top: 10pt;
     padding-right: 2pt;
