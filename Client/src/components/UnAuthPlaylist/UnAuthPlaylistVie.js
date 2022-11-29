@@ -18,6 +18,10 @@ function UnAuthPlaylist() {
     function goBack(){
         history("/userdash")
     }
+
+    function refreshPage() {
+        window.location.reload(false);
+     }
     //open in a new tab
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
@@ -84,6 +88,7 @@ function UnAuthPlaylist() {
     }
     //add comments to a playlist
     function addComment(rev){
+        if(window.confirm("Are you sure?")==true){
         fetch("/api/playlist/review/"+params.id,{
             method:'POST',
             headers:{
@@ -92,6 +97,11 @@ function UnAuthPlaylist() {
             },
             body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
           })
+        refreshPage();
+        }
+          else{
+            return null
+        }
     }
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
