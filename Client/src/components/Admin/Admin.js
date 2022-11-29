@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 // import { auth } from "firebase-admin";
 import { getAuth, sendEmailVerification } from "firebase/auth";
+import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
 
 export default function Admin() {
   const auth = getAuth();
@@ -26,7 +26,9 @@ export default function Admin() {
     <div>
       <h1>Logged in as Admin, You have SM Privlege</h1>
       <button onClick={handleLogout}>Logout {user.email}</button>
+      <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
     </div>
   );
 }
+
 //use state to ensure the person trying to access his page is the admin
