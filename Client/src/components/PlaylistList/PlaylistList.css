@@ -14,3 +14,20 @@
     font-size: 30px;
     margin-bottom: 10px;
 }
+
+.create-playlist-container button{
+    border-radius:30px;
+    border:0;
+    color: rgb(72, 72, 72);
+    padding: 5px 10px;
+    margin: 5px;
+}
+#playName{
+    padding:0px 20px;
+}
+
+.create-playlist-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

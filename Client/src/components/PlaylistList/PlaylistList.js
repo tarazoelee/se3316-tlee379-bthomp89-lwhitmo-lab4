@@ -102,8 +102,8 @@ function PlaylistList() {
   }
   return (
     <div className='your-playlist-container'>
+        <h3 className='title'>My Playlists</h3>
       <div className='create-playlist-container'>
-         <h3 className='title'>Your playlists</h3>
         <input
           type="button"
           value="Create Playlist"
@@ -112,7 +112,7 @@ function PlaylistList() {
         {isOpen && <Popup
           content={<>
           <p></p>
-          <span>Name:  <input id='playName'></input></span>
+          <input id='playName' placeholder='name your playlist'></input>
           <button onClick={()=>addPlaylist(document.getElementById('playName').value)}>Submit</button>
           </>}
           handleClose={togglePopup}

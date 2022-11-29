@@ -1,11 +1,8 @@
 .dash-container {
     display: flex;
+    gap:30rem;
 }
 
-.searchtracks-container {
-    width: 70%;
-}
-
-.list-container {
-    width: 25%;
+.searchtracks-container{
+    margin-left:200px;
 }

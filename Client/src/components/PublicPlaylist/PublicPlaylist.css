@@ -17,7 +17,7 @@
     margin:0px 5px;
     border:0;
     background-color: white;
-    transition: 0.5s;
+    transition: 0.3s;
 }
 .track-container button:hover{
     color: gray;
