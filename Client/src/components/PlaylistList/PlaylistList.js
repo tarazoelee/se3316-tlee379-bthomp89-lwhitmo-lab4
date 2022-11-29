@@ -121,9 +121,10 @@ function PlaylistList() {
       <div className='playlist-list-container'>{
         auth.map((item, arrRef) => ( 
         arrRef=item.Songs,
-        <div key = { item.id } className='track-container' onClick={()=>openPlaylist(item.id)}>
+        <div key = { item.id } className='track-container'>
         <p className='playlist-title'>{item.Name}</p>
         <p className='playlist-details'>Creator: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
+        <button onClick={()=>openPlaylist(item.id)}>Open playlist</button>
         <button onClick={()=>document.getElementById("confirm"+item.id).style.display=("block")}>Delete Playlist</button>
         <button id={"confirm"+item.id} style={{display:"none"}} onClick={()=>deletePlaylist(item.id)}>click here to confirm</button>
        </div>
