@@ -101,24 +101,24 @@ function PlaylistList() {
       return item.length
   }
   return (
-    <div className='playlist-container'>
-      <h3 className='title'>Your playlists</h3>
-      <div>
-    <input
-      type="button"
-      value="Create Playlist"
-      onClick={togglePopup}
-    />
-    {isOpen && <Popup
-      content={<>
-      <p></p>
-      <span>Name:  <input id='playName'></input></span>
-      <button onClick={()=>addPlaylist(document.getElementById('playName').value)}>Submit</button>
-      </>}
-      handleClose={togglePopup}
-    />}
-  </div>
-      <div className='playlist-container'>{
+    <div className='your-playlist-container'>
+        <h3 className='title'>My Playlists</h3>
+      <div className='create-playlist-container'>
+        <input
+          type="button"
+          value="Create Playlist"
+          onClick={togglePopup}
+        />
+        {isOpen && <Popup
+          content={<>
+          <p></p>
+          <input id='playName' placeholder='name your playlist'></input>
+          <button onClick={()=>addPlaylist(document.getElementById('playName').value)}>Submit</button>
+          </>}
+          handleClose={togglePopup}
+        />}
+    </div>
+      <div className='playlist-list-container'>{
         auth.map((item, arrRef) => ( 
         arrRef=item.Songs,
         <div key = { item.id } className='track-container' >
@@ -127,10 +127,9 @@ function PlaylistList() {
         <button onClick={()=>document.getElementById("confirm"+item.id).style.display=("block")}>Delete Playlist</button>
         <button id={"confirm"+item.id} style={{display:"none"}} onClick={()=>deletePlaylist(item.id)}>click here to confirm</button>
        </div>
-                    ))
-                  }
+            ))
+      }
       </div>
-  
     </div>
   )
 }

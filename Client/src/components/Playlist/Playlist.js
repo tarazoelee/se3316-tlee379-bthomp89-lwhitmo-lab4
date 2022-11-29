@@ -12,14 +12,14 @@ function Playlist() {
     }
   return (
     <div className='dash-container'>
-        <div className='searchtracks-container'>
-        <h2 className="text-center mb-4">Add Songs</h2>
-            <SearchTracksForPlaylist></SearchTracksForPlaylist>
-        </div>
         <div className='list-container'>
             <PlaylistInformation></PlaylistInformation>
         </div>
-        <div className='go-back'>
+        <div className='searchtracks-cont'>
+            <h2 className="mt-3">Add Songs</h2>
+                <SearchTracksForPlaylist></SearchTracksForPlaylist>
+            </div>
+        <div className='go-back-btn'>
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
     </div>

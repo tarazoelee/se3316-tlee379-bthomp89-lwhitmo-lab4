@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from 'react'
 import './PlaylistInformation.css'
 import {useParams} from 'react-router-dom'
-import { Alert } from 'react-bootstrap'
 
 //information about each of the playlists
 function PlaylistInformation() {
@@ -123,19 +122,21 @@ function PlaylistInformation() {
 
     
   return (
-    <div className='playlist-container'>
+    <div className='playlist-info-container'>
       <h3 className="text-center mb-4">{play.Name}</h3>
-      <h4 className="text-center mb-4">{play.visibility}</h4>
-      <div>
-        <button onClick={()=>changeToPublic()}>Change to public</button>
-        <button onClick={()=>changeToPrivate()}>Change to private</button>
-        {play.Description}
-        <p></p>
-        Update/Add Description Here:  
-        <input id ="desc"></input>
-        <button onClick={()=>addDescription(document.getElementById("desc").value)}>Submit</button>
+      <div className="text-center mb-4">{play.visibility}</div>
+      <div className='play-details-container'>
+        <div className='change-btn-cont'>
+          <button className="change-btn" onClick={()=>changeToPublic()}>Change to public</button>
+          <button className="change-btn" onClick={()=>changeToPrivate()}>Change to private</button>
+        </div>
+        <div> {play.Description}</div>
+        <div onClick={addTime()}>Total time: {time}</div>
+        <div className='descript-container'>  
+          <input id ="desc" placeholder='update or add a description'></input> 
+           <button className="change-btn" onClick={()=>addDescription(document.getElementById("desc").value)}>Submit</button>
+        </div>
       </div>
-      <div onClick={addTime()}>Total time: {time}</div>
       <div>
       {items.length > 0 && (
         <div>
