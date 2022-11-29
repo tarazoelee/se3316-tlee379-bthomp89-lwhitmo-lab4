@@ -11,6 +11,7 @@ router.get("/", users);
 router.post("/adduser/:id", (req, res) => {
   const uid = req.params.id;
   const email = req.body.email; //needs to be in the req.body
+  //const email = "test@gmail.com";
   try {
     addUser(uid, email);
     return res.status(200).send("Added User " + uid);
