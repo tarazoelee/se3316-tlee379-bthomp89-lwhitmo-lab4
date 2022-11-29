@@ -74,10 +74,9 @@ function PublicPlaylist() {
       <div className='public-playlist-list-container'>{
         auth.map((item, arrRef) => ( 
         arrRef=item.Songs,
-        <div key = { item.id } className='track-container' >
+        <div key = { item.id } className='track-container' onClick={()=>openPlaylist(item.id)}>
         <p className='playlist-title'>{item.Name}</p>
         <p className='playlist-details'>Creator: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
-        <button onClick={()=>openPlaylist(item.id)}>Open Playlist</button>
        </div>
             ))
                   }
