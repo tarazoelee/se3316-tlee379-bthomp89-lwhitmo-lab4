@@ -70,6 +70,13 @@ router.post('/review/:id', (req,res)=>{
     res.send()
 })
 
+router.delete('/deleteSong/:id/:song',(req,res)=>{
+    const playlistId= req.params.id;
+    const songID= req.params.song;
+    console.log()
+    deleteSong(playlistId, Number(songID))
+    res.send("done")
+})
 //delete a playlist
 router.delete('/deletePlaylist/:id', (req,res)=>{
     const playlist = req.params.id;
@@ -103,19 +110,21 @@ async function addPlaylist(name, email, user){
         UserEmail: email,
         User: user,
         Songs:[],
-        visibility: "private"
+        visibility: "private",
+        Timestamp: FieldValue.serverTimestamp()
       });
       
       console.log('Added document with ID: ', res.id);
       
 }
-
+let FieldValue= require('firebase-admin').firestore.FieldValue;
 //add songs function
 async function addSongs(id, tracks){
-    const FieldValue = require('firebase-admin').firestore.FieldValue;
+   // const FieldValue = require('firebase-admin').firestore.FieldValue;
     for (track in tracks){
         const res = await db.collection('Playlists').doc(id).update({
-            Songs: FieldValue.arrayUnion(tracks[track])
+            Songs: FieldValue.arrayUnion(tracks[track]),
+            Timestamp: FieldValue.serverTimestamp()
         })
     }
 
@@ -135,7 +144,8 @@ async function changeVisibility2(id){
 async function addDescription(id, desc){
     //const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
-        Description: desc
+        Description: desc,
+        Timestamp: FieldValue.serverTimestamp()
     })
     console.log("Added description to: "+id)
 }
@@ -177,5 +187,11 @@ async function addTime(id, time){
     })
 
     console.log("Added time to: "+id)
+}
+
+async function deleteSong(play, song){
+    const res = await db.collection('Playlists').doc(play).update({
+        Songs: FieldValue.arrayRemove(song)
+    })
 }
 module.exports = router;
