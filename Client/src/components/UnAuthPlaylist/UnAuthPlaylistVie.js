@@ -54,7 +54,6 @@ function UnAuthPlaylist() {
     }
     
     function setRating(newRating){
-        console.log(newRating);
         fetch("/api/playlist/rating/"+params.id,{
             method:'POST',
             headers:{
@@ -63,7 +62,25 @@ function UnAuthPlaylist() {
             },
             body: JSON.stringify({"rating": newRating, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
           })
+          calcRating();
+    }
 
+    function calcRating(){
+        const div = document.getElementById("rating-container");
+        const ratingDiv = document.createElement('div')
+        var num = play.Ratings.length;
+        var sum = 0;
+        play.Ratings.map((item) => {
+            var rating = parseInt(item.rating);
+            sum+=rating;
+        });
+        while(div.firstElementChild){
+            div.removeChild(div.firstElementChild);
+        }
+        var avg = (sum/num);
+        div.appendChild(ratingDiv) 
+        ratingDiv.appendChild(document.createTextNode(avg))
+    
     }
     //add comments to a playlist
     function addComment(rev){
@@ -112,19 +129,21 @@ function UnAuthPlaylist() {
             <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
         </div>
         <div>
+             <ReactStars
+            count={5}
+            onChange={setRating}
+            size={24}
+            activeColor="#ffd700" />
+            <div id='rating-container'></div>
             <input id='comm-input' placeholder='add a review'></input>
+
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
             {play.Reviews && play.Reviews.map(item => 
-                <div key={item.date}>
+                <div key={item.date+item.user}>
                     <div>{item.comm}, {item.user}, {item.date}</div>
                 </div>)
             }
         </div>
-        <ReactStars
-        count={5}
-        onChange={setRating}
-        size={24}
-        activeColor="#ffd700" />
     </div>
     </div>
   )
