@@ -25,6 +25,16 @@ function PlaylistInformation() {
             ;
         })
     }
+    function deleteSong(id, song){
+      fetch('/api/playlist/deleteSong/'+id+'/'+song,{
+        method: "DELETE",
+        headers:{
+          "Content-Type": "application/json",
+          "Content-length" : 3
+        }
+      })
+      refreshPage()
+    }
 
     //open new song in tab
     const openInNewTab = url => {
@@ -132,7 +142,9 @@ function PlaylistInformation() {
           {nItems.map((item)=>{
             return(
                 <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
-               <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
+               <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> 
+               <button class= "playsong-btn" onClick={()=> deleteSong(params.id, item.trackId)}>Delete song</button>
+               </div>
             )
           })}
         </div>
