@@ -10,6 +10,7 @@ function UnAuthPlaylist() {
     const [items, setItems] = useState([])
     const [nItems, setNItems]=useState([])
     const [play, setPlay]=useState([])
+    const [rating, setRate] = useState()
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
     const history = useNavigate();
@@ -70,20 +71,14 @@ function UnAuthPlaylist() {
     }
 
     function calcRating(){
-        const div = document.getElementById("rating-container");
-        const ratingDiv = document.createElement('div')
         var num = play.Ratings.length;
         var sum = 0;
         play.Ratings.map((item) => {
             var rating = parseInt(item.rating);
             sum+=rating;
         });
-        while(div.firstElementChild){
-            div.removeChild(div.firstElementChild);
-        }
         var avg = (sum/num);
-        div.appendChild(ratingDiv) 
-        ratingDiv.appendChild(document.createTextNode(avg))
+        setRate(avg);
     
     }
     //add comments to a playlist
@@ -120,14 +115,17 @@ function UnAuthPlaylist() {
   return (
     <div className='dash-container'>
     <div className='playlist-container'>
-    <h3 className="text-center mb-4">{play.Name}</h3>
-    <h4 className="text-center mb-4">{play.visibility}</h4>
-      {play.Description}
+        <h3 className="text-center mb-4">{play.Name}</h3>
+        <h4 className="text-center mb-4">{play.visibility}</h4>
+        <div className='description'>
+            {play.Description}
+            {rating}
+        </div>
       {items.length > 0 && (
-        <div>
+        <div className='songs-container'>
           {nItems.map((item)=>{
             return(
-                <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
+            <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
                <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
             )
           })}
@@ -136,7 +134,7 @@ function UnAuthPlaylist() {
       </div>
       <div className='right-column'>
         <div className='go-back'>
-            <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
+            <button onClick={goBack} className="btn btn-outline-light">Go Back</button>
         </div>
         <div>
              <ReactStars
@@ -144,12 +142,11 @@ function UnAuthPlaylist() {
             onChange={setRating}
             size={24}
             activeColor="#ffd700" />
-            <div id='rating-container'></div>
-            <input id='comm-input' placeholder='add a review'></input>
 
+            <input id='comm-input' placeholder='add a review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
             {play.Reviews && play.Reviews.map(item => 
-                <div key={item.date+item.user}>
+                <div key={item.date+item.user} className="review-item">
                     <div>{item.comm}, {item.user}, {item.date}</div>
                 </div>)
             }
