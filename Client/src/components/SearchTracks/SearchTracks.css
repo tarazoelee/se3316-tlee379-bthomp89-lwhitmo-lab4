@@ -29,6 +29,7 @@ input {
     border-radius: 20px;
     color: rgb(59, 59, 59);
     cursor: pointer;
+    max-width:1000px;
 }
 
 .clicked-info{

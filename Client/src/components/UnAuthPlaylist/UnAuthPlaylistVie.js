@@ -145,8 +145,11 @@ function UnAuthPlaylist() {
     }
 
   return (
-    <div className='dash-container'>
+    <div className='unauthdash-container'>
     <div className='playlist-container'>
+         <div className='go-back'>
+            <button onClick={goBack} className="btn btn-outline-light">Go Back</button>
+        </div>
         <h3 className="text-center mb-4">{play.Name}</h3>
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
@@ -154,10 +157,10 @@ function UnAuthPlaylist() {
             <div>{rating}</div>
         </div>
       {items.length > 0 && (
-        <div className='songs-container'>
+        <div className='unauth-songs-container'>
           {nItems.map((item)=>{
             return(
-                <div key = { item.trackId } id={item.trackId} className='track-container'>
+                <div key = { item.trackId } id={item.trackId} className='unauth-track-container'>
                  <div className='default-track' onClick={() => getClicked(item.trackId, item.albumTitle, item.trackDuration)}>
                     <div>{ item.trackTitle }, Artist: { item.artistName } </div>
                     <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play Song</button> </div>
@@ -169,9 +172,6 @@ function UnAuthPlaylist() {
       )}
       </div>
       <div className='right-column'>
-        <div className='go-back'>
-            <button onClick={goBack} className="btn btn-outline-light">Go Back</button>
-        </div>
         <div>
              <ReactStars
             count={5}
