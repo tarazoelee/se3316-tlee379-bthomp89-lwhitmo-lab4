@@ -120,7 +120,7 @@ function UnAuthPlaylist() {
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
             {play.Description}
-            {rating}
+            <div>{rating}</div>
         </div>
       {items.length > 0 && (
         <div className='songs-container'>
