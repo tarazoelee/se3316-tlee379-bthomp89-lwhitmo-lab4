@@ -47,6 +47,14 @@ router.post("/removeadmin/:id", (req, res) => {
   res.send("Removed " + uid + " Admin Privliges");
 });
 
+//Check if given user (uid) is admin
+router.get("/isadmin/:id", (req, res) => {
+  const uid = req.params.id;
+  isAdmin(uid).then((data) => {
+    return res.status(200).send(data);
+  });
+});
+
 //Set a users account to disabled
 router.post("/setdisabled/:id", (req, res) => {
   const uid = req.params.id;
@@ -59,6 +67,14 @@ router.post("/removedisabled/:id", (req, res) => {
   const uid = req.params.id;
   removeDisabled(uid);
   res.send("Account" + uid + "is no longer disabled");
+});
+
+//Check if given user (uid) is admin
+router.get("/isdisabled/:id", (req, res) => {
+  const uid = req.params.id;
+  isDisabled(uid).then((data) => {
+    return res.status(200).send(data);
+  });
 });
 
 //fucntions to preform all route actions
@@ -98,6 +114,30 @@ async function getUser(uid) {
   const document = db.collection("Users").doc(uid);
   let user = await document.get();
   let response = user.data();
+  if (!user.exists) {
+    console.log("User doesn't exist");
+  } else {
+    console.log(response);
+  }
+  return response;
+}
+
+async function isAdmin(uid) {
+  const document = db.collection("Users").doc(uid);
+  let user = await document.get();
+  let response = user.data().isAdmin;
+  if (!user.exists) {
+    console.log("User doesn't exist");
+  } else {
+    console.log(response);
+  }
+  return response;
+}
+
+async function isDisabled(uid) {
+  const document = db.collection("Users").doc(uid);
+  let user = await document.get();
+  let response = user.data().disabled;
   if (!user.exists) {
     console.log("User doesn't exist");
   } else {
