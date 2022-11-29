@@ -34,3 +34,12 @@
     width:100px;
     margin-left: 700px;
 }
+
+.playlist-container{
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    background-color: rgb(46, 41, 62);
+    padding: 55px 25px;
+    height: 100vh;
+    width: 800px;
+}
