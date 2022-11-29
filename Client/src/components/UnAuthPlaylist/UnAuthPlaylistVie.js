@@ -3,12 +3,14 @@ import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
 import './UnAuthPlaylist.css'
 import { useAuth } from "../../contexts/AuthContext"
+import ReactStars from "react-rating-stars-component";
 
 //playlist for users that are not logged in
 function UnAuthPlaylist() {
     const [items, setItems] = useState([])
     const [nItems, setNItems]=useState([])
     const [play, setPlay]=useState([])
+    const [rating, setRate] = useState()
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
     const history = useNavigate();
@@ -17,6 +19,10 @@ function UnAuthPlaylist() {
     function goBack(){
         history("/userdash")
     }
+
+    function refreshPage() {
+        window.location.reload(false);
+     }
     //open in a new tab
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
@@ -52,8 +58,32 @@ function UnAuthPlaylist() {
         })
     }
     
+    function setRating(newRating){
+        fetch("/api/playlist/rating/"+params.id,{
+            method:'POST',
+            headers:{
+              "Content-Type": "application/json",
+              "Content-length" : 2
+            },
+            body: JSON.stringify({"rating": newRating, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
+          })
+          calcRating();
+    }
+
+    function calcRating(){
+        var num = play.Ratings.length;
+        var sum = 0;
+        play.Ratings.map((item) => {
+            var rating = parseInt(item.rating);
+            sum+=rating;
+        });
+        var avg = (sum/num);
+        setRate(avg);
+    
+    }
     //add comments to a playlist
     function addComment(rev){
+        if(window.confirm("Are you sure?")==true){
         fetch("/api/playlist/review/"+params.id,{
             method:'POST',
             headers:{
@@ -62,6 +92,11 @@ function UnAuthPlaylist() {
             },
             body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
           })
+        refreshPage();
+        }
+          else{
+            return null
+        }
     }
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
@@ -80,14 +115,17 @@ function UnAuthPlaylist() {
   return (
     <div className='dash-container'>
     <div className='playlist-container'>
-    <h3 className="text-center mb-4">{play.Name}</h3>
-    <h4 className="text-center mb-4">{play.visibility}</h4>
-      {play.Description}
+        <h3 className="text-center mb-4">{play.Name}</h3>
+        <h4 className="text-center mb-4">{play.visibility}</h4>
+        <div className='description'>
+            {play.Description}
+            {rating}
+        </div>
       {items.length > 0 && (
-        <div>
+        <div className='songs-container'>
           {nItems.map((item)=>{
             return(
-                <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
+            <div class="track-container"key={item.trackId}>Title: {item.trackTitle} Album: {item.albumTitle} Artist: {item.artistName}
                <button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play on Youtube</button> </div>
             )
           })}
@@ -96,13 +134,19 @@ function UnAuthPlaylist() {
       </div>
       <div className='right-column'>
         <div className='go-back'>
-            <button onClick={goBack} class="btn btn-outline-light">Go Back</button>
+            <button onClick={goBack} className="btn btn-outline-light">Go Back</button>
         </div>
         <div>
+             <ReactStars
+            count={5}
+            onChange={setRating}
+            size={24}
+            activeColor="#ffd700" />
+
             <input id='comm-input' placeholder='add a review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
             {play.Reviews && play.Reviews.map(item => 
-                <div key={item.date}>
+                <div key={item.date+item.user} className="review-item">
                     <div>{item.comm}, {item.user}, {item.date}</div>
                 </div>)
             }

@@ -1,16 +1,29 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 
 export default function Signup() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useNavigate();
+
+  useEffect(() => {
+    if (currentUser != null) {
+      if (user.emailVerified === false) {
+        history("/verifyemail");
+      } else {
+        history("/userdash");
+      }
+    }
+  }, [currentUser]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -22,8 +35,12 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      history("/verifyemail");
+      await signup(emailRef.current.value, passwordRef.current.value).then(
+        () => {
+          //currentUser is "null" in this method, need to figure out how to access it
+          //fetch("/api/user/add/user/" + currentUser.uid);
+        }
+      );
     } catch (err) {
       setError("Failed to sign in");
     }
