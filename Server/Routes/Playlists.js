@@ -191,7 +191,8 @@ async function addTime(id, time){
 
 async function deleteSong(play, song){
     const res = await db.collection('Playlists').doc(play).update({
-        Songs: FieldValue.arrayRemove(song)
+        Songs: FieldValue.arrayRemove(song),
+        Timestamp: FieldValue.serverTimestamp()
     })
 }
 module.exports = router;
