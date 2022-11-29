@@ -18,10 +18,19 @@ export default function Signup() {
   useEffect(() => {
     if (currentUser != null) {
       if (user.emailVerified === false) {
+        fetch(`/api/users/adduser/${currentUser.uid}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Content-length": 1,
+          },
+          body: JSON.stringify({ email: emailRef.current.value }),
+        });
         history("/verifyemail");
       } else {
         history("/userdash");
       }
+      console.log(currentUser.uid);
     }
   }, [currentUser]);
 
@@ -35,12 +44,7 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value).then(
-        () => {
-          //currentUser is "null" in this method, need to figure out how to access it
-          //fetch("/api/user/add/user/" + currentUser.uid);
-        }
-      );
+      await signup(emailRef.current.value, passwordRef.current.value);
     } catch (err) {
       setError("Failed to sign in");
     }

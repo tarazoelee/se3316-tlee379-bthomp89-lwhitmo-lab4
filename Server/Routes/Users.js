@@ -10,7 +10,7 @@ router.get("/", users);
 //Add user to database (takes uid in url and email in body, creates document with docid = uid and sets email, isAdmin and disabled)
 router.post("/adduser/:id", (req, res) => {
   const uid = req.params.id;
-  const email = "brayden@gmail.com"; //needs to be in the req.body
+  const email = req.body.email; //needs to be in the req.body
   try {
     addUser(uid, email);
     return res.status(200).send("Added User " + uid);
@@ -69,7 +69,7 @@ router.post("/removedisabled/:id", (req, res) => {
   res.send("Account" + uid + "is no longer disabled");
 });
 
-//Check if given user (uid) is admin
+//Check if given user (uid) is disabled
 router.get("/isdisabled/:id", (req, res) => {
   const uid = req.params.id;
   isDisabled(uid).then((data) => {
