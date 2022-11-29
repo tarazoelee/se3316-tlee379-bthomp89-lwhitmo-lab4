@@ -150,6 +150,12 @@ async function changeVisibility2(id){
     })
 }
 
+async function changeReviewVisibility(id){
+    const res= await db.collection('Playlists').doc(id).update({
+        Reviews: {visibility: "private"}
+    })
+}
+
 async function addDescription(id, desc){
     //const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
@@ -163,7 +169,7 @@ async function addDescription(id, desc){
 async function addReviews(id, review, user, date){
     const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
-        Reviews:FieldValue.arrayUnion({comm: review, user: user, date: date})
+        Reviews:FieldValue.arrayUnion({comm: review, user: user, date: date, visibility: true})
     })
     console.log("Added review to: "+id)
 }

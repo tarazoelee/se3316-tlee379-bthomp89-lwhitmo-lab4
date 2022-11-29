@@ -3,7 +3,6 @@ import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
 import './AdminUnAuthPlaylist.css'
 import { useAuth } from "../../contexts/AuthContext"
-import ReactStars from "react-rating-stars-component";
 
 //playlist for users that are not logged in
 function AdminUnAuthPlaylist() {
@@ -83,23 +82,6 @@ function AdminUnAuthPlaylist() {
         var avg = (sum/num);
         setRate(avg);
     }
-    //add comments to a playlist
-    function addComment(rev){
-        if(window.confirm("Are you sure?")==true){
-        fetch("/api/playlist/review/"+params.id,{
-            method:'POST',
-            headers:{
-              "Content-Type": "application/json",
-              "Content-length" : 2
-            },
-            body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
-          })
-        refreshPage();
-        }
-          else{
-            return null
-        }
-    }
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
     useEffect(() => {
@@ -173,17 +155,12 @@ function AdminUnAuthPlaylist() {
       </div>
       <div className='right-column'>
         <div>
-             <ReactStars
-            count={5}
-            onChange={setRating}
-            size={24}
-            activeColor="#ffd700" />
-
-            <input id='comm-input' placeholder='add a review'></input>
-            <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
-            {play.Reviews && play.Reviews.map(item => 
+            {
+            play.Reviews && play.Reviews.map(item => 
                 <div key={item.date+item.user} className="review-item">
-                    <div>{item.comm}, {item.user}, {item.date}</div>
+                    {console.log(item.visiblity)}
+                    <div>{item.comm}, {item.user}, {item.date}, public: {(item.visibility).toString()} </div>
+                    <button>hide</button>
                 </div>)
             }
         </div>

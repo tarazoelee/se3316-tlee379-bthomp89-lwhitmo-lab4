@@ -181,7 +181,8 @@ function UnAuthPlaylist() {
 
             <input id='comm-input' placeholder='add a review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
-            {play.Reviews && play.Reviews.map(item => 
+            {//only outputting reviews that are public 
+            play.Reviews && play.Reviews.filter(element => element.visibility).map(item => 
                 <div key={item.date+item.user} className="review-item">
                     <div>{item.comm}, {item.user}, {item.date}</div>
                 </div>)
