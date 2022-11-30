@@ -16,10 +16,9 @@ export default function Login() {
   const { login, googleSignIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [admin, setAdmin]=useState(false)
+  let admin;
   const history = useNavigate();
-  //const [admin, setAdmin] = useState("");
-
+  
   async function handleGoogleSignIn(e) {
     e.preventDefault();
     try {
@@ -34,7 +33,7 @@ export default function Login() {
     if (currentUser != null) {
       var userID = currentUser.uid;
       checkAdmin(userID).then(()=>{
-        console.log(admin)
+        console.log("Need "+admin)
         if (admin === true) {
           history("/admin");
         } else if (user.emailVerified === false) {
@@ -51,12 +50,13 @@ export default function Login() {
 
   async function checkAdmin(userID) {
     await fetch(`api/users/isadmin/${userID}`)
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(typeof(json))
-        setAdmin(json)
-        setLoading(true)
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          console.log(Boolean(data))
+          admin = data
+          setLoading(true)
+        });
   }
 
   async function handleSubmit(e) {
