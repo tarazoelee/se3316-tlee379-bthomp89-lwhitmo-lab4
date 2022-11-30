@@ -2,7 +2,6 @@ import '../PlaylistList/PlaylistList'
 import {React, useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import './PublicPlaylist.css'
-import { useAuth } from "../../contexts/AuthContext"
 
 //get all the playlists that are public to display
 function PublicPlaylist() {

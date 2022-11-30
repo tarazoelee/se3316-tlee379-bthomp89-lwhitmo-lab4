@@ -190,7 +190,6 @@ async function removeReview(id,comm, date, user, vis){
 }
 
 async function addDescription(id, desc){
-    //const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
         Description: desc,
         Timestamp: FieldValue.serverTimestamp()

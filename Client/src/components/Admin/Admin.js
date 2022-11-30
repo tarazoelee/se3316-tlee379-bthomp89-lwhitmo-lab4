@@ -12,9 +12,10 @@ export default function Admin() {
   const [items, setItems] = useState([]);
   const [DataisLoaded, setLoading] = useState(false);
   const history = useNavigate();
-
+  
   useEffect(() => {
     fetchData();
+    console.log('running')
   }, []);
 
   //Fetch all User data
@@ -37,9 +38,11 @@ export default function Admin() {
     items.map((item) => {
       newMap.push(item);
     });
+    /*
     for (var j = 0; j < newMap.length; j++) {
       displayUser(newMap, userDiv, j);
     }
+    */
   }
 
   if (!DataisLoaded) {
@@ -54,7 +57,7 @@ export default function Admin() {
   function refreshPage() {
     window.location.reload(false);
   }
-
+/* 
   function displayUser(newMap, userDiv, j) {
     var newContent = document.createElement("li");
     var email = document.createTextNode("Email: " + newMap[j].email + " ");
@@ -115,15 +118,24 @@ export default function Admin() {
 
     userDiv.appendChild(newContent);
   }
+  */
 
   return (
     <div className="dash-container">
       <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
+      <div className="view-users-container">
+        <div id="users-context" >{
+          items.map((item)=>(
+            <div>{item.email} </div>
+          ))
+       
+        }
+        </div>
+      </div>
       <div>
         <AdminProfile></AdminProfile>
       </div>
-      <div id="users-context"></div>
-      <button onClick={mapData}>CLICK</button>
     </div>
   );
+  // <button onClick={mapData}>CLICK</button>
 }

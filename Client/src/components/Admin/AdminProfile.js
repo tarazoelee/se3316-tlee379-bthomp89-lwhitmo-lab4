@@ -22,7 +22,7 @@ export default function AdminProfile() {
   return (
     <div className="profiledash-card">
       {error && <Alert variant="danger">{error}</Alert>} {currentUser.email}
-      <p1 className="sm-privlige">You Have SM Privliges</p1>
+      <p className="sm-privlige">You Have SM Privliges</p>
       <div>
         <Button
           variant="link"
