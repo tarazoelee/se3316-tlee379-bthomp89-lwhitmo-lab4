@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminProfile from "./AdminProfile";
+import "./Admin.css";
 
 export default function Admin() {
   const [auth, setAuth] = useState([]);
@@ -29,15 +30,12 @@ export default function Admin() {
     while (userDiv.firstChild) {
       userDiv.removeChild(userDiv.firstChild);
     }
-    let i = 0;
     items.map((item) => {
       newMap.push(item);
-      i++;
     });
     for (var j = 0; j < newMap.length; j++) {
       displayUser(newMap, userDiv, j);
     }
-    console.log(newMap);
   }
 
   if (!DataisLoaded) {
@@ -49,19 +47,68 @@ export default function Admin() {
     );
   }
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   function displayUser(newMap, userDiv, j) {
     var newContent = document.createElement("li");
-    var email = document.createTextNode("Email: " + newMap[j].email);
-    var isAdmin = document.createTextNode("isAdmin: " + newMap[j].isAdmin);
-    var disabled = document.createTextNode("Disabled: " + newMap[j].disabled);
-    //var giveAdmin //button which onclick gives the user admin
-    //var removeAdmin //button which onclick gives the user admin
-    //var makeDisabled //button which onclick gives the user admin
-    //var unDisabled //button which onclick gives the user admin
+    var email = document.createTextNode("Email: " + newMap[j].email + " ");
+    var isAdmin = document.createTextNode(
+      "isAdmin: " + newMap[j].isAdmin + " "
+    );
+    var disabled = document.createTextNode(
+      " Disabled: " + newMap[j].disabled + " "
+    );
+    var userID = newMap[j].uid;
+
+    var giveAdmin = document.createElement("button");
+    giveAdmin.appendChild(document.createTextNode("Give Admin"));
+    giveAdmin.addEventListener("click", function () {
+      fetch(`/api/users/giveadmin/${userID}`, {
+        method: "POST",
+      });
+      console.log(userID + " was given admin");
+      refreshPage();
+    });
+    var removeAdmin = document.createElement("button");
+    removeAdmin.appendChild(document.createTextNode("Remove Admin"));
+    removeAdmin.addEventListener("click", function () {
+      fetch(`/api/users/removeadmin/${userID}`, {
+        method: "POST",
+      });
+      console.log(userID + " was revoked admin privliges");
+      refreshPage();
+    });
+
+    var makeDisabled = document.createElement("button");
+    makeDisabled.appendChild(document.createTextNode("Disable User"));
+    makeDisabled.addEventListener("click", function () {
+      fetch(`/api/users/setdisabled/${userID}`, {
+        method: "POST",
+      });
+      console.log(userID + " was disabled");
+      refreshPage();
+    });
+
+    var removeDisabled = document.createElement("button");
+    removeDisabled.appendChild(document.createTextNode("Enable User"));
+    removeDisabled.addEventListener("click", function () {
+      fetch(`/api/users/removedisabled/${userID}`, {
+        method: "POST",
+      });
+      console.log(userID + " was enabled");
+      refreshPage();
+    });
 
     newContent.appendChild(email);
     newContent.appendChild(isAdmin);
     newContent.appendChild(disabled);
+    newContent.appendChild(giveAdmin);
+    newContent.appendChild(removeAdmin);
+    newContent.appendChild(makeDisabled);
+    newContent.appendChild(removeDisabled);
+
     userDiv.appendChild(newContent);
   }
 
