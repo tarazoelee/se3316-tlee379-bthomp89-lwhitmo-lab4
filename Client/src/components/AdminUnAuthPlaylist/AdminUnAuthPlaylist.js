@@ -58,9 +58,10 @@ function AdminUnAuthPlaylist() {
     }
     
      //change the visibility of review 
-    function changeToPrivate(comm,date,user,vis){
-        fetch('/api/playlist/changereviewvisibility/'+params.id+'/'+comm+'/'+date+'/'+user+'/'+vis)
+    function changeToPrivate(item){
+        fetch('/api/playlist/changereviewvisibility/'+params.id+'/'+item)
         alert("changed to private")
+        console.log(item)
         //refreshPage()
         //+'/'+date+'/'+user+'/'+vis
     }
@@ -140,7 +141,7 @@ function AdminUnAuthPlaylist() {
             play.Reviews && play.Reviews.map(item => 
                 <div key={item.date+item.user} className="review-item">
                     <div>{item.comm}, {item.user}, {item.date}, public: {(item.visibility).toString()}</div>
-                    <button onClick={() => changeToPrivate(item.comm,item.date,item.user,item.visibility)}>switch visibility</button>
+                    <button onClick={() => changeToPrivate(item)}>switch visibility</button>
                 </div>)
             }
         </div>
