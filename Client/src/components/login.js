@@ -16,8 +16,9 @@ export default function Login() {
   const { login, googleSignIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  let admin;
+  let disabledUser;
   const history = useNavigate();
-  //const [admin, setAdmin] = useState("");
 
   async function handleGoogleSignIn(e) {
     e.preventDefault();
@@ -32,17 +33,30 @@ export default function Login() {
   useEffect(() => {
     if (currentUser != null) {
       var userID = currentUser.uid;
-      var isAdminTest = checkAdmin(userID).then(() => {
-        console.log("NEED " + isAdminTest);
+      checkAdmin(userID).then(() => {
+        console.log("Need " + admin);
+        if (admin === true) {
+          history("/admin");
+        } else if (user.emailVerified === false) {
+          history("/verifyemail");
+          //history("/userdash");
+        } else {
+          history("/userdash");
+        }
       });
-      if (isAdminTest === true) {
-        history("/admin");
-      } else if (user.emailVerified === false) {
-        history("/verifyemail");
-        //history("/userdash");
-      } else {
-        history("/userdash");
-      }
+
+      // checkDisabled(userID)
+      //   .then(() => {
+      //     console.log("Want " + disabledUser);
+      //     if (disabledUser === true) {
+      //       alert("Cannot Log In User is Disabled");
+      //     } else if (user.emailVerified === false) {
+      //       history("/verifyemail");
+      //     } else {
+      //       history("/userdash");
+      //     }
+      //   })
+      //   .catch("error");
     } else {
       history("/");
     }
@@ -52,7 +66,21 @@ export default function Login() {
     await fetch(`api/users/isadmin/${userID}`)
       .then((res) => res.json())
       .then((data) => {
-        return data;
+        console.log(data);
+        console.log(Boolean(data));
+        admin = data;
+        setLoading(true);
+      });
+  }
+
+  async function checkDisabled(userID) {
+    await fetch(`api/users/isdisabled/${userID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        console.log(Boolean(data));
+        disabledUser = data;
+        setLoading(true);
       });
   }
 
