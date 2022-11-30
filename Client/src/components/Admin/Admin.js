@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
 import AdminProfile from "./AdminProfile";
 import "./Admin.css";
@@ -94,7 +94,7 @@ export default function Admin() {
         <div id="users-context" >{
           items.map((item)=>(
             <div className="user-container">
-              <div>{item.email} </div>
+              <div><strong>{item.email} </strong></div>
               <div>Admin: {(item.isAdmin).toString()} | Disabled: {(item.disabled).toString()}</div>
               <div className="user-btns">
                 <button onClick={()=>giveAdmin(item.uid)}>Give Admin</button>
