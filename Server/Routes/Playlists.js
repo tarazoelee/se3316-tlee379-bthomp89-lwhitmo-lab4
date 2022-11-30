@@ -5,7 +5,13 @@ const { db } = require("../../util/admin");
 const {playlists} = require('../handler/playlists');
 
 //get all the current playlists from firebase
-router.get('/', playlists);
+router.get('/', (req, res)=>{
+   getPlays().then((data)=>{
+    res.send(data)
+   })
+});
+
+//router.get('/', playlists)
 
 //get the songs on a playlist
 router.get('/getsongs/:id',(req,res)=>{
@@ -149,12 +155,14 @@ async function addSongs(id, tracks){
 }
 async function changeVisibility(id){
     const res= await db.collection('Playlists').doc(id).update({
-        visibility: "public"
+        visibility: "public",
+        Timestamp: FieldValue.serverTimestamp()
     })
 }
 async function changeVisibility2(id){
     const res= await db.collection('Playlists').doc(id).update({
-        visibility: "private"
+        visibility: "private",
+        Timestamp: FieldValue.serverTimestamp()
     })
 }
 
@@ -228,5 +236,10 @@ async function deleteSong(play, song){
         Songs: FieldValue.arrayRemove(song),
         Timestamp: FieldValue.serverTimestamp()
     })
+}
+//get songs ordered by most recently changed
+async function getPlays(){
+    const res = await db.collection('Playlists').orderBy('Timestamp','desc').get()
+    return res.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 }
 module.exports = router;
