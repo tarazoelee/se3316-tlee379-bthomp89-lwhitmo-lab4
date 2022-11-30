@@ -128,4 +128,3 @@ export default function Admin() {
   );
 }
 
-//use state to ensure the person trying to access his page is the admin
