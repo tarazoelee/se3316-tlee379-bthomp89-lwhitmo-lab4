@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+// import { auth } from "firebase-admin";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
 import AdminProfile from "./AdminProfile";
 import "./Admin.css";
 
@@ -114,6 +118,7 @@ export default function Admin() {
 
   return (
     <div className="dash-container">
+      <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
       <div>
         <AdminProfile></AdminProfile>
       </div>
@@ -122,3 +127,4 @@ export default function Admin() {
     </div>
   );
 }
+

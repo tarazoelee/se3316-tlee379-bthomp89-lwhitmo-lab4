@@ -1,0 +1,26 @@
+.public-playlist-container {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    background-color: rgb(46, 41, 62);
+    padding: 55px 25px;
+    width: 800px;
+}
+
+.public-playlist-list-container {
+    font-family: 'Montserrat', sans-serif;
+    padding: 30px 25px;
+}
+
+.track-container button {
+    color: gray;
+    border-radius: 30px;
+    margin: 0px 5px;
+    border: 0;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.track-container button:hover {
+    color: gray;
+    background-color: rgb(183, 183, 183);
+}

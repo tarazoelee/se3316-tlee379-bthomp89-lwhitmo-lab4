@@ -5,7 +5,13 @@ const { db } = require("../../util/admin");
 const {playlists} = require('../handler/playlists');
 
 //get all the current playlists from firebase
-router.get('/', playlists);
+router.get('/', (req, res)=>{
+   getPlays().then((data)=>{
+    res.send(data)
+   })
+});
+
+//router.get('/', playlists)
 
 //get the songs on a playlist
 router.get('/getsongs/:id',(req,res)=>{
@@ -106,10 +112,18 @@ router.get("/changetopublic/:id", (req,res)=>{
     changeVisibility(id)
     res.send("changed")
 })
+
 router.get("/changetoprivate/:id", (req,res)=>{
     const id =req.params.id;
     changeVisibility2(id)
     res.send("changed")
+})
+
+router.get("/changereviewvisibility/:id/:item", (req,res)=>{
+    const id = req.params.id;
+    const item = req.params.item;
+    changeReviewVisibility(id,item)
+    res.send("changed review visibility")
 })
 
 //create new playlist function
@@ -141,13 +155,23 @@ async function addSongs(id, tracks){
 }
 async function changeVisibility(id){
     const res= await db.collection('Playlists').doc(id).update({
-        visibility: "public"
+        visibility: "public",
+        Timestamp: FieldValue.serverTimestamp()
     })
 }
 async function changeVisibility2(id){
     const res= await db.collection('Playlists').doc(id).update({
-        visibility: "private"
+        visibility: "private",
+        Timestamp: FieldValue.serverTimestamp()
     })
+}
+
+async function changeReviewVisibility(id,item){
+    FieldValue = require('firebase-admin').firestore.FieldValue;
+    const res = await db.collection('Playlists').doc(id).update({
+        Reviews: FieldValue.arrayRemove(item)
+    })
+    console.log("changed visibility")
 }
 
 async function addDescription(id, desc){
@@ -163,7 +187,7 @@ async function addDescription(id, desc){
 async function addReviews(id, review, user, date){
     const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
-        Reviews:FieldValue.arrayUnion({comm: review, user: user, date: date})
+        Reviews: (FieldValue.arrayUnion({comm: review, user: user, date: date, visibility: true}))
     })
     console.log("Added review to: "+id)
 }
@@ -212,5 +236,10 @@ async function deleteSong(play, song){
         Songs: FieldValue.arrayRemove(song),
         Timestamp: FieldValue.serverTimestamp()
     })
+}
+//get songs ordered by most recently changed
+async function getPlays(){
+    const res = await db.collection('Playlists').orderBy('Timestamp','desc').get()
+    return res.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 }
 module.exports = router;
