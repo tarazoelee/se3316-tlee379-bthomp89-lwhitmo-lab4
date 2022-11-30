@@ -17,7 +17,12 @@ function UnAuthPlaylist() {
     const { currentUser } = useAuth()
 
     function goBack(){
+        if(currentUser !== null){
+            history("/userdash")
+        }
+        else{
         history("/opendash")
+        }
     }
 
     function refreshPage() {
