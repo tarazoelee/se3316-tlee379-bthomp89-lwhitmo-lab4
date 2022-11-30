@@ -118,6 +118,7 @@ export default function Admin() {
 
   return (
     <div className="dash-container">
+      <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
       <div>
         <AdminProfile></AdminProfile>
       </div>
