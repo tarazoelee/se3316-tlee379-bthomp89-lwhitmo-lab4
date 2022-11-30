@@ -4,6 +4,7 @@ import SearchTracks from "../SearchTracks/SearchTracks";
 import PlaylistList from "../PlaylistList/PlaylistList";
 import ProfileDash from "../ProfileDash/ProfileDash";
 import PublicPlaylist from "../PublicPlaylist/PublicPlaylist";
+import { Link } from "react-router-dom";
 
 function UserDash() {
   return (
@@ -17,6 +18,9 @@ function UserDash() {
       </div>
       <div>
         <ProfileDash></ProfileDash>
+        <Link to="/privacy">Privacy Policy</Link>
+        <p></p>
+        <Link to="/aup">Acceptable Use Policy</Link>
       </div>
     </div>
   );

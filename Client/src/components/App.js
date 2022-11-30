@@ -12,6 +12,8 @@ import Playlist from "./Playlist/Playlist";
 import VerifyEmail from "./VerifyEmail/VerifyEmail";
 import UnAuthPlaylist from "./UnAuthPlaylist/UnAuthPlaylistVie";
 import Admin from "./Admin/Admin";
+import PrivacyPolicy from "./Privacy Policy/PrivacyPolicy";
+import AUP from "./AUP/AUP";
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
               <Route path="/verifyemail" element={<VerifyEmail />} />
               <Route path="/playlistview/:id" element={<UnAuthPlaylist></UnAuthPlaylist>}/>
               <Route path="/admin" element={<Admin />} />
+              <Route path='/privacy' element={<PrivacyPolicy></PrivacyPolicy>}/>
+              <Route path='/aup' element={<AUP></AUP>}/>
             </Routes>
           </AuthProvider>
         </Router>
