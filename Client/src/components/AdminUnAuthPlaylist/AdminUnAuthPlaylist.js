@@ -68,7 +68,7 @@ function AdminUnAuthPlaylist() {
             },
             body: JSON.stringify({"comm": comm, "date": date, "user":user, "vis":vis})
         })
-        alert("changed to private")
+        alert("changed visibility")
         refreshPage();
     }
 
