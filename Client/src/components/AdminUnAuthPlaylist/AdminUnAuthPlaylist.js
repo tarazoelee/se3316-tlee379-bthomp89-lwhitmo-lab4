@@ -57,30 +57,12 @@ function AdminUnAuthPlaylist() {
         })
     }
     
-    function setRating(newRating){
-        fetch("/api/playlist/rating/"+params.id,{
-            method:'POST',
-            headers:{
-              "Content-Type": "application/json",
-              "Content-length" : 2
-            },
-            body: JSON.stringify({"rating": newRating, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
-          })
-          calcRating();
-    }
-
-    function calcRating(){
-        getDescription()
-        const div = document.getElementsByClassName("description")
-
-        var num = play.Ratings.length;
-        var sum = 0;
-        play.Ratings.map((item) => {
-            var rating = parseInt(item.rating);
-            sum+=rating;
-        });
-        var avg = (sum/num);
-        setRate(avg);
+     //change the visibility of review 
+    function changeToPrivate(comm,date,user,vis){
+        fetch('/api/playlist/changereviewvisibility/'+params.id+'/'+comm+'/'+date+'/'+user+'/'+vis)
+        alert("changed to private")
+        //refreshPage()
+        //+'/'+date+'/'+user+'/'+vis
     }
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
@@ -116,7 +98,6 @@ function AdminUnAuthPlaylist() {
             track.appendChild(div);
             close.addEventListener("click",()=>removeClicked(id));
         }
-    console.log('clicked')
     }
 
     function removeClicked(id){
@@ -158,9 +139,8 @@ function AdminUnAuthPlaylist() {
             {
             play.Reviews && play.Reviews.map(item => 
                 <div key={item.date+item.user} className="review-item">
-                    {console.log(item.visiblity)}
-                    <div>{item.comm}, {item.user}, {item.date}, public: {(item.visibility).toString()} </div>
-                    <button>hide</button>
+                    <div>{item.comm}, {item.user}, {item.date}, public: {(item.visibility).toString()}</div>
+                    <button onClick={() => changeToPrivate(item.comm,item.date,item.user,item.visibility)}>switch visibility</button>
                 </div>)
             }
         </div>
@@ -168,5 +148,5 @@ function AdminUnAuthPlaylist() {
     </div>
   )
 }
-
+//,item.date,item.user,item.visibility
 export default AdminUnAuthPlaylist;
