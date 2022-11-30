@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { GoogleButton } from "react-google-button";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { json, Link, useNavigate } from "react-router-dom";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 
 import "./login.css";
@@ -17,6 +17,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useNavigate();
+  //const [admin, setAdmin] = useState("");
 
   async function handleGoogleSignIn(e) {
     e.preventDefault();
@@ -30,7 +31,11 @@ export default function Login() {
   //This block of code handles routing based on the user stored
   useEffect(() => {
     if (currentUser != null) {
-      if (user.email === "testadminemail@gmail.com") {
+      var userID = currentUser.uid;
+      var isAdminTest = checkAdmin(userID).then(() => {
+        console.log("NEED " + isAdminTest);
+      });
+      if (isAdminTest === true) {
         history("/admin");
       } else if (user.emailVerified === false) {
         history("/verifyemail");
@@ -42,6 +47,14 @@ export default function Login() {
       history("/");
     }
   }, [currentUser]);
+
+  async function checkAdmin(userID) {
+    await fetch(`api/users/isadmin/${userID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        return data;
+      });
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
