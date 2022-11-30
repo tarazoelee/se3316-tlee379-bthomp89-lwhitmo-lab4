@@ -16,6 +16,10 @@ function Dashboard() {
         </div>
         <div className="w-100 text-center mt-2 text-gray">
             <Link to="/privacy">Privacy Policy</Link>
+            <p></p>
+            <Link to="/aup">Acceptable Use Policy</Link>
+            <p></p>
+            <Link to='/DMCA'>DMCA Policy</Link>
         </div>
     </div>
   )

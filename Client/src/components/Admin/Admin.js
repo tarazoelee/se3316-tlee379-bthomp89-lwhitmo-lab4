@@ -111,6 +111,11 @@ export default function Admin() {
       </div>
       <div>
         <AdminProfile></AdminProfile>
+        <Link to="/privacy">Update Privacy Policy</Link>
+        <p></p>
+        <Link to="/aup">Update Acceptable User Policy</Link>
+        <p></p>
+        <Link to='/DMCA'>DMCA Policy</Link>
       </div>
     </div>
   );
