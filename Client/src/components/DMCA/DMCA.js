@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import './PrivacyPolicy.css'
+import '../Privacy Policy/PrivacyPolicy.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext"
 //pop up for creating the playlists
-function PrivacyPolicy () {
+function DMCA () {
     const history = useNavigate();
     const { currentUser } = useAuth()
     const [items, setItems] = useState('')
@@ -17,7 +17,7 @@ function PrivacyPolicy () {
         }
     }
     async function fetchData(){
-        await fetch("/api/policies/privacy")
+        await fetch("/api/policies/DMCA")
           .then((res) => res.json())
           .then((data) => {
             console.log(data)
@@ -31,9 +31,10 @@ function PrivacyPolicy () {
   return (
     <div class ='policy'>
         <div dangerouslySetInnerHTML={{__html: items.info}}></div>
+
         <button onClick={()=>goBack()}>Go Back</button>
     </div>
   );
 };
  
-export default PrivacyPolicy;
+export default DMCA;

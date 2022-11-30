@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { auth } from "firebase-admin";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
@@ -121,6 +121,11 @@ export default function Admin() {
       <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
       <div>
         <AdminProfile></AdminProfile>
+        <Link to="/privacy">Update Privacy Policy</Link>
+        <p></p>
+        <Link to="/aup">Update Acceptable User Policy</Link>
+        <p></p>
+        <Link to='/DMCA'>DMCA Policy</Link>
       </div>
       <div id="users-context"></div>
       <button onClick={mapData}>CLICK</button>
