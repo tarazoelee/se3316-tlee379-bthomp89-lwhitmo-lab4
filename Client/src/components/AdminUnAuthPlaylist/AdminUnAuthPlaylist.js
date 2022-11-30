@@ -43,7 +43,6 @@ function AdminUnAuthPlaylist() {
             .then((data) => {
                 nItems.push(data);
                 setLoading(true);
-            ;
         })
     } 
     //this retruns an array of the songs that are on the playlist 
@@ -51,8 +50,8 @@ function AdminUnAuthPlaylist() {
         fetch("/api/playlist/getsongs/"+params.id)
             .then((res) => res.json())
             .then((json) => {
-                    setItems(json.Songs);
-                    setLoading(true);
+                setItems(json.Songs);
+                setLoading(true);
             ;
         })
     }
@@ -76,11 +75,11 @@ function AdminUnAuthPlaylist() {
     useEffect(() => {
         fetchData();
         getDescription();
-        console.log(items)
+        //console.log(items)
         items.map((item)=>{
-            console.log(item)
+            //console.log(item)
             fetchDataInfo(item)
-            console.log(nItems)
+            //console.log(nItems)
         })
     }, [items.length]);
 
