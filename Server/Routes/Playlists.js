@@ -119,10 +119,14 @@ router.get("/changetoprivate/:id", (req,res)=>{
     res.send("changed")
 })
 
-router.get("/changereviewvisibility/:id/:item", (req,res)=>{
+router.post("/changereviewvisibility/:id", (req,res)=>{
     const id = req.params.id;
-    const item = req.params.item;
-    changeReviewVisibility(id,item)
+    const comm = req.body.comm;
+    const date = req.body.date;
+    const user = req.body.user;
+    const vis = req.body.vis;
+    changeReviewVisibility(id,comm,date,user,vis)
+    removeReview(id,comm,date,user,vis)
     res.send("changed review visibility")
 })
 
@@ -166,12 +170,26 @@ async function changeVisibility2(id){
     })
 }
 
-async function changeReviewVisibility(id,item){
+async function changeReviewVisibility(id,comm, date, user, vis){
     FieldValue = require('firebase-admin').firestore.FieldValue;
+    var item = {comm: comm, date: date, user: user, visibility: vis}
+    var newItem = {comm: comm, date: date, user: user, visibility: !vis}
+    const res = await db.collection('Playlists').doc(id).update({
+        Reviews: FieldValue.arrayRemove(item),
+        Reviews: FieldValue.arrayUnion(newItem)
+    })
+    console.log(item)
+    console.log("changed visibility to" + newItem.visibility)
+}
+
+async function removeReview(id,comm, date, user, vis){
+    FieldValue = require('firebase-admin').firestore.FieldValue;
+    var item = {comm: comm, date: date, user: user, visibility: vis}
     const res = await db.collection('Playlists').doc(id).update({
         Reviews: FieldValue.arrayRemove(item)
     })
-    console.log("changed visibility")
+    console.log(item)
+    console.log("removed item")
 }
 
 async function addDescription(id, desc){
