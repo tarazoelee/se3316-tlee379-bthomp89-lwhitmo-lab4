@@ -1,12 +1,11 @@
 import {React, useState, useEffect} from 'react'
 import '../Playlist/Playlist'
 import { useNavigate, useParams } from "react-router-dom";
-import './UnAuthPlaylist.css'
+import './AdminUnAuthPlaylist.css'
 import { useAuth } from "../../contexts/AuthContext"
-import ReactStars from "react-rating-stars-component";
 
 //playlist for users that are not logged in
-function UnAuthPlaylist() {
+function AdminUnAuthPlaylist() {
     const [items, setItems] = useState([])
     const [nItems, setNItems]=useState([])
     const [play, setPlay]=useState([])
@@ -17,12 +16,7 @@ function UnAuthPlaylist() {
     const { currentUser } = useAuth()
 
     function goBack(){
-        if(currentUser !== null){
-            history("/userdash")
-        }
-        else{
-        history("/opendash")
-        }
+        history("/admin")
     }
 
     function refreshPage() {
@@ -63,47 +57,12 @@ function UnAuthPlaylist() {
         })
     }
     
-    function setRating(newRating){
-        fetch("/api/playlist/rating/"+params.id,{
-            method:'POST',
-            headers:{
-              "Content-Type": "application/json",
-              "Content-length" : 2
-            },
-            body: JSON.stringify({"rating": newRating, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
-          })
-          calcRating();
-    }
-
-    function calcRating(){
-        getDescription()
-        const div = document.getElementsByClassName("description")
-
-        var num = play.Ratings.length;
-        var sum = 0;
-        play.Ratings.map((item) => {
-            var rating = parseInt(item.rating);
-            sum+=rating;
-        });
-        var avg = (sum/num);
-        setRate(avg);
-    }
-    //add comments to a playlist
-    function addComment(rev){
-        if(window.confirm("Are you sure?")==true){
-        fetch("/api/playlist/review/"+params.id,{
-            method:'POST',
-            headers:{
-              "Content-Type": "application/json",
-              "Content-length" : 2
-            },
-            body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
-          })
-        refreshPage();
-        }
-          else{
-            return null
-        }
+     //change the visibility of review 
+    function changeToPrivate(comm,date,user,vis){
+        fetch('/api/playlist/changereviewvisibility/'+params.id+'/'+comm+'/'+date+'/'+user+'/'+vis)
+        alert("changed to private")
+        //refreshPage()
+        //+'/'+date+'/'+user+'/'+vis
     }
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
@@ -139,7 +98,6 @@ function UnAuthPlaylist() {
             track.appendChild(div);
             close.addEventListener("click",()=>removeClicked(id));
         }
-    console.log('clicked')
     }
 
     function removeClicked(id){
@@ -178,18 +136,11 @@ function UnAuthPlaylist() {
       </div>
       <div className='right-column'>
         <div>
-             <ReactStars
-            count={5}
-            onChange={setRating}
-            size={24}
-            activeColor="#ffd700" />
-
-            <input id='comm-input' placeholder='add a review'></input>
-            <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
-            {//only outputting reviews that are public 
-            play.Reviews && play.Reviews.filter(element => element.visibility).map(item => 
+            {
+            play.Reviews && play.Reviews.map(item => 
                 <div key={item.date+item.user} className="review-item">
-                    <div>{item.comm}, {item.user}, {item.date}</div>
+                    <div>{item.comm}, {item.user}, {item.date}, public: {(item.visibility).toString()}</div>
+                    <button onClick={() => changeToPrivate(item.comm,item.date,item.user,item.visibility)}>switch visibility</button>
                 </div>)
             }
         </div>
@@ -197,5 +148,5 @@ function UnAuthPlaylist() {
     </div>
   )
 }
-
-export default UnAuthPlaylist;
+//,item.date,item.user,item.visibility
+export default AdminUnAuthPlaylist;

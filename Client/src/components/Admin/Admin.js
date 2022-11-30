@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+// import { auth } from "firebase-admin";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
 import AdminProfile from "./AdminProfile";
 import "./Admin.css";
 
@@ -122,4 +126,5 @@ export default function Admin() {
     </div>
   );
 }
+
 //use state to ensure the person trying to access his page is the admin
