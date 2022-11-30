@@ -152,6 +152,7 @@ async function addUser(uid, email) {
     .collection("Users")
     .doc("/" + uid + "/")
     .create({
+      uid: uid,
       email: email,
       isAdmin: false,
       disabled: false,
