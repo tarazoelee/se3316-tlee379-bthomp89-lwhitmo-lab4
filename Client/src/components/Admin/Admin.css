@@ -1,3 +1,23 @@
-#users-context {
-  background-color: white;
+
+.view-users-container{
+  color:rgb(85, 85, 85)
+}
+
+.view-users-container h3{
+  color: rgb(253, 253, 253);
+  padding-top:50px;
+}
+
+.user-container{
+  margin:10px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border-radius: 20px;
+  width:500px;
+}
+
+.user-btns{
+  display: flex;
+  gap:2rem;
+  padding: 5px;
 }

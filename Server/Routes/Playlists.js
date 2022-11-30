@@ -88,7 +88,6 @@ router.post('/review/:id', (req,res)=>{
 router.delete('/deleteSong/:id/:song',(req,res)=>{
     const playlistId= req.params.id;
     const songID= req.params.song;
-    console.log()
     deleteSong(playlistId, Number(songID))
     res.send("done")
 })
@@ -178,7 +177,6 @@ async function changeReviewVisibility(id,comm, date, user, vis){
         Reviews: FieldValue.arrayRemove(item),
         Reviews: FieldValue.arrayUnion(newItem)
     })
-    console.log(item)
     console.log("changed visibility to" + newItem.visibility)
 }
 
@@ -188,12 +186,10 @@ async function removeReview(id,comm, date, user, vis){
     const res = await db.collection('Playlists').doc(id).update({
         Reviews: FieldValue.arrayRemove(item)
     })
-    console.log(item)
     console.log("removed item")
 }
 
 async function addDescription(id, desc){
-    //const FieldValue = require('firebase-admin').firestore.FieldValue;
     const res = await db.collection('Playlists').doc(id).update({
         Description: desc,
         Timestamp: FieldValue.serverTimestamp()
@@ -213,10 +209,18 @@ async function addReviews(id, review, user, date){
 //add ratings to a playlist 
 async function addRating(id, rating, user){
     const FieldValue = require('firebase-admin').firestore.FieldValue;
+
     const res = await db.collection('Playlists').doc(id).update({
         Ratings: FieldValue.arrayUnion({rating: rating, user:user })
     })
     console.log("Added rating to: "+id)
+    /*
+    const result = db.collection('Playlists').doc(id).get().then((value)=>{
+        return ratingsList = value.data()["Ratings"]
+        //console.log(ratingsList)
+    })
+    */
+
 }
 
 async function getPlaySongs(id){
