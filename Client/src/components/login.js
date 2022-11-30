@@ -16,6 +16,7 @@ export default function Login() {
   const { login, googleSignIn, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [admin, setAdmin]=useState(false)
   const history = useNavigate();
   //const [admin, setAdmin] = useState("");
 
@@ -32,17 +33,17 @@ export default function Login() {
   useEffect(() => {
     if (currentUser != null) {
       var userID = currentUser.uid;
-      var isAdminTest = checkAdmin(userID).then(() => {
-        console.log("NEED " + isAdminTest);
-      });
-      if (isAdminTest === true) {
-        history("/admin");
-      } else if (user.emailVerified === false) {
-        history("/verifyemail");
-        //history("/userdash");
-      } else {
-        history("/userdash");
-      }
+      checkAdmin(userID).then(()=>{
+        console.log(admin)
+        if (admin === true) {
+          history("/admin");
+        } else if (user.emailVerified === false) {
+          history("/verifyemail");
+          //history("/userdash");
+        } else {
+          history("/userdash");
+        }
+      }).catch("error")
     } else {
       history("/");
     }
@@ -51,8 +52,10 @@ export default function Login() {
   async function checkAdmin(userID) {
     await fetch(`api/users/isadmin/${userID}`)
       .then((res) => res.json())
-      .then((data) => {
-        return data;
+      .then((json) => {
+        console.log(typeof(json))
+        setAdmin(json)
+        setLoading(true)
       });
   }
 
