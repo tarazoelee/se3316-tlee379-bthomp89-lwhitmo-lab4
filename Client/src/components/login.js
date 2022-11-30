@@ -17,8 +17,9 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   let admin;
+  let disabledUser;
   const history = useNavigate();
-  
+
   async function handleGoogleSignIn(e) {
     e.preventDefault();
     try {
@@ -32,8 +33,8 @@ export default function Login() {
   useEffect(() => {
     if (currentUser != null) {
       var userID = currentUser.uid;
-      checkAdmin(userID).then(()=>{
-        console.log("Need "+admin)
+      checkAdmin(userID).then(() => {
+        console.log("Need " + admin);
         if (admin === true) {
           history("/admin");
         } else if (user.emailVerified === false) {
@@ -42,7 +43,20 @@ export default function Login() {
         } else {
           history("/userdash");
         }
-      }).catch("error")
+      });
+
+      // checkDisabled(userID)
+      //   .then(() => {
+      //     console.log("Want " + disabledUser);
+      //     if (disabledUser === true) {
+      //       alert("Cannot Log In User is Disabled");
+      //     } else if (user.emailVerified === false) {
+      //       history("/verifyemail");
+      //     } else {
+      //       history("/userdash");
+      //     }
+      //   })
+      //   .catch("error");
     } else {
       history("/");
     }
@@ -50,13 +64,24 @@ export default function Login() {
 
   async function checkAdmin(userID) {
     await fetch(`api/users/isadmin/${userID}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-          console.log(Boolean(data))
-          admin = data
-          setLoading(true)
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        console.log(Boolean(data));
+        admin = data;
+        setLoading(true);
+      });
+  }
+
+  async function checkDisabled(userID) {
+    await fetch(`api/users/isdisabled/${userID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        console.log(Boolean(data));
+        disabledUser = data;
+        setLoading(true);
+      });
   }
 
   async function handleSubmit(e) {
