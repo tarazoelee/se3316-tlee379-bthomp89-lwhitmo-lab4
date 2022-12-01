@@ -76,10 +76,9 @@ function UnAuthPlaylist() {
     }
 
     function calcRating(){
-        getDescription()
-        const div = document.getElementsByClassName("description")
-
-        var num = play.Ratings.length;
+        //const div = document.getElementsByClassName("description")
+        if(play.Ratings.length){
+         var num = play.Ratings.length;}
         var sum = 0;
         play.Ratings.map((item) => {
             var rating = parseInt(item.rating);
@@ -159,7 +158,7 @@ function UnAuthPlaylist() {
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
             {play.Description}
-            <div>{rating}</div>
+            <div>Rating: {rating}</div>
         </div>
       {items.length > 0 && (
         <div className='unauth-songs-container'>
@@ -182,7 +181,8 @@ function UnAuthPlaylist() {
             count={5}
             onChange={setRating}
             size={24}
-            activeColor="#ffd700" />
+            activeColor="#ffd700" 
+            isHalf={true}/>
 
             <input id='comm-input' placeholder='add a review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>

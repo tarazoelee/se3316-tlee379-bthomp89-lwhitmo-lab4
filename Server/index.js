@@ -4,6 +4,7 @@ const tracks = require("./routes/tracks");
 const playlists = require("./Routes/Playlists");
 const users = require("./Routes/Users");
 const bodyParser = require("body-parser");
+const policies = require("./routes/Policies")
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 app.use("/api/tracks", tracks);
 app.use("/api/users", users);
 app.use("/api/playlist", playlists);
+app.use("/api/policies", policies);
 
 app.get("/api", (request, response) => {
   response.send("Hello world from Express!");

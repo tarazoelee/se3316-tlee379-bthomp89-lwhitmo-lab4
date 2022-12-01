@@ -41,6 +41,8 @@ function UserDash() {
         <Link to="/privacy">Privacy Policy</Link>
         <p></p>
         <Link to="/aup">Acceptable Use Policy</Link>
+        <p></p>
+        <Link to='/DMCA'>DMCA Policy</Link>
       </div>
     </div>
   );
