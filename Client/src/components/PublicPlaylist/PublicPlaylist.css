@@ -23,3 +23,8 @@
     color: gray;
     background-color: rgb(183, 183, 183);
 }
+
+.rating-info{
+    font-size: 14px;
+    color:rgb(194, 142, 10);
+}

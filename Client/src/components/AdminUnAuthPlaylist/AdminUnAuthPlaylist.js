@@ -43,7 +43,6 @@ function AdminUnAuthPlaylist() {
             .then((data) => {
                 nItems.push(data);
                 setLoading(true);
-            ;
         })
     } 
     //this retruns an array of the songs that are on the playlist 
@@ -51,8 +50,8 @@ function AdminUnAuthPlaylist() {
         fetch("/api/playlist/getsongs/"+params.id)
             .then((res) => res.json())
             .then((json) => {
-                    setItems(json.Songs);
-                    setLoading(true);
+                setItems(json.Songs);
+                setLoading(true);
             ;
         })
     }
@@ -76,11 +75,11 @@ function AdminUnAuthPlaylist() {
     useEffect(() => {
         fetchData();
         getDescription();
-        console.log(items)
+        //console.log(items)
         items.map((item)=>{
-            console.log(item)
+            //console.log(item)
             fetchDataInfo(item)
-            console.log(nItems)
+            //console.log(nItems)
         })
     }, [items.length]);
 
@@ -123,8 +122,8 @@ function AdminUnAuthPlaylist() {
         <h3 className="text-center mb-4">{play.Name}</h3>
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
-            {play.Description}
-            <div>{rating}</div>
+            <p>{play.Description}</p>
+           <p className='rating-info'> { play.Ratings && ((play.Ratings.reduce((sum,a)=>sum+a.rating,0))/play.Ratings.length).toFixed(2)} stars </p>
         </div>
       {items.length > 0 && (
         <div className='unauth-songs-container'>
