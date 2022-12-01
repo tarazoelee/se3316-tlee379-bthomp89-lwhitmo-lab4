@@ -70,13 +70,49 @@ router.post("/removedisabled/:id", (req, res) => {
   res.send("Account" + uid + "is no longer disabled");
 });
 
-//Check if given user (uid) is disabled
+//Check if given user (email) is disabled
 router.get("/isdisabled/:id", (req, res) => {
-  const uid = req.params.id;
-  isDisabled(uid).then((data) => {
-    return res.status(200).send(data);
-  });
+  const email = req.params.id;
+  const test = db
+    .collection("Users")
+    .where("email", "==", email)
+    .get()
+    .then((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      //console.log(data[0].disabled);
+      return res.status(200).json(data[0].disabled);
+    });
 });
+
+async function isDisabled(email) {
+  const test = db
+    .collection("Users")
+    .where("email", "==", email)
+    .get()
+    .then((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return data[0].disabled;
+      //return res.status(201).json(data);
+    });
+
+  //let response = test2.datadisabled;
+  //console.log(test);
+  // const document = db.collection("Users").doc();
+  // let user = await document.get();
+  // let response = user.data().disabled;
+  // if (!user.exists) {
+  //   console.log("User doesn't exist");
+  // } else {
+  //   console.log(response);
+  // }
+  // return response;
+}
 
 //fucntions to preform all route actions
 async function giveAdmin(uid) {
@@ -127,18 +163,6 @@ async function isAdmin(uid) {
   const document = db.collection("Users").doc(uid);
   let user = await document.get();
   let response = user.data().isAdmin;
-  if (!user.exists) {
-    console.log("User doesn't exist");
-  } else {
-    console.log(response);
-  }
-  return response;
-}
-
-async function isDisabled(uid) {
-  const document = db.collection("Users").doc(uid);
-  let user = await document.get();
-  let response = user.data().disabled;
   if (!user.exists) {
     console.log("User doesn't exist");
   } else {
