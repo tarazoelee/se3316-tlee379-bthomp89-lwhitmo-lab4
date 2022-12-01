@@ -11,6 +11,7 @@ function UnAuthPlaylist() {
     const [nItems, setNItems]=useState([])
     const [play, setPlay]=useState([])
     const [rating, setRate] = useState()
+    const [ratingsList, setRatingsList] =useState([])
     const [DataisLoaded, setLoading]= useState(false)
     const params = useParams();
     const history = useNavigate();
@@ -57,9 +58,8 @@ function UnAuthPlaylist() {
         fetch("/api/playlist/getsongs/"+params.id)
             .then((res) => res.json())
             .then((json) => {
-                    setItems(json.Songs);
-                    setLoading(true);
-            ;
+                setItems(json.Songs);
+                setLoading(true);
         })
     }
     
@@ -75,10 +75,17 @@ function UnAuthPlaylist() {
           calcRating();
     }
 
+    function getRatingsList(){
+        play.Ratings.map((item)=>(
+            console.log(item.rating)
+        ))
+        console.log("running")
+    }
+
+    //calculate average rating of playlist 
     function calcRating(){
-        //const div = document.getElementsByClassName("description")
-        if(play.Ratings.length){
-         var num = play.Ratings.length;}
+        console.log("running")
+        var num = play.Ratings.length;
         var sum = 0;
         play.Ratings.map((item) => {
             var rating = parseInt(item.rating);
@@ -87,6 +94,7 @@ function UnAuthPlaylist() {
         var avg = (sum/num);
         setRate(avg);
     }
+
     //add comments to a playlist
     function addComment(rev){
         if(window.confirm("Are you sure?")==true){
@@ -107,13 +115,10 @@ function UnAuthPlaylist() {
 
     //use effect to call all needed inforamtion amd call fetching data info for every song
     useEffect(() => {
-        fetchData();
+        fetchData()
         getDescription();
-        console.log(items)
         items.map((item)=>{
-            console.log(item)
             fetchDataInfo(item)
-            console.log(nItems)
         })
     }, [items.length]);
 
@@ -138,9 +143,9 @@ function UnAuthPlaylist() {
             track.appendChild(div);
             close.addEventListener("click",()=>removeClicked(id));
         }
-    console.log('clicked')
     }
 
+    //remove extra track details 
     function removeClicked(id){
         const track = document.getElementById(id);
         while(track.children[1]){
@@ -158,7 +163,7 @@ function UnAuthPlaylist() {
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
             {play.Description}
-            <div>Rating: {rating}</div>
+            <div>{rating}</div>
         </div>
       {items.length > 0 && (
         <div className='unauth-songs-container'>
@@ -183,7 +188,6 @@ function UnAuthPlaylist() {
             size={24}
             activeColor="#ffd700" 
             isHalf={true}/>
-
             <input id='comm-input' placeholder='add a review'></input>
             <button onClick={()=> addComment(document.getElementById('comm-input').value)}>add</button>
             {//only outputting reviews that are public 
