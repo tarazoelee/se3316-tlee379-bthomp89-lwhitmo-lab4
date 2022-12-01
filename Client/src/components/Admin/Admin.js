@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
 import AdminProfile from "./AdminProfile";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+import { useAuth } from "../../contexts/AuthContext";
+
 import "./Admin.css";
 
 export default function Admin() {
-  const [auth, setAuth] = useState([]);
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [items, setItems] = useState([]);
   const [DataisLoaded, setLoading] = useState(false);
   const history = useNavigate();
-  
+
+  const { login, googleSignIn, currentUser } = useAuth();
+
+  let admin;
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -20,6 +28,37 @@ export default function Admin() {
       .then((res) => res.json())
       .then((json) => {
         setItems(json);
+        setLoading(true);
+      });
+  }
+
+  //This block of code handles routing based on the user stored
+  useEffect(() => {
+    if (currentUser != null) {
+      var userID = currentUser.uid;
+      checkAdmin(userID).then(() => {
+        console.log("Need " + admin);
+        if (admin === true) {
+          history("/admin");
+        } else if (user.emailVerified === false) {
+          history("/verifyemail");
+          //history("/userdash");
+        } else {
+          history("/userdash");
+        }
+      });
+    } else {
+      history("/");
+    }
+  }, [currentUser]);
+
+  async function checkAdmin(userID) {
+    await fetch(`api/users/isadmin/${userID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        console.log(Boolean(data));
+        admin = data;
         setLoading(true);
       });
   }
@@ -54,36 +93,36 @@ export default function Admin() {
     window.location.reload(false);
   }
 
-  function giveAdmin(userid){
-      fetch(`/api/users/giveadmin/${userid}`, {
-        method: "POST",
-      });
-      console.log(userid + " was given admin");
-      refreshPage();
+  function giveAdmin(userid) {
+    fetch(`/api/users/giveadmin/${userid}`, {
+      method: "POST",
+    });
+    console.log(userid + " was given admin");
+    refreshPage();
   }
 
-  function removeAdmin(userid){
-      fetch(`/api/users/removeadmin/${userid}`, {
-        method: "POST",
-      });
-      console.log(userid + " was revoked admin privliges");
-      refreshPage();
+  function removeAdmin(userid) {
+    fetch(`/api/users/removeadmin/${userid}`, {
+      method: "POST",
+    });
+    console.log(userid + " was revoked admin privliges");
+    refreshPage();
   }
 
-  function disableUser(userID){
-      fetch(`/api/users/setdisabled/${userID}`, {
-        method: "POST",
-      });
-      console.log(userID + " was disabled");
-      refreshPage();
+  function disableUser(userID) {
+    fetch(`/api/users/setdisabled/${userID}`, {
+      method: "POST",
+    });
+    console.log(userID + " was disabled");
+    refreshPage();
   }
 
-  function enableUser(userID){
-      fetch(`/api/users/removedisabled/${userID}`, {
-        method: "POST",
-      });
-      console.log(userID + " was enabled");
-      refreshPage();
+  function enableUser(userID) {
+    fetch(`/api/users/removedisabled/${userID}`, {
+      method: "POST",
+    });
+    console.log(userID + " was enabled");
+    refreshPage();
   }
 
   return (
@@ -91,22 +130,32 @@ export default function Admin() {
       <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
       <div className="view-users-container">
         <h3>Users:</h3>
-        <div id="users-context" >{
-          items.map((item)=>(
+        <div id="users-context">
+          {items.map((item) => (
             <div className="user-container">
-              <div><strong>{item.email} </strong></div>
-              <div>Admin: {(item.isAdmin).toString()} | Disabled: {(item.disabled).toString()}</div>
-              <div className="user-btns">
-                <button onClick={()=>giveAdmin(item.uid)}>Give Admin</button>
-                <button onClick={()=> removeAdmin(item.uid)}>Remove Admin</button>
+              <div>
+                <strong>{item.email} </strong>
               </div>
-                <div className="user-btns">
-                <button onClick={()=> disableUser(item.uid)}>Disable User</button>
-                <button onClick={() => enableUser(item.uid)}>Enable User</button>
+              <div>
+                Admin: {item.isAdmin.toString()} | Disabled:{" "}
+                {item.disabled.toString()}
+              </div>
+              <div className="user-btns">
+                <button onClick={() => giveAdmin(item.uid)}>Give Admin</button>
+                <button onClick={() => removeAdmin(item.uid)}>
+                  Remove Admin
+                </button>
+              </div>
+              <div className="user-btns">
+                <button onClick={() => disableUser(item.uid)}>
+                  Disable User
+                </button>
+                <button onClick={() => enableUser(item.uid)}>
+                  Enable User
+                </button>
               </div>
             </div>
-          ))
-        }
+          ))}
         </div>
       </div>
       <div>
@@ -119,6 +168,7 @@ export default function Admin() {
         <p>
           <Link to='/logs'>Logging System</Link>
         </p>
+
       </div>
     </div>
   );
