@@ -64,29 +64,31 @@ export default function Login() {
     await fetch(`api/users/isdisabled/${userID}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log("TEST" + data);
         console.log(Boolean(data));
         disabledUser = data;
+        console.log("DIS" + disabledUser);
         setLoading(true);
       });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-    } catch (err) {
-      if (
-        err.message ===
-        "Firebase: The user account has been disabled by an administrator. (auth/user-disabled)."
-      ) {
-        setError("Your account has been disabled. Contact administrator");
+
+    setError("");
+    setLoading(true);
+    checkDisabled(emailRef.current.value).then(() => {
+      if (disabledUser == false) {
+        try {
+          login(emailRef.current.value, passwordRef.current.value);
+        } catch (err) {
+          setError("Failed to login to account");
+        }
       } else {
-        setError("Failed to login to account");
+        setError("Account disabled please conatct Admin");
+        setLoading(false);
       }
-    }
+    });
 
     setLoading(false);
   }
