@@ -76,7 +76,7 @@ function PublicPlaylist() {
         <div key = { item.id } className='track-container' onClick={()=>openPlaylist(item.id)}>
         <p className='playlist-title'>{item.Name}</p>
         <p className='playlist-details'>Creator: {item.User}, {getLength(arrRef)} tracks, Time: {item.Time}</p>
-        <p className='rating-info'>{((item.Ratings.reduce((sum,a)=>sum+a.rating,0))/item.Ratings.length).toFixed(2)} stars</p>
+        <p className='rating-info'>{item.Ratings &&((item.Ratings.reduce((sum,a)=>sum+a.rating,0))/item.Ratings.length).toFixed(2)} stars</p>
        </div>
             ))
                   }
