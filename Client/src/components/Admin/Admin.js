@@ -5,10 +5,15 @@ import AdminProfile from "./AdminProfile";
 import "./Admin.css";
 
 export default function Admin() {
-  const [auth, setAuth] = useState([]);
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [items, setItems] = useState([]);
   const [DataisLoaded, setLoading] = useState(false);
   const history = useNavigate();
+
+  const { login, googleSignIn, currentUser } = useAuth();
+
+  let admin;
   
   useEffect(() => {
     fetchData();
@@ -20,6 +25,37 @@ export default function Admin() {
       .then((res) => res.json())
       .then((json) => {
         setItems(json);
+        setLoading(true);
+      });
+  }
+
+  //This block of code handles routing based on the user stored
+  useEffect(() => {
+    if (currentUser != null) {
+      var userID = currentUser.uid;
+      checkAdmin(userID).then(() => {
+        console.log("Need " + admin);
+        if (admin === true) {
+          history("/admin");
+        } else if (user.emailVerified === false) {
+          history("/verifyemail");
+          //history("/userdash");
+        } else {
+          history("/userdash");
+        }
+      });
+    } else {
+      history("/");
+    }
+  }, [currentUser]);
+
+  async function checkAdmin(userID) {
+    await fetch(`api/users/isadmin/${userID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        console.log(Boolean(data));
+        admin = data;
         setLoading(true);
       });
   }
