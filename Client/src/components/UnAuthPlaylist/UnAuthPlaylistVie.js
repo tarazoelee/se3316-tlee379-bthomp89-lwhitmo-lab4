@@ -75,13 +75,6 @@ function UnAuthPlaylist() {
           calcRating();
     }
 
-    function getRatingsList(){
-        play.Ratings.map((item)=>(
-            console.log(item.rating)
-        ))
-        console.log("running")
-    }
-
     //calculate average rating of playlist 
     function calcRating(){
         console.log("running")
@@ -152,7 +145,7 @@ function UnAuthPlaylist() {
             track.removeChild(track.children[1])
         }
     }
-
+//{((play.Ratings.reduce((sum,a)=>sum+a.rating,0))/play.Ratings.length).toFixed(2)}
   return (
     <div className='unauthdash-container'>
     <div className='playlist-container'>
@@ -163,8 +156,8 @@ function UnAuthPlaylist() {
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
             {play.Description}
-            <div>{rating}</div>
-        </div>
+        <p className='rating-info'>{ play.Ratings && ((play.Ratings.reduce((sum,a)=>sum+a.rating,0))/play.Ratings.length).toFixed(2)} stars</p>
+     </div>
       {items.length > 0 && (
         <div className='unauth-songs-container'>
           {nItems.map((item)=>{
