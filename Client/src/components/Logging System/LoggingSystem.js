@@ -45,6 +45,21 @@ function LoggingSystem () {
 
   return (
     <div className="App">
+      <div>
+      <h1>DMCA Takedown Procedure</h1>
+    <ol>
+    <li>Copyright Owner Investigated: 
+    Copyright owners should investigate on their own first so that they are able to confirm both (a) that they own or are authorized to act on the owner’s behalf of the copyright to an original work and (b) that the content on the Website is unauthorized and infringing. This includes confirming that the use is not protected as fair use. Fair use is if the content only uses a small amount of copyrighted content, uses that content in a transformative way, uses it for educational purposes, or some combination of the above.</li> 
+    <li>Copyright Owner Sends DMCA Notice: 
+    After conducting an investigation, a copyright owner prepares a DMCA takedown notice and sends the complaint to BLT’s copyright agent by email: lwhitmo@uwo.ca. Assuming the takedown notice is sufficiently detailed according to the requirements the process will move on to the next step. </li>
+    <li>Log Complaint: 
+    A manager at BLT will investigate the infringement and fill out an online form to log the complaint into BLT’s records. </li>
+    <li>Make Change to Website: 
+    The manager will remove the content that the complaint targets. </li>
+    <li>Remove or Reinstate Content: 
+    If the content is resolved or after further investigation there is no issue with the content, it will be reinstated to the website. If not, the content will remain removed from the website. </li>
+    </ol>
+      </div>
         <div>
         <button id = "goBack"onClick={()=>goBack()}>Go Back</button>
       <table>
