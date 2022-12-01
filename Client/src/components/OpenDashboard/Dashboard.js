@@ -1,15 +1,14 @@
 import React from 'react'
 import './Dashboard.css'
 import SearchTracks from '../SearchTracks/SearchTracks';
-import PublicPlaylist from '../PublicPlaylist/PublicPlaylist';
-import ProfileDash from '../ProfileDash/ProfileDash';
+import OpenPublicPlaylist from '../OpenPublicPlaylist/OpenPublicPlaylist';
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
   return (
     <div className='dash-container'>
         <div className='list-container'>
-            <PublicPlaylist></PublicPlaylist>
+          <OpenPublicPlaylist></OpenPublicPlaylist>
         </div>
         <div className='searchtracks-container'>
             <SearchTracks></SearchTracks>
@@ -20,7 +19,7 @@ function Dashboard() {
             <Link to="/aup">Acceptable Use Policy</Link>
             <p></p>
             <Link to='/DMCA'>DMCA Policy</Link>
-        </div>
+        </div>x
     </div>
   )
 }
