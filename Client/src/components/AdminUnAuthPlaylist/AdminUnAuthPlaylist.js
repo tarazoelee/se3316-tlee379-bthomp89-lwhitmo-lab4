@@ -122,8 +122,8 @@ function AdminUnAuthPlaylist() {
         <h3 className="text-center mb-4">{play.Name}</h3>
         <h4 className="text-center mb-4">{play.visibility}</h4>
         <div className='description'>
-            {play.Description}
-            <div>{rating}</div>
+            <p>{play.Description}</p>
+           <p className='rating-info'> { play.Ratings && ((play.Ratings.reduce((sum,a)=>sum+a.rating,0))/play.Ratings.length).toFixed(2)} stars </p>
         </div>
       {items.length > 0 && (
         <div className='unauth-songs-container'>

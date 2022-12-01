@@ -72,21 +72,9 @@ function UnAuthPlaylist() {
             },
             body: JSON.stringify({"rating": newRating, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
           })
-          calcRating();
+          refreshPage();
     }
 
-    //calculate average rating of playlist 
-    function calcRating(){
-        console.log("running")
-        var num = play.Ratings.length;
-        var sum = 0;
-        play.Ratings.map((item) => {
-            var rating = parseInt(item.rating);
-            sum+=rating;
-        });
-        var avg = (sum/num);
-        setRate(avg);
-    }
 
     //add comments to a playlist
     function addComment(rev){
@@ -145,7 +133,7 @@ function UnAuthPlaylist() {
             track.removeChild(track.children[1])
         }
     }
-//{((play.Ratings.reduce((sum,a)=>sum+a.rating,0))/play.Ratings.length).toFixed(2)}
+
   return (
     <div className='unauthdash-container'>
     <div className='playlist-container'>
