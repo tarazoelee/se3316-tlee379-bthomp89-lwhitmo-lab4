@@ -44,19 +44,6 @@ export default function Login() {
           history("/userdash");
         }
       });
-
-      // checkDisabled(userID)
-      //   .then(() => {
-      //     console.log("Want " + disabledUser);
-      //     if (disabledUser === true) {
-      //       alert("Cannot Log In User is Disabled");
-      //     } else if (user.emailVerified === false) {
-      //       history("/verifyemail");
-      //     } else {
-      //       history("/userdash");
-      //     }
-      //   })
-      //   .catch("error");
     } else {
       history("/");
     }
