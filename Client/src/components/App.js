@@ -16,7 +16,9 @@ import AdminUnAuthPlaylist from "./AdminUnAuthPlaylist/AdminUnAuthPlaylist";
 import PrivacyPolicy from "./Privacy Policy/PrivacyPolicy";
 import AUP from "./AUP/AUP";
 import DMCA from "./DMCA/DMCA";
-
+import UpdatePrivacy from "./UpdatePrivacy/UpdatePrivacy";
+import UpdateDMCA from "./UpdateDMCA/updateDMCA";
+import UpdateAUP from "./UpdateAUP/UpdateAUP";
 
 function App() {
   return (
@@ -42,6 +44,9 @@ function App() {
               <Route path='/privacy' element={<PrivacyPolicy></PrivacyPolicy>}/>
               <Route path='/aup' element={<AUP></AUP>}/>
               <Route path ='/DMCA' element ={<DMCA/>}/>
+              <Route path ='/updatePrivacy' element={<UpdatePrivacy/>}/>
+              <Route path='/updatedmca' element={<UpdateDMCA/>}/>
+              <Route path='/updateaup' element={<UpdateAUP/>}/>
             </Routes>
           </AuthProvider>
         </Router>
