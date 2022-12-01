@@ -162,6 +162,7 @@ async function getUser(uid) {
 async function isAdmin(uid) {
   const document = db.collection("Users").doc(uid);
   let user = await document.get();
+  if(user.data() != undefined){
   let response = user.data().isAdmin;
   if (!user.exists) {
     console.log("User doesn't exist");
@@ -169,6 +170,8 @@ async function isAdmin(uid) {
     console.log(response);
   }
   return response;
+  }
+  else return false
 }
 
 async function addUser(uid, email) {
