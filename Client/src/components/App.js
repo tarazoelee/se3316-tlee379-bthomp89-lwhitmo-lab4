@@ -19,6 +19,8 @@ import DMCA from "./DMCA/DMCA";
 import UpdatePrivacy from "./UpdatePrivacy/UpdatePrivacy";
 import UpdateDMCA from "./UpdateDMCA/updateDMCA";
 import UpdateAUP from "./UpdateAUP/UpdateAUP";
+import LoggingSystem from "./Logging System/LoggingSystem";
+
 
 function App() {
   return (
@@ -47,6 +49,7 @@ function App() {
               <Route path ='/updatePrivacy' element={<UpdatePrivacy/>}/>
               <Route path='/updatedmca' element={<UpdateDMCA/>}/>
               <Route path='/updateaup' element={<UpdateAUP/>}/>
+              <Route path='/logs' element={<LoggingSystem/>}/>
             </Routes>
           </AuthProvider>
         </Router>

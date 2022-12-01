@@ -111,11 +111,14 @@ export default function Admin() {
       </div>
       <div>
         <AdminProfile></AdminProfile>
-        <Link to="/updateprivacy">Update Privacy Policy</Link>
-        <p></p>
-        <Link to="/updateaup">Update Acceptable User Policy</Link>
-        <p></p>
-        <Link to='/updatedmca'>DMCA Policy</Link>
+        <p>
+        <Link to="/updateprivacy">Update Privacy Policy</Link></p>
+        <p>
+        <Link to="/updateaup">Update Acceptable User Policy</Link></p>
+        <p><Link to='/updatedmca'>DMCA Policy</Link></p>
+        <p>
+          <Link to='/logs'>Logging System</Link>
+        </p>
       </div>
     </div>
   );
