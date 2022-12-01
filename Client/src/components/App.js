@@ -20,6 +20,7 @@ import UpdatePrivacy from "./UpdatePrivacy/UpdatePrivacy";
 import UpdateDMCA from "./UpdateDMCA/updateDMCA";
 import UpdateAUP from "./UpdateAUP/UpdateAUP";
 import LoggingSystem from "./Logging System/LoggingSystem";
+import OpenUnAuthPlaylist from "./OpenUnAuthPlaylist/OpenUnAuthPlaylist";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
               <Route path="/playlist/:id" element={<Playlist></Playlist>} />
               <Route path="/verifyemail" element={<VerifyEmail />} />
               <Route path="/playlistview/:id" element={<UnAuthPlaylist></UnAuthPlaylist>}/>
+              <Route path="/openplaylistview/:id" element={<OpenUnAuthPlaylist></OpenUnAuthPlaylist>}/>
               <Route path="/adminplaylistview/:id" element={<AdminUnAuthPlaylist></AdminUnAuthPlaylist>}/>
               <Route path="/admin" element={<Admin />} />
               <Route path='/privacy' element={<PrivacyPolicy></PrivacyPolicy>}/>
