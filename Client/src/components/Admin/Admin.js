@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AdminPublicPlaylistsList from "../AdminPublicPlaylistList/AdminPublicPlaylistList";
 import AdminProfile from "./AdminProfile";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+import { useAuth } from "../../contexts/AuthContext";
+
 import "./Admin.css";
 
 export default function Admin() {
@@ -14,7 +17,7 @@ export default function Admin() {
   const { login, googleSignIn, currentUser } = useAuth();
 
   let admin;
-  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -90,36 +93,36 @@ export default function Admin() {
     window.location.reload(false);
   }
 
-  function giveAdmin(userid){
-      fetch(`/api/users/giveadmin/${userid}`, {
-        method: "POST",
-      });
-      console.log(userid + " was given admin");
-      refreshPage();
+  function giveAdmin(userid) {
+    fetch(`/api/users/giveadmin/${userid}`, {
+      method: "POST",
+    });
+    console.log(userid + " was given admin");
+    refreshPage();
   }
 
-  function removeAdmin(userid){
-      fetch(`/api/users/removeadmin/${userid}`, {
-        method: "POST",
-      });
-      console.log(userid + " was revoked admin privliges");
-      refreshPage();
+  function removeAdmin(userid) {
+    fetch(`/api/users/removeadmin/${userid}`, {
+      method: "POST",
+    });
+    console.log(userid + " was revoked admin privliges");
+    refreshPage();
   }
 
-  function disableUser(userID){
-      fetch(`/api/users/setdisabled/${userID}`, {
-        method: "POST",
-      });
-      console.log(userID + " was disabled");
-      refreshPage();
+  function disableUser(userID) {
+    fetch(`/api/users/setdisabled/${userID}`, {
+      method: "POST",
+    });
+    console.log(userID + " was disabled");
+    refreshPage();
   }
 
-  function enableUser(userID){
-      fetch(`/api/users/removedisabled/${userID}`, {
-        method: "POST",
-      });
-      console.log(userID + " was enabled");
-      refreshPage();
+  function enableUser(userID) {
+    fetch(`/api/users/removedisabled/${userID}`, {
+      method: "POST",
+    });
+    console.log(userID + " was enabled");
+    refreshPage();
   }
 
   return (
@@ -127,22 +130,32 @@ export default function Admin() {
       <AdminPublicPlaylistsList></AdminPublicPlaylistsList>
       <div className="view-users-container">
         <h3>Users:</h3>
-        <div id="users-context" >{
-          items.map((item)=>(
+        <div id="users-context">
+          {items.map((item) => (
             <div className="user-container">
-              <div><strong>{item.email} </strong></div>
-              <div>Admin: {(item.isAdmin).toString()} | Disabled: {(item.disabled).toString()}</div>
-              <div className="user-btns">
-                <button onClick={()=>giveAdmin(item.uid)}>Give Admin</button>
-                <button onClick={()=> removeAdmin(item.uid)}>Remove Admin</button>
+              <div>
+                <strong>{item.email} </strong>
               </div>
-                <div className="user-btns">
-                <button onClick={()=> disableUser(item.uid)}>Disable User</button>
-                <button onClick={() => enableUser(item.uid)}>Enable User</button>
+              <div>
+                Admin: {item.isAdmin.toString()} | Disabled:{" "}
+                {item.disabled.toString()}
+              </div>
+              <div className="user-btns">
+                <button onClick={() => giveAdmin(item.uid)}>Give Admin</button>
+                <button onClick={() => removeAdmin(item.uid)}>
+                  Remove Admin
+                </button>
+              </div>
+              <div className="user-btns">
+                <button onClick={() => disableUser(item.uid)}>
+                  Disable User
+                </button>
+                <button onClick={() => enableUser(item.uid)}>
+                  Enable User
+                </button>
               </div>
             </div>
-          ))
-        }
+          ))}
         </div>
       </div>
       <div>
@@ -151,7 +164,7 @@ export default function Admin() {
         <p></p>
         <Link to="/updateaup">Update Acceptable User Policy</Link>
         <p></p>
-        <Link to='/updatedmca'>DMCA Policy</Link>
+        <Link to="/updatedmca">DMCA Policy</Link>
       </div>
     </div>
   );
