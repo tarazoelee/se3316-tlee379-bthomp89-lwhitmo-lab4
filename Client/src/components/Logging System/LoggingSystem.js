@@ -46,6 +46,7 @@ function LoggingSystem () {
   return (
     <div className="App">
         <div>
+        <button id = "goBack"onClick={()=>goBack()}>Go Back</button>
       <table>
         <tr>
           <th>Date</th>
@@ -68,8 +69,7 @@ function LoggingSystem () {
           //)
         ))}
       </table>
-      </div>
-      <div>
+<p></p>
       <label>Date</label>
       <input id='date'type="text" />
       <label>Name</label>

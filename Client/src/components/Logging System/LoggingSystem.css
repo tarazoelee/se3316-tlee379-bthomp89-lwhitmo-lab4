@@ -21,3 +21,20 @@
   td {
     color: white;
   }
+  label{
+    color: white
+  }
+  button{
+    background-color: rgba(255, 255, 255, 0.76);
+    width: 80px;
+    border-radius: 10px;
+    font-size: 12px;
+    transition: 0.2s;
+    border:0;
+    color:black;
+  }
+  .goBack{
+    text-align: right;
+    padding-top: 10pt;
+    padding-right: 2pt;
+  }
