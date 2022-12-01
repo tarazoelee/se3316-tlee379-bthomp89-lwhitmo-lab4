@@ -73,6 +73,7 @@ router.post("/removedisabled/:id", (req, res) => {
 //Check if given user (email) is disabled
 router.get("/isdisabled/:id", (req, res) => {
   const email = req.params.id;
+
   const test = db
     .collection("Users")
     .where("email", "==", email)
@@ -82,37 +83,40 @@ router.get("/isdisabled/:id", (req, res) => {
         id: doc.id,
         ...doc.data(),
       }));
-      //console.log(data[0].disabled);
-      return res.status(200).json(data[0].disabled);
+      try {
+        return res.status(200).json(data[0].disabled);
+      } catch (err) {
+        return res.status(400).json("Login Unsuccessful");
+      }
     });
 });
 
-async function isDisabled(email) {
-  const test = db
-    .collection("Users")
-    .where("email", "==", email)
-    .get()
-    .then((snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      return data[0].disabled;
-      //return res.status(201).json(data);
-    });
+// async function isDisabled(email) {
+//   const test = db
+//     .collection("Users")
+//     .where("email", "==", email)
+//     .get()
+//     .then((snapshot) => {
+//       const data = snapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         ...doc.data(),
+//       }));
+//       return data[0].disabled;
+//       //return res.status(201).json(data);
+//     });
 
-  //let response = test2.datadisabled;
-  //console.log(test);
-  // const document = db.collection("Users").doc();
-  // let user = await document.get();
-  // let response = user.data().disabled;
-  // if (!user.exists) {
-  //   console.log("User doesn't exist");
-  // } else {
-  //   console.log(response);
-  // }
-  // return response;
-}
+//   //let response = test2.datadisabled;
+//   //console.log(test);
+//   // const document = db.collection("Users").doc();
+//   // let user = await document.get();
+//   // let response = user.data().disabled;
+//   // if (!user.exists) {
+//   //   console.log("User doesn't exist");
+//   // } else {
+//   //   console.log(response);
+//   // }
+//   // return response;
+// }
 
 //fucntions to preform all route actions
 async function giveAdmin(uid) {
@@ -162,16 +166,15 @@ async function getUser(uid) {
 async function isAdmin(uid) {
   const document = db.collection("Users").doc(uid);
   let user = await document.get();
-  if(user.data() != undefined){
-  let response = user.data().isAdmin;
-  if (!user.exists) {
-    console.log("User doesn't exist");
-  } else {
-    console.log(response);
-  }
-  return response;
-  }
-  else return false
+  if (user.data() != undefined) {
+    let response = user.data().isAdmin;
+    if (!user.exists) {
+      console.log("User doesn't exist");
+    } else {
+      console.log(response);
+    }
+    return response;
+  } else return false;
 }
 
 async function addUser(uid, email) {

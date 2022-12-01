@@ -79,13 +79,12 @@ export default function Login() {
     setLoading(true);
     checkDisabled(emailRef.current.value).then(() => {
       if (disabledUser == false) {
-        try {
-          login(emailRef.current.value, passwordRef.current.value);
-        } catch (err) {
-          setError("Failed to login to account");
-        }
-      } else {
+        login(emailRef.current.value, passwordRef.current.value);
+      } else if (disabledUser == true) {
         setError("Account disabled please conatct Admin");
+        setLoading(false);
+      } else {
+        setError(disabledUser);
         setLoading(false);
       }
     });
@@ -98,7 +97,9 @@ export default function Login() {
       <div className="logincontent-container">
         <h1>BLTify</h1>
         <p>
-          hi! welcome to bltify, enjoy your experience making and sharing some sick playlists! Please proceed to login or make an account if you do not already have one!
+          hi! welcome to bltify, enjoy your experience making and sharing some
+          sick playlists! Please proceed to login or make an account if you do
+          not already have one!
         </p>
       </div>
       <div className="logincard-container">
