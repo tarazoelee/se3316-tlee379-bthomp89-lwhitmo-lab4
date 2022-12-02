@@ -34,6 +34,14 @@ function UnAuthPlaylist() {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
+    //HTML Sanitization
+    function encodeHTML(s) {
+    return s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/"/g, "&quot;");
+    }
+
     //get the description of the playlist
     function getDescription(){
         fetch("/api/playlist/"+params.id)
@@ -79,6 +87,7 @@ function UnAuthPlaylist() {
 
     //add comments to a playlist
     function addComment(rev){
+        var safe = encodeHTML(rev)
         if(window.confirm("Are you sure?")==true){
         fetch("/api/playlist/review/"+params.id,{
             method:'POST',
@@ -86,7 +95,7 @@ function UnAuthPlaylist() {
               "Content-Type": "application/json",
               "Content-length" : 2
             },
-            body: JSON.stringify({"review": rev, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
+            body: JSON.stringify({"review": safe, "user": currentUser.email.substr(0, currentUser.email.indexOf('@'))})
           })
         refreshPage();
         }
