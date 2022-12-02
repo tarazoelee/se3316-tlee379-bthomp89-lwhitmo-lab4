@@ -79,7 +79,12 @@ export default function Login() {
     setLoading(true);
     checkDisabled(emailRef.current.value).then(() => {
       if (disabledUser == false) {
-        login(emailRef.current.value, passwordRef.current.value);
+        login(emailRef.current.value, passwordRef.current.value).catch(
+          (err) => {
+            setError("Incorrect password");
+            setLoading(false);
+          }
+        );
       } else if (disabledUser == true) {
         setError("Account disabled please conatct Admin");
         setLoading(false);
@@ -88,7 +93,6 @@ export default function Login() {
         setLoading(false);
       }
     });
-
     setLoading(false);
   }
 
