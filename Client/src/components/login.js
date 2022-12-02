@@ -86,7 +86,9 @@ export default function Login() {
           }
         );
       } else if (disabledUser == true) {
-        setError("Account disabled please conatct Admin");
+        setError(
+          "Account disabled please contact Admin: testadminemail@gmail.com"
+        );
         setLoading(false);
       } else {
         setError(disabledUser);
