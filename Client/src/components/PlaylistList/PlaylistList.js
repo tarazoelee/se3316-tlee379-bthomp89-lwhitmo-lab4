@@ -62,7 +62,16 @@ function PlaylistList() {
     
   }
 
+    //HTML Sanitization
+    function encodeHTML(s) {
+    return s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/"/g, "&quot;");
+    }
+
   function addPlaylist(name){
+    var safe = encodeHTML(name)
     const names=[];
     //get an array of current playlist names
     for(let i=0; i<auth.length;i++){
@@ -78,7 +87,7 @@ function PlaylistList() {
           "Content-Type": "application/json",
           "Content-length" : 7
         },
-        body: JSON.stringify({"name": name, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
+        body: JSON.stringify({"name": safe, "email": currentUser.email, "user": currentUser.email.substr(0, currentUser.email.indexOf('@')) })
       })
       refreshPage()
   }
