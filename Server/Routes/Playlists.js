@@ -60,6 +60,14 @@ router.post('/description/:id', (req,res)=>{
     res.send()
 })
 
+router.post('/changeName/:id', (req,res)=>{
+    const playlistID= req.params.id;
+    const Name = req.body.name;
+
+    changeName(playlistID, Name)
+    res.send()
+})
+
 //add rating to a playlist 
 router.post('/rating/:id', (req,res)=>{
     const playlistID= req.params.id;
@@ -195,6 +203,13 @@ async function addDescription(id, desc){
         Timestamp: FieldValue.serverTimestamp()
     })
     console.log("Added description to: "+id)
+}
+async function changeName(id, name){
+    const res = await db.collection('Playlists').doc(id).update({
+        Name: name,
+        Timestamp: FieldValue.serverTimestamp()
+    })
+    console.log("Changed Name to: "+id)
 }
 
 //add comments to playlist 

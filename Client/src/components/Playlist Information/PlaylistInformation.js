@@ -1,16 +1,21 @@
 import {React, useState, useEffect} from 'react'
 import './PlaylistInformation.css'
 import {useParams} from 'react-router-dom'
+import { useAuth } from "../../contexts/AuthContext"
 
 //information about each of the playlists
 function PlaylistInformation() {
     const [items, setItems] = useState([])
     const [nItems, setNItems]=useState([])
+    const [items2, setItems2] = useState([])
+    const [auth, setAuth]= useState([]);
     const [play, setPlay]=useState([])
     const [DataisLoaded, setLoading]= useState(false)
+    const { currentUser } = useAuth()
     const params = useParams();
     let total;
     let time=0;
+    const newMap=[]
     function refreshPage() {
       window.location.reload(false);
     }
@@ -24,6 +29,22 @@ function PlaylistInformation() {
             ;
         })
     }
+    async function fetchPlays(){
+      await fetch("/api/playlist")
+          .then((res) => res.json())
+          .then((json) => {
+              items2.push(json);
+              setLoading(true);
+          ;
+      })
+      console.log(items2)
+      items2[0].map((item)=>{
+      if(item.UserEmail == currentUser.email){
+        newMap.push(item)
+      }
+      })
+      setAuth(newMap)
+  }
     function deleteSong(id, song){
       fetch('/api/playlist/deleteSong/'+id+'/'+song,{
         method: "DELETE",
@@ -58,6 +79,30 @@ function PlaylistInformation() {
         .then((json)=>{
             setPlay(json);
         })
+    }
+
+    async function changeName(name){
+      await fetchPlays()
+      const names=[];
+      console.log(newMap)
+      //get an array of current playlist names
+      for(let i=0; i<newMap.length;i++){
+        names.push(newMap[i].Name)
+      }
+      console.log(names)
+      //if there is a playlist with that name already, do not add the playlist
+      if(names.includes(name)){
+        return alert("choose a new name")
+      }
+      fetch('/api/playlist/changeName/'+params.id,{
+          method:'POST',
+          headers:{
+            "Content-Type": "application/json",
+            "Content-length" : 2
+          },
+          body: JSON.stringify({"name": name })
+        })
+        refreshPage()
     }
     //find the total time for the playlist
     function addTime(){
@@ -136,6 +181,10 @@ function PlaylistInformation() {
           <input id ="desc" placeholder='update or add a description'></input> 
            <button className="change-btn" onClick={()=>addDescription(document.getElementById("desc").value)}>Submit</button>
         </div>
+        <div className ='changeName'>
+      <input id ="n" placeholder='change name'></input> 
+      <button className="change-btn" onClick={()=>changeName(document.getElementById("n").value)}>Submit</button>
+  </div>
       </div>
       <div>
       {items.length > 0 && (

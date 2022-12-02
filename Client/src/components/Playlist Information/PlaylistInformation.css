@@ -37,3 +37,11 @@
 .descript-container input{
     padding:10px;
 }
+.changeName{
+    display:flex;
+    gap:2rem;
+    margin-bottom:10px;
+}
+.changeName input{
+    padding:10px;
+}
