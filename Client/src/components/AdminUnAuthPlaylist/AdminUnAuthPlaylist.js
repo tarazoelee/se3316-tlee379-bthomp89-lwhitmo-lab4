@@ -130,7 +130,7 @@ function AdminUnAuthPlaylist() {
           {nItems.map((item)=>{
             return(
                 <div key = { item.trackId } id={item.trackId} className='unauth-track-container'>
-                 <div className='default-track' onClick={() => getClicked(item.trackId, item.albumTitle, item.trackDuration)}>
+                 <div className='default-track' onClick={() => getClicked(item.trackId, item.albumTitle, item.titleDuration)}>
                     <div>{ item.trackTitle }, Artist: { item.artistName } </div>
                     <div><button class="playsong-btn" onClick={() => openInNewTab("https://www.youtube.com/results?search_query="+item.artistName+"-"+item.albumTitle+" "+item.trackTitle)}>Play Song</button> </div>
                 </div> 
