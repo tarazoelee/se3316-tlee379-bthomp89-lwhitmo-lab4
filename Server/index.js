@@ -1,11 +1,11 @@
 const express = require("express");
 const app = express();
 const tracks = require("../Server/Routes/Tracks.js");
-const playlists = require("./Routes/Playlists");
-const users = require("../Server/Routes/Users");
+const playlists = require("./Routes/Playlists.js");
+const users = require("../Server/Routes/Users.js");
 const bodyParser = require("body-parser");
-const policies = require("../Server/Routes/Policies")
-const complaints = require('./Routes/Complaints')
+const policies = require("../Server/Routes/Policies.js")
+const complaints = require('./Routes/Complaints.js')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

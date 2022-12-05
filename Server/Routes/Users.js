@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../../util/admin");
+const { db } = require("../../util/admin.js");
 
-const { users } = require("../handler/users");
+const { users } = require("../handler/users.js");
 
 //Get all users from database
 router.get("/", users);

@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../../util/admin");
+const { db } = require("../../util/admin.js");
 
-const {tracks} = require('../handler/tracks');
+const {tracks} = require('../handler/tracks.js');
 
 router.get('/', tracks)
 //get track info

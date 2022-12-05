@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../../util/admin");
+const { db } = require("../../util/admin.js");
 
-const {playlists} = require('../handler/playlists');
+const {playlists} = require('../handler/playlists.js');
 
 //get all the current playlists from firebase
 router.get('/', (req, res)=>{

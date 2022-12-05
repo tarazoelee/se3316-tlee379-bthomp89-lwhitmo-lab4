@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { db } = require("../../util/admin");
-const {policies} = require('../handler/Policies');
+const { db } = require("../../util/admin.js");
+const {policies} = require('../handler/Policies.js');
 router.get('/', policies)
 
 
