@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../../util/admin.js");
 
-const { users } = require("../handler/users.js");
+const { users } = require("../Handler/users.js");
 
 //Get all users from database
 router.get("/", users);

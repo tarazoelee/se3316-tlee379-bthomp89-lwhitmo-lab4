@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { db } = require("../../util/admin");
-const {complaints} = require('../handler/Complaints');
+const {complaints} = require('../Handler/Complaints');
 router.get('/', complaints)
 
 
