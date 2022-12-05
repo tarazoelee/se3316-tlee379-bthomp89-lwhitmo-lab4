@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
-const tracks = require("./routes/tracks");
+const tracks = require("./Routes/tracks");
 const playlists = require("./Routes/Playlists");
 const users = require("./Routes/Users");
 const bodyParser = require("body-parser");
-const policies = require("./routes/Policies")
+const policies = require("./Routes/Policies")
 const complaints = require('./Routes/Complaints')
 
 app.use(bodyParser.urlencoded({ extended: false }));
