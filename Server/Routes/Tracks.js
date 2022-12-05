@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { db } = require("../../util/admin.js");
 
-const {tracks} = require('../handler/Tracks.js');
+const {tracks} = require('../Handler/Tracks.js');
 
 router.get('/', tracks)
 //get track info
