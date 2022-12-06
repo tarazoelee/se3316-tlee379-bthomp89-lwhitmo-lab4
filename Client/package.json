@@ -50,5 +50,5 @@
   "devDependencies": {
     "nodemon": "^2.0.20"
   },
-  "proxy": "http://ec2-54-90-117-89.compute-1.amazonaws.com1234"
+  "proxy": "http://ec2-54-90-117-89.compute-1.amazonaws.com:1234"
 }
